@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Walidator numeru KSeF i tytuł przelewu 2027 – darmowe narzędzie</title>
+    <meta
+      name="description"
+      content="Sprawdź, czy numer KSeF jest poprawny (suma kontrolna CRC-8, NIP, data) i skopiuj gotowy tytuł przelewu. Od 1 stycznia 2027 numer KSeF w przelewie jest obowiązkowy."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <link rel="stylesheet" href="hark-shop.css" />
+    <style>
+      .x-tool { display: grid; gap: 16px; padding: 22px 24px; border-radius: var(--r-m); background: var(--fill-tertiary); }
+      .x-tool label { font: var(--type-label); color: var(--text-primary); }
+      .x-mono { font-family: "Geist Mono", ui-monospace, monospace; }
+      .x-input {
+        width: 100%;
+        min-height: 140px;
+        padding: 14px 16px;
+        border: 1px solid var(--stroke-primary);
+        border-radius: var(--r-s);
+        background: var(--fill-primary-on);
+        color: var(--text-primary);
+        font-size: var(--size-prose);
+        line-height: 1.6;
+        resize: vertical;
+      }
+      .x-input::placeholder { color: var(--text-secondary); }
+      .x-input:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+      .x-results { display: grid; gap: 12px; }
+      .x-results:empty { display: none; }
+      .x-result { display: grid; gap: 10px; padding: 18px 20px; border-radius: var(--r-s); background: var(--fill-primary-on); border: 1px solid var(--stroke-secondary); }
+      .x-result__top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+      .x-result__num { font-size: var(--size-small); overflow-wrap: anywhere; }
+      .x-result__why { font: var(--type-small); color: color-mix(in srgb, var(--fill-system-red) 70%, var(--text-primary)); }
+      .x-result__why li { margin-left: 18px; }
+      .x-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 8px; border-radius: var(--r-pill); font: var(--type-tag); color: var(--text-primary); }
+      .x-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; }
+      .x-badge--ok { background: color-mix(in srgb, var(--fill-system-green) 18%, var(--fill-primary-on)); box-shadow: inset 0 0 0 1px var(--fill-system-green); }
+      .x-badge--ok::before { background: var(--fill-system-green); }
+      .x-badge--bad { background: color-mix(in srgb, var(--fill-system-red) 16%, var(--fill-primary-on)); box-shadow: inset 0 0 0 1px var(--fill-system-red); }
+      .x-badge--bad::before { background: var(--fill-system-red); }
+      .x-ok { color: color-mix(in srgb, var(--fill-system-green) 55%, var(--text-primary)); font-weight: var(--weight-bold); }
+      .x-bad { color: color-mix(in srgb, var(--fill-system-red) 70%, var(--text-primary)); font-weight: var(--weight-bold); }
+      .x-title { display: grid; gap: 10px; padding-top: 16px; border-top: 1px solid var(--stroke-primary); }
+      .x-title h2 { font: var(--type-heading); }
+      .x-title__out {
+        padding: 12px 14px;
+        border-radius: var(--r-s);
+        background: var(--fill-primary-on);
+        border: 1px solid var(--stroke-secondary);
+        font-size: var(--size-small);
+        overflow-wrap: anywhere;
+        min-height: var(--tap);
+      }
+      .x-title__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font: var(--type-small); color: var(--text-secondary); }
+      .x-warn { font: var(--type-small); color: color-mix(in srgb, var(--fill-system-red) 70%, var(--text-primary)); }
+      button.btn { cursor: pointer; }
+      .x-template { font-size: var(--size-heading); overflow-wrap: anywhere; }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Ile znaków ma numer KSeF?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Numer KSeF ma 35 znaków, licząc z myślnikami." }
+          },
+          {
+            "@type": "Question",
+            "name": "Gdzie znajdę numer KSeF faktury?",
+            "acceptedAnswer": { "@type": "Answer", "text": "W UPO (Urzędowym Poświadczeniu Odbioru), w Aplikacji Podatnika KSeF albo w Twoim programie księgowym." }
+          },
+          {
+            "@type": "Question",
+            "name": "Czy muszę podawać numer KSeF w przelewie?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Tak, od 1 stycznia 2027 r., gdy czynny podatnik VAT płaci przelewem innemu czynnemu podatnikowi VAT. Obowiązek nie dotyczy faktur wystawionych w trybie awaryjnym ani w trybie offline, które nie trafiły do systemu z powodu ogłoszonej awarii." }
+          },
+          {
+            "@type": "Question",
+            "name": "Co jeśli numer jest błędny?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Najczęściej to literówka. Sprawdź sumę kontrolną, a potem skopiuj numer jeszcze raz z UPO." }
+          },
+          {
+            "@type": "Question",
+            "name": "Czy mogę sam wygenerować numer KSeF?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Nie. Numer KSeF nadaje wyłącznie system KSeF po przyjęciu faktury." }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div class="page" id="top">
+      <header class="nav glass" data-auto></header>
+      <main class="main">
+        <header class="shop-title">
+          <h1>Sprawdź numer KSeF i przygotuj tytuł przelewu</h1>
+          <p class="shop-title__intro">Wklej jeden lub kilka numerów KSeF – od razu zobaczysz, czy są poprawne, i skopiujesz gotowy tytuł przelewu.</p>
+        </header>
+
+        <section class="section" id="narzedzie" data-nav="Narzędzie">
+          <div class="x-tool">
+            <label for="ksef-input">Wklej numer(y) KSeF – jeden w linii</label>
+            <textarea
+              id="ksef-input"
+              class="x-input x-mono"
+              rows="4"
+              spellcheck="false"
+              autocomplete="off"
+              autocapitalize="characters"
+              placeholder="5265877635-20250826-0100001AF629-AF"
+            ></textarea>
+            <div class="links">
+              <button type="button" class="btn" id="ksef-check">Sprawdź</button>
+              <button type="button" class="btn" id="ksef-example">Wstaw przykład</button>
+            </div>
+            <div class="x-results" id="ksef-results" aria-live="polite"></div>
+            <div class="x-title">
+              <h2>Tytuł przelewu</h2>
+              <p class="x-title__out x-mono" id="title-out">Tu pojawi się tytuł z poprawnych numerów.</p>
+              <div class="x-title__meta">
+                <span id="title-count">0 znaków</span>
+                <button type="button" class="btn" id="title-copy" disabled>Kopiuj</button>
+                <span id="copy-status" aria-live="polite"></span>
+              </div>
+              <p class="x-warn" id="title-warn" hidden>Za długi tytuł – przy wielu fakturach użyj identyfikatora zbiorczego KSeF (wygenerujesz go w Aplikacji Podatnika KSeF lub w programie księgowym).</p>
+            </div>
+          </div>
+          <p class="fineprint">Narzędzie sprawdza poprawność zapisu numeru (format i sumę kontrolną). Nie sprawdza, czy faktura istnieje w KSeF. Dane nie opuszczają Twojej przeglądarki.</p>
+        </section>
+
+        <section class="section" id="2027" data-nav="Od 2027">
+          <div class="head">
+            <p class="head__eyebrow">Nowy obowiązek</p>
+            <h2>Od 1 stycznia 2027: numer KSeF w tytule przelewu</h2>
+          </div>
+          <div class="pair">
+            <div class="prose">
+              <p>Od 1 stycznia 2027 r. czynny podatnik VAT, który płaci przelewem innemu czynnemu podatnikowi VAT za faktury ustrukturyzowane, musi podać w tytule przelewu numer KSeF.</p>
+              <p>Gdy płacisz za więcej niż jedną fakturę, podaj identyfikator zbiorczy albo kilka numerów KSeF. Ta sama zasada obejmuje od 1 stycznia 2027 r. przelewy w mechanizmie podzielonej płatności (MPP).</p>
+            </div>
+            <aside class="callout" aria-label="Najmniejsze firmy">
+              <p class="callout__head">Też od 1 stycznia 2027</p>
+              <p class="callout__lead"><strong>Do KSeF dołączają najmniejsi przedsiębiorcy.</strong> Warto już teraz sprawdzić, skąd będziesz brać numery KSeF do przelewów.</p>
+            </aside>
+          </div>
+        </section>
+
+        <section class="section" id="budowa" data-nav="Budowa">
+          <div class="head">
+            <h2>Jak zbudowany jest numer KSeF</h2>
+            <p class="head__sub">Wzór: <span class="x-mono">9999999999-RRRRMMDD-FFFFFFFFFFFF-FF</span> · oficjalny przykład: <span class="x-mono">5265877635-20250826-0100001AF629-AF</span></p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Część</th>
+                  <th scope="col">Znaczenie</th>
+                  <th scope="col">W przykładzie</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">9999999999 <small>10 cyfr</small></th>
+                  <td>NIP sprzedawcy. Przy samofakturowaniu – NIP nabywcy; przy przedstawicielu podatkowym – NIP przedstawiciela.</td>
+                  <td class="num x-mono">5265877635</td>
+                </tr>
+                <tr>
+                  <th scope="row">RRRRMMDD <small>8 cyfr</small></th>
+                  <td>Data przyjęcia faktury do KSeF – nie data wystawienia z pola P_1.</td>
+                  <td class="num x-mono">20250826</td>
+                </tr>
+                <tr>
+                  <th scope="row">FFFFFFFFFFFF <small>12 znaków szesnastkowych</small></th>
+                  <td>Część techniczna.</td>
+                  <td class="num x-mono">0100001AF629</td>
+                </tr>
+                <tr>
+                  <th scope="row">FF <small>2 znaki</small></th>
+                  <td>Suma kontrolna CRC-8 z pierwszych 32 znaków.</td>
+                  <td class="num x-mono">AF</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section" id="numer-faktury" data-nav="Numer faktury">
+          <div class="head">
+            <h2>Numer KSeF a numer faktury</h2>
+            <p class="head__sub">To dwa różne numery – w przelewie od 2027 r. liczy się numer KSeF.</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Numer KSeF</th>
+                  <th scope="col">Numer faktury</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Kto nadaje</th>
+                  <td>System KSeF, po przyjęciu faktury</td>
+                  <td>Ty, przy wystawianiu (pole P_2)</td>
+                </tr>
+                <tr>
+                  <th scope="row">Gdzie go znajdziesz</th>
+                  <td>W UPO – nie ma go w pliku XML faktury</td>
+                  <td>W treści faktury XML</td>
+                </tr>
+                <tr>
+                  <th scope="row">Przykład</th>
+                  <td class="x-mono">5265877635-20250826-0100001AF629-AF</td>
+                  <td class="x-mono">FV/001/05/2026</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section" id="zbiorczy" data-nav="Zbiorczy">
+          <div class="head">
+            <h2>Identyfikator zbiorczy – jeden zapis zamiast wielu numerów</h2>
+            <p class="head__sub">Obejmuje co najmniej 2 faktury od tego samego sprzedawcy.</p>
+          </div>
+          <section class="stats">
+            <div class="stat"><span class="stat__fig">35</span><span class="stat__label">Znaków, jak numer KSeF</span></div>
+            <div class="stat"><span class="stat__fig">500</span><span class="stat__label">Numerów KSeF maksymalnie</span></div>
+            <div class="stat"><span class="stat__fig">50</span><span class="stat__label">Numerów w Aplikacji Podatnika KSeF</span></div>
+          </section>
+          <div class="prose">
+            <p>Identyfikator zbiorczy wygenerujesz w programie księgowym połączonym z API KSeF albo w Aplikacji Podatnika KSeF. To narzędzie go nie generuje.</p>
+          </div>
+        </section>
+
+        <section class="section" id="faq" data-nav="FAQ">
+          <div class="head"><h2>Najczęstsze pytania o numer KSeF</h2></div>
+          <div class="cards">
+            <div>
+              <h3>Ile znaków ma numer KSeF?</h3>
+              <p>35, licząc z myślnikami.</p>
+            </div>
+            <div>
+              <h3>Gdzie znajdę numer KSeF faktury?</h3>
+              <p>W UPO, w Aplikacji Podatnika KSeF albo w Twoim programie księgowym.</p>
+            </div>
+            <div>
+              <h3>Czy muszę podawać numer KSeF w przelewie?</h3>
+              <p>Tak, od 1 stycznia 2027 r., gdy czynny podatnik VAT płaci przelewem innemu czynnemu podatnikowi VAT. Nie dotyczy to faktur wystawionych w trybie awaryjnym ani w trybie offline, które nie trafiły do systemu z powodu ogłoszonej awarii.</p>
+            </div>
+            <div>
+              <h3>Co jeśli numer jest błędny?</h3>
+              <p>Najczęściej to literówka. Sprawdź sumę kontrolną, a potem skopiuj numer jeszcze raz z UPO.</p>
+            </div>
+            <div>
+              <h3>Czy mogę sam wygenerować numer KSeF?</h3>
+              <p>Nie. Numer KSeF nadaje wyłącznie system.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="foot">
+        <p>
+          Źródła: ksef.podatki.gov.pl (<a class="link" href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" target="_blank" rel="noopener">Numer KSeF i identyfikator zbiorczy</a>, aktualizacja 10.11.2026),
+          <a class="link" href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md" target="_blank" rel="noopener">dokumentacja API KSeF 2.0</a> Ministerstwa Finansów. Strona informacyjna, nie stanowi porady podatkowej.
+        </p>
+        <nav aria-label="Powrót do sekcji" data-auto></nav>
+        <a class="badge" href="https://hark.com/" target="_blank" rel="noopener"><span class="hark-mark"></span><span>built by hark</span></a>
+      </footer>
+    </div>
+    <script src="hark.js"></script>
+    <script id="ksef-logic">
+      var KSEF_EXAMPLE = "5265877635-20250826-0100001AF629-AF";
+      var KSEF_RE = /^\d{10}-\d{8}-[0-9A-F]{12}-[0-9A-F]{2}$/;
+
+      function crc8(s) {
+        var c = 0;
+        for (var k = 0; k < s.length; k++) {
+          c ^= s.charCodeAt(k);
+          for (var i = 0; i < 8; i++) {
+            c = c & 0x80 ? ((c << 1) ^ 0x07) & 0xff : (c << 1) & 0xff;
+          }
+        }
+        return c.toString(16).toUpperCase().padStart(2, "0");
+      }
+
+      function nipValid(nip) {
+        var w = [6, 5, 7, 2, 3, 4, 5, 6, 7], sum = 0;
+        for (var i = 0; i < 9; i++) sum += w[i] * +nip[i];
+        var r = sum % 11;
+        return r !== 10 && r === +nip[9];
+      }
+
+      function dateCheck(d, today) {
+        var y = +d.slice(0, 4), m = +d.slice(4, 6), day = +d.slice(6, 8);
+        var dt = new Date(y, m - 1, day);
+        if (dt.getFullYear() !== y || dt.getMonth() !== m - 1 || dt.getDate() !== day) return false;
+        var t = today || new Date();
+        var t0 = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+        return dt >= new Date(2022, 0, 1) && dt <= t0;
+      }
+
+      function plural(n) {
+        if (n === 1) return "znak";
+        var d = n % 10, h = n % 100;
+        return d >= 2 && d <= 4 && (h < 12 || h > 14) ? "znaki" : "znaków";
+      }
+
+      function checkKsef(raw, today) {
+        var s = raw.replace(/\s+/g, "").toUpperCase();
+        var res = { input: s, valid: false, errors: [], parts: null };
+        if (s.length !== 35) {
+          res.errors.push("Zła długość: " + s.length + " " + plural(s.length) + " zamiast 35");
+          return res;
+        }
+        if (!KSEF_RE.test(s)) {
+          res.errors.push("Zły format: oczekiwano NIP(10 cyfr)-RRRRMMDD-12 znaków 0–9/A–F-2 znaki 0–9/A–F");
+          return res;
+        }
+        var nip = s.slice(0, 10), date = s.slice(11, 19), tech = s.slice(20, 32), given = s.slice(33, 35);
+        var calc = crc8(s.slice(0, 32));
+        var p = {
+          nip: nip, nipOk: nipValid(nip),
+          date: date, dateOk: dateCheck(date, today),
+          tech: tech, given: given, calc: calc, crcOk: given === calc
+        };
+        res.parts = p;
+        if (!p.crcOk) res.errors.push("Suma kontrolna się nie zgadza: jest " + given + ", powinno być " + calc + " – prawdopodobnie literówka");
+        if (!p.nipOk) res.errors.push("Nieprawidłowy NIP");
+        if (!p.dateOk) res.errors.push("Nieprawidłowa data");
+        res.valid = res.errors.length === 0;
+        return res;
+      }
+
+      function buildTitle(nums) {
+        return nums.length ? "KSeF: " + nums.join(" ") : "";
+      }
+
+      if (typeof document !== "undefined") {
+        (function () {
+          var input = document.getElementById("ksef-input");
+          var out = document.getElementById("ksef-results");
+          var titleOut = document.getElementById("title-out");
+          var titleCount = document.getElementById("title-count");
+          var titleWarn = document.getElementById("title-warn");
+          var copyBtn = document.getElementById("title-copy");
+          var copyStatus = document.getElementById("copy-status");
+          var currentTitle = "";
+
+          function esc(t) {
+            return String(t).replace(/[&<>"]/g, function (c) {
+              return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+            });
+          }
+          function mark(ok) {
+            return ok ? ' <span class="x-ok" aria-label="poprawne">✓</span>' : ' <span class="x-bad" aria-label="błędne">✗</span>';
+          }
+          function row(label, value) {
+            return '<div class="row"><dt>' + label + "</dt><dd>" + value + "</dd></div>";
+          }
+
+          function render() {
+            var lines = input.value.split(/\r?\n/).filter(function (l) { return l.trim() !== ""; });
+            var valid = [];
+            var html = lines.map(function (line) {
+              var r = checkKsef(line);
+              if (r.valid) valid.push(r.input);
+              var h = '<article class="x-result"><div class="x-result__top">' +
+                (r.valid ? '<span class="x-badge x-badge--ok">Poprawny</span>' : '<span class="x-badge x-badge--bad">Błędny</span>') +
+                '<span class="x-result__num x-mono">' + esc(r.input) + "</span></div>";
+              if (r.errors.length) {
+                h += '<ul class="x-result__why">' + r.errors.map(function (e) { return "<li>" + esc(e) + "</li>"; }).join("") + "</ul>";
+              }
+              if (r.parts) {
+                var p = r.parts;
+                var nipF = p.nip.slice(0, 3) + "-" + p.nip.slice(3, 6) + "-" + p.nip.slice(6, 8) + "-" + p.nip.slice(8, 10);
+                var dateF = p.date.slice(6, 8) + "." + p.date.slice(4, 6) + "." + p.date.slice(0, 4);
+                h += '<div class="breakdown"><dl>' +
+                  row("NIP sprzedawcy", '<span class="x-mono">' + nipF + "</span>" + mark(p.nipOk)) +
+                  row("Data przyjęcia do KSeF", dateF + mark(p.dateOk)) +
+                  row("Część techniczna", '<span class="x-mono">' + p.tech + "</span>") +
+                  row("Suma kontrolna <small>podana / obliczona</small>", '<span class="x-mono">' + p.given + " / " + p.calc + "</span>" + mark(p.crcOk)) +
+                  "</dl></div>";
+              }
+              return h + "</article>";
+            }).join("");
+            out.innerHTML = html;
+
+            currentTitle = buildTitle(valid);
+            titleOut.textContent = currentTitle || "Tu pojawi się tytuł z poprawnych numerów.";
+            var n = currentTitle.length;
+            titleCount.textContent = n + " " + plural(n) + (n ? " · limit w bankach ok. 140" : "");
+            titleWarn.hidden = n <= 140;
+            copyBtn.disabled = !n;
+            copyStatus.textContent = "";
+          }
+
+          function selectTitle() {
+            var range = document.createRange();
+            range.selectNodeContents(titleOut);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }
+
+          copyBtn.addEventListener("click", function () {
+            if (!currentTitle) return;
+            var done = function () { copyStatus.textContent = "Skopiowano"; };
+            var fallback = function () {
+              selectTitle();
+              var ok = false;
+              try { ok = document.execCommand("copy"); } catch (e) {}
+              copyStatus.textContent = ok ? "Skopiowano" : "Tekst zaznaczony – naciśnij Ctrl+C";
+            };
+            if (navigator.clipboard && window.isSecureContext) {
+              navigator.clipboard.writeText(currentTitle).then(done, fallback);
+            } else {
+              fallback();
+            }
+          });
+
+          input.addEventListener("input", render);
+          document.getElementById("ksef-check").addEventListener("click", render);
+          document.getElementById("ksef-example").addEventListener("click", function () {
+            input.value = KSEF_EXAMPLE;
+            render();
+            input.focus();
+          });
+        })();
+      }
+    </script>
+  </body>
+</html>
