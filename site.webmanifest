@@ -1,0 +1,12 @@
+{
+  "name": "Numer KSeF – darmowe narzędzia",
+  "short_name": "NumerKSeF",
+  "description": "Darmowe narzędzia KSeF: walidator numeru, przelew MPP, identyfikator zbiorczy, faktura XML, kod QR.",
+  "lang": "pl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f6f8fb",
+  "theme_color": "#1747c9",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

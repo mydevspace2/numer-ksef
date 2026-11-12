@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sprawdź wiele numerów KSeF naraz – lista, CSV, wyciąg bankowy</title>
+<meta name="description" content="Masowa weryfikacja numerów KSeF: wklej listę, wgraj plik CSV/TXT albo wyciąg bankowy. Status każdego wiersza, przyczyna błędu i eksport wyników do CSV.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://numerksef.dpdns.org/sprawdz-wiele-numerow-ksef/">
+<meta name="theme-color" content="#1747c9">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:site_name" content="Numer KSeF – darmowe narzędzia">
+<meta property="og:title" content="Sprawdź wiele numerów KSeF naraz – lista, CSV, wyciąg bankowy">
+<meta property="og:description" content="Masowa weryfikacja numerów KSeF: wklej listę, wgraj plik CSV/TXT albo wyciąg bankowy. Status każdego wiersza, przyczyna błędu i eksport wyników do CSV.">
+<meta property="og:url" content="https://numerksef.dpdns.org/sprawdz-wiele-numerow-ksef/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/assets/style.css?v=2">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "Masowy walidator numerów KSeF z eksportem CSV",
+   "url": "https://numerksef.dpdns.org/sprawdz-wiele-numerow-ksef/",
+   "description": "Masowa weryfikacja numerów KSeF: wklej listę, wgraj plik CSV/TXT albo wyciąg bankowy. Status każdego wiersza, przyczyna błędu i eksport wyników do CSV.",
+   "applicationCategory": "FinanceApplication",
+   "operatingSystem": "Dowolny (przeglądarka internetowa)",
+   "browserRequirements": "Wymaga JavaScript",
+   "inLanguage": "pl-PL",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "PLN"
+   },
+   "dateModified": "2026-11-13",
+   "publisher": {
+    "@type": "Organization",
+    "name": "Numer KSeF – darmowe narzędzia",
+    "url": "https://numerksef.dpdns.org/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Czy mogę wgrać plik z Excela?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Tak, w formacie CSV lub TXT. Plik XLSX zapisz najpierw jako „CSV UTF-8”. Plik czyta tylko Twoja przeglądarka – nie jest nigdzie wysyłany."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy muszę wskazać kolumnę z numerami?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nie. Narzędzie samo wyszukuje numery KSeF i identyfikatory zbiorcze w całym wierszu, także w środku dłuższego tytułu przelewu."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Jak otworzyć pobrany CSV w Excelu?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Plik ma kodowanie UTF-8 z BOM i separator średnik, więc polski Excel otworzy go poprawnie, z polskimi znakami, po dwukrotnym kliknięciu."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Co oznacza „Brak numeru” w trybie wyciągu?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "W tytule tego przelewu nie znaleziono ani numeru KSeF, ani identyfikatora zbiorczego. Od 2027 r. przy płatnościach między czynnymi podatnikami VAT to sygnał do wyjaśnienia z płatnikiem."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Ile wierszy mogę sprawdzić naraz?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nie ma sztywnego limitu – tysiące wierszy sprawdzisz w kilka sekund. Wszystko liczy Twoje urządzenie."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy narzędzie sprawdza, czy faktury istnieją w KSeF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nie. Sprawdza poprawność zapisu: format, sumę kontrolną CRC-8, NIP i datę. Istnienie faktury potwierdza tylko KSeF."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Strona główna",
+     "item": "https://numerksef.dpdns.org/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Sprawdź wiele numerów KSeF",
+     "item": "https://numerksef.dpdns.org/sprawdz-wiele-numerow-ksef/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#tresc">Przejdź do treści</a><header class="site-head"><div class="wrap"><a class="brand" href="/" aria-label="NumerKSeF – strona główna"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="#1747c9"/><path d="M9 9h3v6.2L17.6 9h3.7l-6 6.6L21.6 23h-3.8l-4.6-5.4-1.2 1.3V23H9z" fill="#fff"/><circle cx="24.5" cy="24.5" r="4.5" fill="#22c55e" stroke="#fff" stroke-width="1.5"/><path d="M22.4 24.6l1.4 1.4 2.7-2.8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>NumerKSeF<small>darmowe narzędzia KSeF</small></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav" aria-label="Narzędzia"><ul><li><a href="/">Walidator numeru</a></li><li><a href="/przelew-mpp-numer-ksef/">Przelew MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/" aria-current="page">Wiele numerów</a></li><li><a href="/przelew-z-faktury-xml-ksef/">Faktura XML</a></li><li><a href="/kod-qr-ksef/">Kod QR</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG</a></li></ul></nav></div></header>
+<main id="tresc" class="wrap" tabindex="-1">
+<nav class="crumbs" aria-label="Okruszki"><ol><li><a href="/">Strona główna</a></li><li aria-current="page">Sprawdź wiele numerów KSeF</li></ol></nav>
+<div class="hero"><h1>Sprawdź wiele numerów KSeF naraz – lista, CSV, wyciąg bankowy</h1><p class="lead">Wklej kolumnę z Excela, wgraj plik CSV lub TXT albo wklej tytuły przelewów z wyciągu. Wyszukamy w tekście każdy numer KSeF i identyfikator zbiorczy, sprawdzimy je i pokażemy, które wiersze wymagają poprawki.</p>
+<ul class="trust"><li>Za darmo, bez rejestracji</li><li>Dane nie opuszczają Twojej przeglądarki.</li><li>Bez reklam i śledzenia</li></ul>
+</div>
+
+<section class="tool" aria-labelledby="h-bulk">
+  <h2 id="h-bulk">Masowa weryfikacja numerów KSeF</h2>
+  <fieldset><legend>Tryb</legend><div class="radios">
+    <label><input type="radio" name="b-mode" id="b-mode-list" checked> Lista numerów</label>
+    <label><input type="radio" name="b-mode" id="b-mode-statement"> Wyciąg bankowy (oznacz wiersze bez numeru)</label>
+  </div></fieldset>
+  <div class="field"><label for="b-in">Wklej numery, wiersze CSV lub tytuły przelewów – jeden wpis w linii</label>
+  <textarea id="b-in" class="mono" rows="7" spellcheck="false" autocomplete="off" placeholder="5265877635-20250826-0100001AF629-AF&#10;1111111111-IZ202607-65ED02180000-E7"></textarea></div>
+  <label class="file" id="b-drop" for="b-file"><strong>Albo upuść tu plik CSV / TXT</strong><br><span class="hint">Plik czyta tylko Twoja przeglądarka.</span><input type="file" id="b-file" accept=".csv,.txt,text/csv,text/plain" multiple></label>
+  <div class="btns" style="margin-top:12px"><button type="button" class="btn" id="b-check">Sprawdź</button><button type="button" class="btn ghost" id="b-ex">Przykład: lista</button><button type="button" class="btn ghost" id="b-ex-statement">Przykład: wyciąg</button><button type="button" class="btn ghost" id="b-clear">Wyczyść</button></div>
+  <div id="b-sum" class="status" role="status" aria-live="polite"></div>
+  <div id="b-actions" class="btns" hidden><button type="button" class="btn" id="b-csv">Pobierz CSV</button><button type="button" class="btn ghost" id="b-copy">Kopiuj wyniki</button><label class="check" style="align-self:center"><input type="checkbox" id="b-only-bad"> Pokaż tylko problemy</label></div>
+  <div class="table-wrap" id="b-table" hidden><table class="res-table">
+    <caption class="sr-only">Wyniki sprawdzenia</caption>
+    <thead><tr><th scope="col">Wiersz</th><th scope="col">Status</th><th scope="col">Numer</th><th scope="col">Typ</th><th scope="col">NIP</th><th scope="col">Data</th><th scope="col">Uwagi</th></tr></thead>
+    <tbody id="b-body"></tbody></table></div>
+  <p class="privacy">🔒 Dane nie opuszczają Twojej przeglądarki – także wgrane pliki.</p>
+</section>
+<article class="content">
+<h2>Do czego służy masowa weryfikacja</h2>
+<p>Od 1 stycznia 2027 r. numer KSeF trafia do przelewów między czynnymi podatnikami VAT. Księgowość, która płaci dziesiątki faktur tygodniowo, nie sprawdzi każdego numeru ręcznie. Ten walidator przyjmuje całą listę naraz – prosto z Excela, z pliku CSV wyeksportowanego z programu, z rejestru faktur albo z wyciągu bankowego – i w ułamku sekundy pokazuje, które numery są poprawne, a które trzeba poprawić przed wysłaniem przelewów.</p>
+
+<h2>Dwa tryby pracy</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Tryb</th><th scope="col">Dla kogo</th><th scope="col">Co robi</th></tr></thead>
+<tbody>
+<tr><th scope="row">Lista numerów</th><td>Płacący: księgowość przed wysłaniem paczki przelewów</td><td>Sprawdza każdy numer; jeśli wiersz nie zawiera rozpoznawalnego numeru, sprawdza cały wiersz i podaje przyczynę błędu</td></tr>
+<tr><th scope="row">Wyciąg bankowy</th><td>Odbiorca płatności: kontrola wpływów i rozrachunków</td><td>Szuka numerów KSeF i identyfikatorów zbiorczych w tytułach przelewów i oznacza wiersze, w których płatnik nie podał numeru</td></tr>
+</tbody></table></div>
+
+<h2>Jak to działa – krok po kroku</h2>
+<ol class="steps">
+<li><strong>Wklej dane lub wgraj plik.</strong> Obsługujemy CSV (separator średnik, przecinek lub tabulator) i zwykły tekst. Plik nie jest nigdzie wysyłany – czyta go Twoja przeglądarka.</li>
+<li><strong>Wyszukiwanie w tekście.</strong> W każdym wierszu szukamy wzorców 35-znakowych numerów KSeF, 36-znakowych numerów z KSeF 1.0 i identyfikatorów zbiorczych (z „IZ”), także gdy stoją w środku dłuższego tytułu, np. w komunikacie MPP. Nie musisz wskazywać kolumny.</li>
+<li><strong>Weryfikacja.</strong> Każdy znaleziony numer przechodzi tę samą kontrolę co w <a href="/">pojedynczym walidatorze</a>: format, suma kontrolna CRC-8, NIP i data.</li>
+<li><strong>Wyniki.</strong> Tabela pokazuje status, typ, NIP, datę i opis problemu. Możesz zostawić same problemy.</li>
+<li><strong>Eksport.</strong> Pobierz CSV (UTF-8 z BOM, separator średnik – otwiera się poprawnie w polskim Excelu) albo skopiuj wyniki do schowka.</li>
+</ol>
+
+<h2>Co znaczą statusy</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Status</th><th scope="col">Znaczenie</th><th scope="col">Co zrobić</th></tr></thead>
+<tbody>
+<tr><td><span class="badge ok">Poprawny</span></td><td>Format, suma kontrolna, NIP i data się zgadzają</td><td>Można użyć w przelewie</td></tr>
+<tr><td><span class="badge warn">Do sprawdzenia</span></td><td>Stary format KSeF 1.0 (36 znaków) albo początek numeru, który nie jest NIP-em</td><td>Potwierdź numer u wystawcy lub w KSeF</td></tr>
+<tr><td><span class="badge bad">Błędny</span></td><td>Zła suma kontrolna, zły NIP, nieistniejąca data lub zły format</td><td>Skopiuj numer ponownie z UPO lub programu</td></tr>
+<tr><td><span class="badge info">Brak numeru</span></td><td>W wierszu nie ma numeru KSeF ani identyfikatora zbiorczego</td><td>Przy płatności od czynnego podatnika VAT od 2027 r. – wyjaśnij z płatnikiem</td></tr>
+</tbody></table></div>
+
+<h2>Kontrola wyciągu bankowego po stronie odbiorcy</h2>
+<p>Przepisy nakładają obowiązek podania numeru KSeF na płacącego, ale to odbiorca rozlicza wpływy. Tryb „Wyciąg bankowy” szybko pokaże, które wpłaty mają numer KSeF lub identyfikator zbiorczy, w których jest literówka, a w których numeru nie ma. Pamiętaj o wyjątkach: numer KSeF nie jest wymagany m.in. przy płatności od podatnika zwolnionego z VAT, od konsumenta oraz za faktury wystawione w trybie awaryjnym lub offline, które nie trafiły do systemu z powodu ogłoszonej awarii.</p>
+
+<h2>Wskazówki dla dużych list</h2>
+<ul>
+<li>Narzędzie radzi sobie z tysiącami wierszy – limitem jest tylko pamięć przeglądarki.</li>
+<li>Pliki XLSX zapisz najpierw jako CSV (Plik → Zapisz jako → CSV UTF-8).</li>
+<li>Przy płatności za wiele faktur od jednego dostawcy rozważ <a href="/identyfikator-zbiorczy-ksef/">identyfikator zbiorczy</a> – w tytule zmieszczą się najwyżej trzy numery KSeF.</li>
+<li>Gotowe numery wykorzystasz w <a href="/przelew-mpp-numer-ksef/">komunikacie MPP</a> lub w <a href="/">tytule przelewu</a>.</li>
+</ul>
+
+<h2>Typowe błędy wykrywane w listach</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Komunikat</th><th scope="col">Najczęstsza przyczyna</th></tr></thead>
+<tbody>
+<tr><th scope="row">Suma kontrolna się nie zgadza</th><td>Literówka przy przepisywaniu, zamieniona kolejność znaków albo numer z instrukcji banku (przykłady bankowe nie są prawdziwymi numerami)</td></tr>
+<tr><th scope="row">Znak „O” zamiast zera / „I” zamiast jedynki</th><td>Ręczne przepisywanie z wydruku lub PDF-a; w numerze KSeF nie ma liter spoza A–F</td></tr>
+<tr><th scope="row">Zła długość</th><td>Ucięty numer przy kopiowaniu z wąskiej kolumny w Excelu albo dopisana kropka czy przecinek na końcu</td></tr>
+<tr><th scope="row">Pierwsze 10 cyfr to nie NIP</th><td>Pomylone cyfry na początku numeru</td></tr>
+<tr><th scope="row">Data z przyszłości</th><td>Pomylony rok lub miesiąc w części z datą przyjęcia do KSeF</td></tr>
+</tbody></table></div>
+<p>Spacje, długie myślniki z Worda i małe litery poprawiamy automatycznie, więc nie zgłaszamy ich jako błędów – ale informujemy o poprawce w kolumnie uwag.</p>
+
+<h2>Prywatność dużych plików</h2>
+<p>Rejestry faktur i wyciągi bankowe zawierają wrażliwe dane: nazwy kontrahentów, kwoty, numery rachunków. Dlatego cała analiza odbywa się lokalnie – plik nie opuszcza Twojego komputera, a po zamknięciu karty nie zostaje po nim ślad. Nie potrzebujesz konta ani instalacji, a narzędzie działa także bez internetu po załadowaniu strony. To ważne dla biur rachunkowych, które pracują na danych wielu klientów i muszą dbać o tajemnicę zawodową.</p>
+<h2 id="faq">Najczęstsze pytania</h2><div class="faq"><details><summary>Czy mogę wgrać plik z Excela?</summary><p>Tak, w formacie CSV lub TXT. Plik XLSX zapisz najpierw jako „CSV UTF-8”. Plik czyta tylko Twoja przeglądarka – nie jest nigdzie wysyłany.</p></details><details><summary>Czy muszę wskazać kolumnę z numerami?</summary><p>Nie. Narzędzie samo wyszukuje numery KSeF i identyfikatory zbiorcze w całym wierszu, także w środku dłuższego tytułu przelewu.</p></details><details><summary>Jak otworzyć pobrany CSV w Excelu?</summary><p>Plik ma kodowanie UTF-8 z BOM i separator średnik, więc polski Excel otworzy go poprawnie, z polskimi znakami, po dwukrotnym kliknięciu.</p></details><details><summary>Co oznacza „Brak numeru” w trybie wyciągu?</summary><p>W tytule tego przelewu nie znaleziono ani numeru KSeF, ani identyfikatora zbiorczego. Od 2027 r. przy płatnościach między czynnymi podatnikami VAT to sygnał do wyjaśnienia z płatnikiem.</p></details><details><summary>Ile wierszy mogę sprawdzić naraz?</summary><p>Nie ma sztywnego limitu – tysiące wierszy sprawdzisz w kilka sekund. Wszystko liczy Twoje urządzenie.</p></details><details><summary>Czy narzędzie sprawdza, czy faktury istnieją w KSeF?</summary><p>Nie. Sprawdza poprawność zapisu: format, sumę kontrolną CRC-8, NIP i datę. Istnienie faktury potwierdza tylko KSeF.</p></details></div><h2 id="zrodla">Źródła</h2><ul class="sources"><li><a href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" rel="noopener" target="_blank">Ministerstwo Finansów: Numer KSeF i zbiorczy identyfikator</a> – strona zmodyfikowana 10.11.2026</li><li><a href="https://github.com/CIRFMF/ksef-docs/blob/main/faktury/numer-ksef.md" rel="noopener" target="_blank">Dokumentacja API KSeF 2.0 (MF): Numer KSeF – struktura i CRC-8</a></li><li><a href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" rel="noopener" target="_blank">Ministerstwo Finansów: Podstawy prawne oraz kluczowe terminy KSeF</a></li><li><a href="https://www.mbank.pl/firmy/uslugi-serwis-transakcyjny/import-przelewow" rel="noopener" target="_blank">mBank: import przelewów (Elixir/CSV) – zasady MPP</a></li></ul><h2 id="inne-narzedzia">Inne darmowe narzędzia KSeF</h2><div class="hub"><a href="/"><strong>Walidator numeru KSeF</strong><span>Sprawdź numer KSeF (CRC-8, NIP, data) i ułóż tytuł przelewu.</span></a><a href="/przelew-mpp-numer-ksef/"><strong>Komunikat przelewu MPP</strong><span>Generator /VAT/ /IDC/ /INV/ /TXT/ z numerem KSeF dla split payment.</span></a><a href="/identyfikator-zbiorczy-ksef/"><strong>Identyfikator zbiorczy</strong><span>Sprawdź identyfikator zbiorczy KSeF i rozłóż go na części.</span></a><a href="/przelew-z-faktury-xml-ksef/"><strong>Przelew z faktury XML</strong><span>Wczytaj fakturę FA(3) i skopiuj rachunek, kwotę, tytuł i komunikat MPP.</span></a><a href="/kod-qr-ksef/"><strong>Kod QR KSeF</strong><span>Wygeneruj KOD I z pliku XML albo sprawdź link z kodu QR na fakturze.</span></a><a href="/ksef-od-2027-jdg/"><strong>KSeF dla JDG od 2027</strong><span>Odpowiedz na kilka pytań i zobacz, co zmienia się 1 stycznia 2027 r.</span></a></div><p class="updated">Ostatnia aktualizacja: <time datetime="2026-11-13">13 listopada 2026 r.</time> · Dane nie opuszczają Twojej przeglądarki.</p></article>
+</main>
+<footer class="site-foot"><div class="wrap"><div class="foot-grid"><div><h2>Numer KSeF – darmowe narzędzia</h2><p>Bezpłatne narzędzia do numerów KSeF, przelewów i faktur ustrukturyzowanych. Bez reklam, bez rejestracji. Wszystkie obliczenia wykonuje Twoja przeglądarka – Dane nie opuszczają Twojej przeglądarki.</p><p>Serwis niezależny, niezwiązany z Ministerstwem Finansów. Treści mają charakter informacyjny i nie stanowią porady podatkowej.</p></div><div><h2>Narzędzia</h2><ul><li><a href="/">Walidator numeru KSeF</a></li><li><a href="/przelew-mpp-numer-ksef/">Komunikat przelewu MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/">Wiele numerów naraz</a></li><li><a href="/przelew-z-faktury-xml-ksef/">Przelew z faktury XML</a></li><li><a href="/kod-qr-ksef/">Kod QR KSeF</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG od 2027</a></li></ul></div><div><h2>Serwis i źródła</h2><ul><li><a href="/o-serwisie/">O serwisie</a></li><li><a href="/polityka-prywatnosci/">Polityka prywatności</a></li><li><a href="https://ksef.podatki.gov.pl/" rel="noopener" target="_blank">ksef.podatki.gov.pl (MF)</a></li><li><a href="https://github.com/CIRFMF/ksef-docs" rel="noopener" target="_blank">Dokumentacja KSeF 2.0 (MF, GitHub)</a></li><li><a href="/sitemap.xml">Mapa strony</a></li></ul></div></div><p class="foot-note">© 2026 NumerKSeF · Ostatnia aktualizacja: 13 listopada 2026 r. · Kod działa bez serwera, bez ciasteczek i bez śledzenia.</p></div></footer><p id="live" class="sr-only" aria-live="polite"></p>
+<script src="/assets/core.js?v=2" defer></script>
+<script src="/assets/ui.js?v=2" defer></script>
+<script src="/assets/page-bulk.js?v=2" defer></script>
+</body>
+</html>

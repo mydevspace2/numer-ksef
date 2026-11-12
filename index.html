@@ -1,447 +1,226 @@
 <!doctype html>
 <html lang="pl">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Walidator numeru KSeF i tytuł przelewu 2027 – darmowe narzędzie</title>
-    <meta
-      name="description"
-      content="Sprawdź, czy numer KSeF jest poprawny (suma kontrolna CRC-8, NIP, data) i skopiuj gotowy tytuł przelewu. Od 1 stycznia 2027 numer KSeF w przelewie jest obowiązkowy."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
-    />
-    <link rel="stylesheet" href="hark.css" />
-    <link rel="stylesheet" href="hark-hero.css" />
-    <link rel="stylesheet" href="hark-shop.css" />
-    <style>
-      .x-tool { display: grid; gap: 16px; padding: 22px 24px; border-radius: var(--r-m); background: var(--fill-tertiary); }
-      .x-tool label { font: var(--type-label); color: var(--text-primary); }
-      .x-mono { font-family: "Geist Mono", ui-monospace, monospace; }
-      .x-input {
-        width: 100%;
-        min-height: 140px;
-        padding: 14px 16px;
-        border: 1px solid var(--stroke-primary);
-        border-radius: var(--r-s);
-        background: var(--fill-primary-on);
-        color: var(--text-primary);
-        font-size: var(--size-prose);
-        line-height: 1.6;
-        resize: vertical;
-      }
-      .x-input::placeholder { color: var(--text-secondary); }
-      .x-input:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
-      .x-results { display: grid; gap: 12px; }
-      .x-results:empty { display: none; }
-      .x-result { display: grid; gap: 10px; padding: 18px 20px; border-radius: var(--r-s); background: var(--fill-primary-on); border: 1px solid var(--stroke-secondary); }
-      .x-result__top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-      .x-result__num { font-size: var(--size-small); overflow-wrap: anywhere; }
-      .x-result__why { font: var(--type-small); color: color-mix(in srgb, var(--fill-system-red) 70%, var(--text-primary)); }
-      .x-result__why li { margin-left: 18px; }
-      .x-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 8px; border-radius: var(--r-pill); font: var(--type-tag); color: var(--text-primary); }
-      .x-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; }
-      .x-badge--ok { background: color-mix(in srgb, var(--fill-system-green) 18%, var(--fill-primary-on)); box-shadow: inset 0 0 0 1px var(--fill-system-green); }
-      .x-badge--ok::before { background: var(--fill-system-green); }
-      .x-badge--bad { background: color-mix(in srgb, var(--fill-system-red) 16%, var(--fill-primary-on)); box-shadow: inset 0 0 0 1px var(--fill-system-red); }
-      .x-badge--bad::before { background: var(--fill-system-red); }
-      .x-ok { color: color-mix(in srgb, var(--fill-system-green) 55%, var(--text-primary)); font-weight: var(--weight-bold); }
-      .x-bad { color: color-mix(in srgb, var(--fill-system-red) 70%, var(--text-primary)); font-weight: var(--weight-bold); }
-      .x-title { display: grid; gap: 10px; padding-top: 16px; border-top: 1px solid var(--stroke-primary); }
-      .x-title h2 { font: var(--type-heading); }
-      .x-title__out {
-        padding: 12px 14px;
-        border-radius: var(--r-s);
-        background: var(--fill-primary-on);
-        border: 1px solid var(--stroke-secondary);
-        font-size: var(--size-small);
-        overflow-wrap: anywhere;
-        min-height: var(--tap);
-      }
-      .x-title__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font: var(--type-small); color: var(--text-secondary); }
-      .x-warn { font: var(--type-small); color: color-mix(in srgb, var(--fill-system-red) 70%, var(--text-primary)); }
-      button.btn { cursor: pointer; }
-      .x-template { font-size: var(--size-heading); overflow-wrap: anywhere; }
-    </style>
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Ile znaków ma numer KSeF?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Numer KSeF ma 35 znaków, licząc z myślnikami." }
-          },
-          {
-            "@type": "Question",
-            "name": "Gdzie znajdę numer KSeF faktury?",
-            "acceptedAnswer": { "@type": "Answer", "text": "W UPO (Urzędowym Poświadczeniu Odbioru), w Aplikacji Podatnika KSeF albo w Twoim programie księgowym." }
-          },
-          {
-            "@type": "Question",
-            "name": "Czy muszę podawać numer KSeF w przelewie?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Tak, od 1 stycznia 2027 r., gdy czynny podatnik VAT płaci przelewem innemu czynnemu podatnikowi VAT. Obowiązek nie dotyczy faktur wystawionych w trybie awaryjnym ani w trybie offline, które nie trafiły do systemu z powodu ogłoszonej awarii." }
-          },
-          {
-            "@type": "Question",
-            "name": "Co jeśli numer jest błędny?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Najczęściej to literówka. Sprawdź sumę kontrolną, a potem skopiuj numer jeszcze raz z UPO." }
-          },
-          {
-            "@type": "Question",
-            "name": "Czy mogę sam wygenerować numer KSeF?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Nie. Numer KSeF nadaje wyłącznie system KSeF po przyjęciu faktury." }
-          }
-        ]
-      }
-    </script>
-  </head>
-  <body>
-    <div class="page" id="top">
-      <header class="nav glass" data-auto></header>
-      <main class="main">
-        <header class="shop-title">
-          <h1>Sprawdź numer KSeF i przygotuj tytuł przelewu</h1>
-          <p class="shop-title__intro">Wklej jeden lub kilka numerów KSeF – od razu zobaczysz, czy są poprawne, i skopiujesz gotowy tytuł przelewu.</p>
-        </header>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Numer KSeF – walidator i tytuł przelewu 2027 | NumerKSeF</title>
+<meta name="description" content="Sprawdź numer KSeF za darmo: suma kontrolna CRC-8, NIP i data. Ułóż tytuł przelewu z numerem KSeF (do 3 numerów, 140 znaków). Dane nie opuszczają przeglądarki.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://numerksef.dpdns.org/">
+<meta name="theme-color" content="#1747c9">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:site_name" content="Numer KSeF – darmowe narzędzia">
+<meta property="og:title" content="Numer KSeF – walidator i tytuł przelewu 2027 | NumerKSeF">
+<meta property="og:description" content="Sprawdź numer KSeF za darmo: suma kontrolna CRC-8, NIP i data. Ułóż tytuł przelewu z numerem KSeF (do 3 numerów, 140 znaków). Dane nie opuszczają przeglądarki.">
+<meta property="og:url" content="https://numerksef.dpdns.org/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/assets/style.css?v=2">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "Walidator numeru KSeF i generator tytułu przelewu",
+   "url": "https://numerksef.dpdns.org/",
+   "description": "Sprawdź numer KSeF za darmo: suma kontrolna CRC-8, NIP i data. Ułóż tytuł przelewu z numerem KSeF (do 3 numerów, 140 znaków). Dane nie opuszczają przeglądarki.",
+   "applicationCategory": "FinanceApplication",
+   "operatingSystem": "Dowolny (przeglądarka internetowa)",
+   "browserRequirements": "Wymaga JavaScript",
+   "inLanguage": "pl-PL",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "PLN"
+   },
+   "dateModified": "2026-11-13",
+   "publisher": {
+    "@type": "Organization",
+    "name": "Numer KSeF – darmowe narzędzia",
+    "url": "https://numerksef.dpdns.org/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Ile znaków ma numer KSeF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "35 znaków, licząc z myślnikami. Numery z KSeF 1.0 mogły mieć 36 znaków (dodatkowy myślnik w części technicznej) – walidator rozpoznaje je i pokazuje ostrzeżenie."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Gdzie znajdę numer KSeF faktury?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "W UPO (Urzędowym Poświadczeniu Odbioru), w Aplikacji Podatnika KSeF albo w programie księgowym połączonym z KSeF. Nie ma go w samym pliku XML faktury."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy od 2027 r. muszę podawać numer KSeF w przelewie?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Tak, od 1 stycznia 2027 r., gdy czynny podatnik VAT płaci przelewem innemu czynnemu podatnikowi VAT za fakturę wystawioną w KSeF – także w MPP. Nie dotyczy to faktur wystawionych w trybie awaryjnym ani faktur offline, które nie trafiły do systemu z powodu ogłoszonej awarii."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Ile numerów KSeF zmieszczę w tytule przelewu?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Najczęściej trzy. Typowe pole tytułu ma 140 znaków, a każdy numer 35. Przy większej liczbie faktur od jednego sprzedawcy użyj identyfikatora zbiorczego."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Co oznacza błąd sumy kontrolnej?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Ostatnie dwa znaki nie pasują do reszty numeru – to prawie zawsze literówka (np. litera O zamiast zera). Skopiuj numer ponownie z UPO lub z programu."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy walidator sprawdza, czy faktura istnieje w KSeF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nie. Sprawdza tylko poprawność zapisu: format, sumę kontrolną CRC-8, NIP i datę. Istnienie faktury potwierdzisz w KSeF lub przez kod QR na fakturze."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy mogę sam wygenerować numer KSeF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nie. Numer KSeF nadaje wyłącznie system KSeF po przyjęciu faktury."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Strona główna",
+     "item": "https://numerksef.dpdns.org/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#tresc">Przejdź do treści</a><header class="site-head"><div class="wrap"><a class="brand" href="/" aria-label="NumerKSeF – strona główna"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="#1747c9"/><path d="M9 9h3v6.2L17.6 9h3.7l-6 6.6L21.6 23h-3.8l-4.6-5.4-1.2 1.3V23H9z" fill="#fff"/><circle cx="24.5" cy="24.5" r="4.5" fill="#22c55e" stroke="#fff" stroke-width="1.5"/><path d="M22.4 24.6l1.4 1.4 2.7-2.8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>NumerKSeF<small>darmowe narzędzia KSeF</small></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav" aria-label="Narzędzia"><ul><li><a href="/" aria-current="page">Walidator numeru</a></li><li><a href="/przelew-mpp-numer-ksef/">Przelew MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/">Wiele numerów</a></li><li><a href="/przelew-z-faktury-xml-ksef/">Faktura XML</a></li><li><a href="/kod-qr-ksef/">Kod QR</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG</a></li></ul></nav></div></header>
+<main id="tresc" class="wrap" tabindex="-1">
 
-        <section class="section" id="narzedzie" data-nav="Narzędzie">
-          <div class="x-tool">
-            <label for="ksef-input">Wklej numer(y) KSeF – jeden w linii</label>
-            <textarea
-              id="ksef-input"
-              class="x-input x-mono"
-              rows="4"
-              spellcheck="false"
-              autocomplete="off"
-              autocapitalize="characters"
-              placeholder="5265877635-20250826-0100001AF629-AF"
-            ></textarea>
-            <div class="links">
-              <button type="button" class="btn" id="ksef-check">Sprawdź</button>
-              <button type="button" class="btn" id="ksef-example">Wstaw przykład</button>
-            </div>
-            <div class="x-results" id="ksef-results" aria-live="polite"></div>
-            <div class="x-title">
-              <h2>Tytuł przelewu</h2>
-              <p class="x-title__out x-mono" id="title-out">Tu pojawi się tytuł z poprawnych numerów.</p>
-              <div class="x-title__meta">
-                <span id="title-count">0 znaków</span>
-                <button type="button" class="btn" id="title-copy" disabled>Kopiuj</button>
-                <span id="copy-status" aria-live="polite"></span>
-              </div>
-              <p class="x-warn" id="title-warn" hidden>Za długi tytuł – przy wielu fakturach użyj identyfikatora zbiorczego KSeF (wygenerujesz go w Aplikacji Podatnika KSeF lub w programie księgowym).</p>
-            </div>
-          </div>
-          <p class="fineprint">Narzędzie sprawdza poprawność zapisu numeru (format i sumę kontrolną). Nie sprawdza, czy faktura istnieje w KSeF. Dane nie opuszczają Twojej przeglądarki.</p>
-        </section>
+<div class="hero"><h1>Sprawdź numer KSeF i przygotuj tytuł przelewu</h1><p class="lead">Wklej numer KSeF – od razu zobaczysz, czy jest poprawny i dlaczego. Potem ułóż gotowy tytuł przelewu z maksymalnie trzema numerami. Od 1 stycznia 2027 r. numer KSeF w przelewie między czynnymi podatnikami VAT jest obowiązkowy.</p>
+<ul class="trust"><li>Za darmo, bez rejestracji</li><li>Dane nie opuszczają Twojej przeglądarki.</li><li>Bez reklam i śledzenia</li></ul>
+</div>
 
-        <section class="section" id="2027" data-nav="Od 2027">
-          <div class="head">
-            <p class="head__eyebrow">Nowy obowiązek</p>
-            <h2>Od 1 stycznia 2027: numer KSeF w tytule przelewu</h2>
-          </div>
-          <div class="pair">
-            <div class="prose">
-              <p>Od 1 stycznia 2027 r. czynny podatnik VAT, który płaci przelewem innemu czynnemu podatnikowi VAT za faktury ustrukturyzowane, musi podać w tytule przelewu numer KSeF.</p>
-              <p>Gdy płacisz za więcej niż jedną fakturę, podaj identyfikator zbiorczy albo kilka numerów KSeF. Ta sama zasada obejmuje od 1 stycznia 2027 r. przelewy w mechanizmie podzielonej płatności (MPP).</p>
-            </div>
-            <aside class="callout" aria-label="Najmniejsze firmy">
-              <p class="callout__head">Też od 1 stycznia 2027</p>
-              <p class="callout__lead"><strong>Do KSeF dołączają najmniejsi przedsiębiorcy.</strong> Warto już teraz sprawdzić, skąd będziesz brać numery KSeF do przelewów.</p>
-            </aside>
-          </div>
-        </section>
+<section class="tool" aria-labelledby="h-walidator">
+  <h2 id="h-walidator">Walidator numeru KSeF</h2>
+  <div class="field">
+    <label for="k-in">Numer KSeF lub identyfikator zbiorczy</label>
+    <input id="k-in" class="mono" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="5265877635-20250826-0100001AF629-AF" aria-describedby="k-hint">
+    <p class="hint" id="k-hint">35 znaków: NIP-RRRRMMDD-12 znaków HEX-suma kontrolna. Spacje i długie myślniki poprawimy sami.</p>
+  </div>
+  <div class="btns">
+    <button type="button" class="btn" id="k-check">Sprawdź</button>
+    <button type="button" class="btn ghost" id="k-ex">Przykład</button>
+    <button type="button" class="btn ghost" id="k-clear">Wyczyść</button>
+    <button type="button" class="btn ghost" id="k-use" hidden>Użyj w tytule przelewu ↓</button>
+  </div>
+  <div id="k-res" class="status" role="status" aria-live="polite"></div>
+</section>
+<section class="tool" id="tytul" aria-labelledby="h-tytul">
+  <h2 id="h-tytul">Generator tytułu przelewu z numerem KSeF</h2>
+  <div class="grid2">
+    <div class="field"><label for="t1">Numer KSeF lub identyfikator zbiorczy 1</label><input id="t1" class="mono" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters"></div>
+    <div class="field"><label for="t2">Numer 2 <span class="hint">(opcjonalnie)</span></label><input id="t2" class="mono" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters"></div>
+    <div class="field"><label for="t3">Numer 3 <span class="hint">(opcjonalnie)</span></label><input id="t3" class="mono" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters"></div>
+    <div class="field"><label for="t-extra">Dodatkowy opis <span class="hint">(np. numer faktury)</span></label><input id="t-extra" type="text" autocomplete="off" maxlength="140"></div>
+  </div>
+  <div class="btns"><button type="button" class="btn ghost" id="t-ex">Przykład</button><button type="button" class="btn ghost" id="t-clear">Wyczyść</button></div>
+  <p class="label" id="t-out-l">Gotowy tytuł przelewu</p>
+  <p class="out placeholder" id="t-out" aria-labelledby="t-out-l" aria-live="polite">Tu pojawi się tytuł przelewu.</p>
+  <div class="out-row"><span class="counter" id="t-count">0 / 140 znaków</span><button type="button" class="btn small" id="t-copy" data-copy="t-out" disabled>Kopiuj tytuł</button></div>
+  <div id="t-stat" class="status" role="status" aria-live="polite"></div>
+  <p class="privacy">🔒 Dane nie opuszczają Twojej przeglądarki. Narzędzie sprawdza zapis numeru, a nie to, czy faktura istnieje w KSeF.</p>
+</section>
+<article class="content">
+<h2>Wszystkie narzędzia w jednym miejscu</h2>
+<p>Poza walidatorem na tej stronie masz do dyspozycji komplet darmowych narzędzi do płatności z numerem KSeF – od komunikatu MPP po kod QR. Każde działa w przeglądarce i nie wymaga logowania.</p>
+<div class="hub">
+<a href="/przelew-mpp-numer-ksef/"><strong>Komunikat przelewu MPP</strong><span>/VAT/ /IDC/ /INV/ /TXT/ z numerem KSeF, walidacja każdego pola i limit 140 znaków.</span></a>
+<a href="/identyfikator-zbiorczy-ksef/"><strong>Identyfikator zbiorczy</strong><span>Płacisz za kilka faktur jednym przelewem? Sprawdź identyfikator zbiorczy.</span></a>
+<a href="/sprawdz-wiele-numerow-ksef/"><strong>Wiele numerów naraz</strong><span>Wklej listę lub wyciąg bankowy, pobierz wyniki w CSV.</span></a>
+<a href="/przelew-z-faktury-xml-ksef/"><strong>Przelew z faktury XML</strong><span>Plik FA(3) → rachunek, kwota, termin, tytuł i komunikat MPP.</span></a>
+<a href="/kod-qr-ksef/"><strong>Kod QR KSeF</strong><span>Generator KOD I i dekoder linków z ochroną przed fałszywymi domenami.</span></a>
+<a href="/ksef-od-2027-jdg/"><strong>KSeF dla JDG od 2027</strong><span>Krótka ankieta: co zmienia się w Twojej firmie 1 stycznia 2027 r.</span></a>
+</div>
 
-        <section class="section" id="budowa" data-nav="Budowa">
-          <div class="head">
-            <h2>Jak zbudowany jest numer KSeF</h2>
-            <p class="head__sub">Wzór: <span class="x-mono">9999999999-RRRRMMDD-FFFFFFFFFFFF-FF</span> · oficjalny przykład: <span class="x-mono">5265877635-20250826-0100001AF629-AF</span></p>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Część</th>
-                  <th scope="col">Znaczenie</th>
-                  <th scope="col">W przykładzie</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">9999999999 <small>10 cyfr</small></th>
-                  <td>NIP sprzedawcy. Przy samofakturowaniu – NIP nabywcy; przy przedstawicielu podatkowym – NIP przedstawiciela.</td>
-                  <td class="num x-mono">5265877635</td>
-                </tr>
-                <tr>
-                  <th scope="row">RRRRMMDD <small>8 cyfr</small></th>
-                  <td>Data przyjęcia faktury do KSeF – nie data wystawienia z pola P_1.</td>
-                  <td class="num x-mono">20250826</td>
-                </tr>
-                <tr>
-                  <th scope="row">FFFFFFFFFFFF <small>12 znaków szesnastkowych</small></th>
-                  <td>Część techniczna.</td>
-                  <td class="num x-mono">0100001AF629</td>
-                </tr>
-                <tr>
-                  <th scope="row">FF <small>2 znaki</small></th>
-                  <td>Suma kontrolna CRC-8 z pierwszych 32 znaków.</td>
-                  <td class="num x-mono">AF</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+<h2>Od 1 stycznia 2027 r.: numer KSeF w tytule przelewu</h2>
+<p>Do końca 2026 r. odroczony jest obowiązek podawania numeru KSeF przy płatnościach. Ministerstwo Finansów pisze wprost: <q>Do końca 2026 r. odroczony jest obowiązek podawania numeru KSeF faktury podczas płatności pomiędzy podatnikami czynnymi (art. 108g …) oraz w ramach MPP</q>. Od 1 stycznia 2027 r. czynny podatnik VAT, który płaci przelewem innemu czynnemu podatnikowi VAT za fakturę wystawioną w KSeF, podaje w przelewie jej numer KSeF.</p>
+<ul>
+<li><strong>Jedna faktura</strong> – <q>płatności za pojedynczą fakturę – podawany będzie numer KSeF faktury</q>.</li>
+<li><strong>Kilka faktur</strong> – identyfikator zbiorczy albo kilka numerów KSeF (lub kilka identyfikatorów), <q>przy uwzględnieniu ograniczeń technicznych pola zawierającego tytuł płatności</q>.</li>
+<li><strong>Przelew MPP</strong> – numer KSeF trafia do komunikatu split payment (pole <code>/INV/</code>). Do tego służy nasz <a href="/przelew-mpp-numer-ksef/">generator komunikatu MPP</a>.</li>
+<li><strong>Wyjątki</strong> – faktury wystawione w trybie awaryjnym oraz faktury offline, które nie zostały wprowadzone do systemu w związku z ogłoszoną awarią.</li>
+</ul>
 
-        <section class="section" id="numer-faktury" data-nav="Numer faktury">
-          <div class="head">
-            <h2>Numer KSeF a numer faktury</h2>
-            <p class="head__sub">To dwa różne numery – w przelewie od 2027 r. liczy się numer KSeF.</p>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col">Numer KSeF</th>
-                  <th scope="col">Numer faktury</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Kto nadaje</th>
-                  <td>System KSeF, po przyjęciu faktury</td>
-                  <td>Ty, przy wystawianiu (pole P_2)</td>
-                </tr>
-                <tr>
-                  <th scope="row">Gdzie go znajdziesz</th>
-                  <td>W UPO – nie ma go w pliku XML faktury</td>
-                  <td>W treści faktury XML</td>
-                </tr>
-                <tr>
-                  <th scope="row">Przykład</th>
-                  <td class="x-mono">5265877635-20250826-0100001AF629-AF</td>
-                  <td class="x-mono">FV/001/05/2026</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+<h2>Jak zbudowany jest numer KSeF</h2>
+<p>Numer KSeF nadaje wyłącznie system po przyjęciu faktury. Według dokumentacji MF <q>zawsze ma długość 35 znaków</q> i wzór <code>9999999999-RRRRMMDD-FFFFFFFFFFFF-FF</code>. Oficjalny przykład to <code>5265877635-20250826-0100001AF629-AF</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Część</th><th scope="col">Znaczenie</th><th scope="col">W przykładzie</th></tr></thead>
+<tbody>
+<tr><th scope="row">10 cyfr</th><td>NIP sprzedawcy (przy samofakturowaniu – NIP nabywcy, przy przedstawicielu podatkowym – NIP przedstawiciela)</td><td class="mono">5265877635</td></tr>
+<tr><th scope="row">RRRRMMDD</th><td>Data przyjęcia faktury do KSeF – nie data wystawienia z pola P_1</td><td class="mono">20250826</td></tr>
+<tr><th scope="row">12 znaków HEX</th><td>Część techniczna: tylko 0–9 i A–F, wielkie litery</td><td class="mono">0100001AF629</td></tr>
+<tr><th scope="row">2 znaki HEX</th><td>Suma kontrolna CRC-8 z pierwszych 32 znaków</td><td class="mono">AF</td></tr>
+</tbody></table></div>
 
-        <section class="section" id="zbiorczy" data-nav="Zbiorczy">
-          <div class="head">
-            <h2>Identyfikator zbiorczy – jeden zapis zamiast wielu numerów</h2>
-            <p class="head__sub">Obejmuje co najmniej 2 faktury od tego samego sprzedawcy.</p>
-          </div>
-          <section class="stats">
-            <div class="stat"><span class="stat__fig">35</span><span class="stat__label">Znaków, jak numer KSeF</span></div>
-            <div class="stat"><span class="stat__fig">500</span><span class="stat__label">Numerów KSeF maksymalnie</span></div>
-            <div class="stat"><span class="stat__fig">50</span><span class="stat__label">Numerów w Aplikacji Podatnika KSeF</span></div>
-          </section>
-          <div class="prose">
-            <p>Identyfikator zbiorczy wygenerujesz w programie księgowym połączonym z API KSeF albo w Aplikacji Podatnika KSeF. To narzędzie go nie generuje.</p>
-          </div>
-        </section>
+<h2>Co dokładnie sprawdza walidator</h2>
+<ol class="steps">
+<li><strong>Porządkuje zapis.</strong> Usuwa spacje, zamienia długie myślniki (– —) na zwykłe i małe litery na wielkie. Zawsze informuje, co poprawił.</li>
+<li><strong>Sprawdza długość i format.</strong> Gdy jakiś znak nie pasuje, wskazuje jego pozycję – np. „znak 23: „O” zamiast zera?”. Litery O i I to najczęstsze literówki.</li>
+<li><strong>Liczy sumę kontrolną CRC-8.</strong> Według dokumentacji MF: polinom <code>0x07</code>, wartość początkowa <code>0x00</code>, wynik jako 2 znaki HEX. Pokazuje sumę podaną i obliczoną.</li>
+<li><strong>Weryfikuje NIP.</strong> Wagi 6, 5, 7, 2, 3, 4, 5, 6, 7; reszta z dzielenia przez 11 musi równać się ostatniej cyfrze.</li>
+<li><strong>Sprawdza datę.</strong> Musi istnieć w kalendarzu i nie może być z przyszłości. Daty sprzed 1 lutego 2026 r. oznaczamy jako numer z KSeF 1.0 lub przykładowy.</li>
+</ol>
+<p>Dwie sytuacje oznaczamy ostrzeżeniem, a nie błędem: <strong>stary format KSeF 1.0</strong> (36 znaków, z dodatkowym myślnikiem w części technicznej – schemat FA(3) nadal go akceptuje) oraz <strong>początek numeru, który nie jest NIP-em</strong>, ale pasuje do innych identyfikatorów dopuszczonych w schemacie (<code>M</code> + 9 cyfr albo 3 litery + 7 cyfr).</p>
 
-        <section class="section" id="faq" data-nav="FAQ">
-          <div class="head"><h2>Najczęstsze pytania o numer KSeF</h2></div>
-          <div class="cards">
-            <div>
-              <h3>Ile znaków ma numer KSeF?</h3>
-              <p>35, licząc z myślnikami.</p>
-            </div>
-            <div>
-              <h3>Gdzie znajdę numer KSeF faktury?</h3>
-              <p>W UPO, w Aplikacji Podatnika KSeF albo w Twoim programie księgowym.</p>
-            </div>
-            <div>
-              <h3>Czy muszę podawać numer KSeF w przelewie?</h3>
-              <p>Tak, od 1 stycznia 2027 r., gdy czynny podatnik VAT płaci przelewem innemu czynnemu podatnikowi VAT. Nie dotyczy to faktur wystawionych w trybie awaryjnym ani w trybie offline, które nie trafiły do systemu z powodu ogłoszonej awarii.</p>
-            </div>
-            <div>
-              <h3>Co jeśli numer jest błędny?</h3>
-              <p>Najczęściej to literówka. Sprawdź sumę kontrolną, a potem skopiuj numer jeszcze raz z UPO.</p>
-            </div>
-            <div>
-              <h3>Czy mogę sam wygenerować numer KSeF?</h3>
-              <p>Nie. Numer KSeF nadaje wyłącznie system.</p>
-            </div>
-          </div>
-        </section>
-      </main>
-      <footer class="foot">
-        <p>
-          Źródła: ksef.podatki.gov.pl (<a class="link" href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" target="_blank" rel="noopener">Numer KSeF i identyfikator zbiorczy</a>, aktualizacja 10.11.2026),
-          <a class="link" href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md" target="_blank" rel="noopener">dokumentacja API KSeF 2.0</a> Ministerstwa Finansów. Strona informacyjna, nie stanowi porady podatkowej.
-        </p>
-        <nav aria-label="Powrót do sekcji" data-auto></nav>
-        <a class="badge" href="https://hark.com/" target="_blank" rel="noopener"><span class="hark-mark"></span><span>built by hark</span></a>
-      </footer>
-    </div>
-    <script src="hark.js"></script>
-    <script id="ksef-logic">
-      var KSEF_EXAMPLE = "5265877635-20250826-0100001AF629-AF";
-      var KSEF_RE = /^\d{10}-\d{8}-[0-9A-F]{12}-[0-9A-F]{2}$/;
+<h2>Numer KSeF a numer faktury</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col"></th><th scope="col">Numer KSeF</th><th scope="col">Numer faktury</th></tr></thead>
+<tbody>
+<tr><th scope="row">Kto nadaje</th><td>System KSeF po przyjęciu faktury</td><td>Wystawca (pole P_2)</td></tr>
+<tr><th scope="row">Gdzie go znajdziesz</th><td>W UPO, w Aplikacji Podatnika KSeF, w programie księgowym – nie ma go w pliku XML</td><td>W treści faktury</td></tr>
+<tr><th scope="row">Długość</th><td>Zawsze 35 znaków</td><td>Dowolna</td></tr>
+<tr><th scope="row">Rola w przelewie od 2027 r.</th><td>Obowiązkowy między czynnymi podatnikami VAT</td><td>Dodatkowo, jeśli zmieści się w tytule</td></tr>
+</tbody></table></div>
 
-      function crc8(s) {
-        var c = 0;
-        for (var k = 0; k < s.length; k++) {
-          c ^= s.charCodeAt(k);
-          for (var i = 0; i < 8; i++) {
-            c = c & 0x80 ? ((c << 1) ^ 0x07) & 0xff : (c << 1) & 0xff;
-          }
-        }
-        return c.toString(16).toUpperCase().padStart(2, "0");
-      }
+<h2>Jak ułożyć tytuł przelewu</h2>
+<p>Przepisy nie narzucają składni zwykłego tytułu przelewu. Pole tytułu w bankach ma zwykle 140 znaków, więc zmieszczą się najwyżej trzy numery KSeF: 3 × 35 znaków plus separatory to 107 znaków, a czwarty numer już się nie zmieści. Dlatego generator przyjmuje do trzech numerów, rozdziela je przecinkami i dopisuje Twój opis (np. numer faktury), pilnując limitu. Przy większej liczbie faktur od jednego sprzedawcy użyj <a href="/identyfikator-zbiorczy-ksef/">identyfikatora zbiorczego</a> – obejmuje do 500 faktur (50 w Aplikacji Podatnika KSeF).</p>
+<p class="note">Przykłady z instrukcji banków (np. <code>3786417439-20260928-AB12CD34EF56-78</code>) są ilustracyjne – nie mają poprawnej sumy kontrolnej, więc walidator słusznie je odrzuci.</p>
 
-      function nipValid(nip) {
-        var w = [6, 5, 7, 2, 3, 4, 5, 6, 7], sum = 0;
-        for (var i = 0; i < 9; i++) sum += w[i] * +nip[i];
-        var r = sum % 11;
-        return r !== 10 && r === +nip[9];
-      }
-
-      function dateCheck(d, today) {
-        var y = +d.slice(0, 4), m = +d.slice(4, 6), day = +d.slice(6, 8);
-        var dt = new Date(y, m - 1, day);
-        if (dt.getFullYear() !== y || dt.getMonth() !== m - 1 || dt.getDate() !== day) return false;
-        var t = today || new Date();
-        var t0 = new Date(t.getFullYear(), t.getMonth(), t.getDate());
-        return dt >= new Date(2022, 0, 1) && dt <= t0;
-      }
-
-      function plural(n) {
-        if (n === 1) return "znak";
-        var d = n % 10, h = n % 100;
-        return d >= 2 && d <= 4 && (h < 12 || h > 14) ? "znaki" : "znaków";
-      }
-
-      function checkKsef(raw, today) {
-        var s = raw.replace(/\s+/g, "").toUpperCase();
-        var res = { input: s, valid: false, errors: [], parts: null };
-        if (s.length !== 35) {
-          res.errors.push("Zła długość: " + s.length + " " + plural(s.length) + " zamiast 35");
-          return res;
-        }
-        if (!KSEF_RE.test(s)) {
-          res.errors.push("Zły format: oczekiwano NIP(10 cyfr)-RRRRMMDD-12 znaków 0–9/A–F-2 znaki 0–9/A–F");
-          return res;
-        }
-        var nip = s.slice(0, 10), date = s.slice(11, 19), tech = s.slice(20, 32), given = s.slice(33, 35);
-        var calc = crc8(s.slice(0, 32));
-        var p = {
-          nip: nip, nipOk: nipValid(nip),
-          date: date, dateOk: dateCheck(date, today),
-          tech: tech, given: given, calc: calc, crcOk: given === calc
-        };
-        res.parts = p;
-        if (!p.crcOk) res.errors.push("Suma kontrolna się nie zgadza: jest " + given + ", powinno być " + calc + " – prawdopodobnie literówka");
-        if (!p.nipOk) res.errors.push("Nieprawidłowy NIP");
-        if (!p.dateOk) res.errors.push("Nieprawidłowa data");
-        res.valid = res.errors.length === 0;
-        return res;
-      }
-
-      function buildTitle(nums) {
-        return nums.length ? "KSeF: " + nums.join(" ") : "";
-      }
-
-      if (typeof document !== "undefined") {
-        (function () {
-          var input = document.getElementById("ksef-input");
-          var out = document.getElementById("ksef-results");
-          var titleOut = document.getElementById("title-out");
-          var titleCount = document.getElementById("title-count");
-          var titleWarn = document.getElementById("title-warn");
-          var copyBtn = document.getElementById("title-copy");
-          var copyStatus = document.getElementById("copy-status");
-          var currentTitle = "";
-
-          function esc(t) {
-            return String(t).replace(/[&<>"]/g, function (c) {
-              return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
-            });
-          }
-          function mark(ok) {
-            return ok ? ' <span class="x-ok" aria-label="poprawne">✓</span>' : ' <span class="x-bad" aria-label="błędne">✗</span>';
-          }
-          function row(label, value) {
-            return '<div class="row"><dt>' + label + "</dt><dd>" + value + "</dd></div>";
-          }
-
-          function render() {
-            var lines = input.value.split(/\r?\n/).filter(function (l) { return l.trim() !== ""; });
-            var valid = [];
-            var html = lines.map(function (line) {
-              var r = checkKsef(line);
-              if (r.valid) valid.push(r.input);
-              var h = '<article class="x-result"><div class="x-result__top">' +
-                (r.valid ? '<span class="x-badge x-badge--ok">Poprawny</span>' : '<span class="x-badge x-badge--bad">Błędny</span>') +
-                '<span class="x-result__num x-mono">' + esc(r.input) + "</span></div>";
-              if (r.errors.length) {
-                h += '<ul class="x-result__why">' + r.errors.map(function (e) { return "<li>" + esc(e) + "</li>"; }).join("") + "</ul>";
-              }
-              if (r.parts) {
-                var p = r.parts;
-                var nipF = p.nip.slice(0, 3) + "-" + p.nip.slice(3, 6) + "-" + p.nip.slice(6, 8) + "-" + p.nip.slice(8, 10);
-                var dateF = p.date.slice(6, 8) + "." + p.date.slice(4, 6) + "." + p.date.slice(0, 4);
-                h += '<div class="breakdown"><dl>' +
-                  row("NIP sprzedawcy", '<span class="x-mono">' + nipF + "</span>" + mark(p.nipOk)) +
-                  row("Data przyjęcia do KSeF", dateF + mark(p.dateOk)) +
-                  row("Część techniczna", '<span class="x-mono">' + p.tech + "</span>") +
-                  row("Suma kontrolna <small>podana / obliczona</small>", '<span class="x-mono">' + p.given + " / " + p.calc + "</span>" + mark(p.crcOk)) +
-                  "</dl></div>";
-              }
-              return h + "</article>";
-            }).join("");
-            out.innerHTML = html;
-
-            currentTitle = buildTitle(valid);
-            titleOut.textContent = currentTitle || "Tu pojawi się tytuł z poprawnych numerów.";
-            var n = currentTitle.length;
-            titleCount.textContent = n + " " + plural(n) + (n ? " · limit w bankach ok. 140" : "");
-            titleWarn.hidden = n <= 140;
-            copyBtn.disabled = !n;
-            copyStatus.textContent = "";
-          }
-
-          function selectTitle() {
-            var range = document.createRange();
-            range.selectNodeContents(titleOut);
-            var sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);
-          }
-
-          copyBtn.addEventListener("click", function () {
-            if (!currentTitle) return;
-            var done = function () { copyStatus.textContent = "Skopiowano"; };
-            var fallback = function () {
-              selectTitle();
-              var ok = false;
-              try { ok = document.execCommand("copy"); } catch (e) {}
-              copyStatus.textContent = ok ? "Skopiowano" : "Tekst zaznaczony – naciśnij Ctrl+C";
-            };
-            if (navigator.clipboard && window.isSecureContext) {
-              navigator.clipboard.writeText(currentTitle).then(done, fallback);
-            } else {
-              fallback();
-            }
-          });
-
-          input.addEventListener("input", render);
-          document.getElementById("ksef-check").addEventListener("click", render);
-          document.getElementById("ksef-example").addEventListener("click", function () {
-            input.value = KSEF_EXAMPLE;
-            render();
-            input.focus();
-          });
-        })();
-      }
-    </script>
-  </body>
+<h2>Dlaczego numeru KSeF nie da się zapisać w kodzie QR do płatności</h2>
+<p>Popularne kody QR do przelewu (standard 2D Związku Banków Polskich) mają pole „Tytuł płatności” ograniczone do 32 znaków, a numer KSeF ma 35. Tytuł z numerem KSeF trzeba więc wkleić ręcznie albo przygotować w pliku importu do banku. Nie myl tego z <a href="/kod-qr-ksef/">kodem QR KSeF</a> na fakturze – on służy do weryfikacji faktury, a nie do płatności.</p>
+<h2 id="faq">Najczęstsze pytania</h2><div class="faq"><details><summary>Ile znaków ma numer KSeF?</summary><p>35 znaków, licząc z myślnikami. Numery z KSeF 1.0 mogły mieć 36 znaków (dodatkowy myślnik w części technicznej) – walidator rozpoznaje je i pokazuje ostrzeżenie.</p></details><details><summary>Gdzie znajdę numer KSeF faktury?</summary><p>W UPO (Urzędowym Poświadczeniu Odbioru), w Aplikacji Podatnika KSeF albo w programie księgowym połączonym z KSeF. Nie ma go w samym pliku XML faktury.</p></details><details><summary>Czy od 2027 r. muszę podawać numer KSeF w przelewie?</summary><p>Tak, od 1 stycznia 2027 r., gdy czynny podatnik VAT płaci przelewem innemu czynnemu podatnikowi VAT za fakturę wystawioną w KSeF – także w MPP. Nie dotyczy to faktur wystawionych w trybie awaryjnym ani faktur offline, które nie trafiły do systemu z powodu ogłoszonej awarii.</p></details><details><summary>Ile numerów KSeF zmieszczę w tytule przelewu?</summary><p>Najczęściej trzy. Typowe pole tytułu ma 140 znaków, a każdy numer 35. Przy większej liczbie faktur od jednego sprzedawcy użyj identyfikatora zbiorczego.</p></details><details><summary>Co oznacza błąd sumy kontrolnej?</summary><p>Ostatnie dwa znaki nie pasują do reszty numeru – to prawie zawsze literówka (np. litera O zamiast zera). Skopiuj numer ponownie z UPO lub z programu.</p></details><details><summary>Czy walidator sprawdza, czy faktura istnieje w KSeF?</summary><p>Nie. Sprawdza tylko poprawność zapisu: format, sumę kontrolną CRC-8, NIP i datę. Istnienie faktury potwierdzisz w KSeF lub przez kod QR na fakturze.</p></details><details><summary>Czy mogę sam wygenerować numer KSeF?</summary><p>Nie. Numer KSeF nadaje wyłącznie system KSeF po przyjęciu faktury.</p></details></div><h2 id="zrodla">Źródła</h2><ul class="sources"><li><a href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" rel="noopener" target="_blank">Ministerstwo Finansów: Numer KSeF i zbiorczy identyfikator</a> – strona zmodyfikowana 10.11.2026</li><li><a href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" rel="noopener" target="_blank">Ministerstwo Finansów: Podstawy prawne oraz kluczowe terminy KSeF</a></li><li><a href="https://github.com/CIRFMF/ksef-docs/blob/main/faktury/numer-ksef.md" rel="noopener" target="_blank">Dokumentacja API KSeF 2.0 (MF): Numer KSeF – struktura i CRC-8</a></li><li><a href="https://github.com/CIRFMF/ksef-docs/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd" rel="noopener" target="_blank">Schemat FA(3) v1-0E (XSD) – repozytorium MF</a></li><li><a href="https://www.zbp.pl/getContentAsset/806da831-e7e0-43e8-b361-c45f922cf529/1b52933d-ceff-4d97-bee2-094d491a3634/2013-12-03_-_Rekomendacja_-_Standard_2D.pdf?language=pl" rel="noopener" target="_blank">Związek Banków Polskich: Rekomendacja „Standard 2D” (kod QR do płatności)</a> – 2013</li></ul><h2 id="inne-narzedzia">Inne darmowe narzędzia KSeF</h2><div class="hub"><a href="/przelew-mpp-numer-ksef/"><strong>Komunikat przelewu MPP</strong><span>Generator /VAT/ /IDC/ /INV/ /TXT/ z numerem KSeF dla split payment.</span></a><a href="/identyfikator-zbiorczy-ksef/"><strong>Identyfikator zbiorczy</strong><span>Sprawdź identyfikator zbiorczy KSeF i rozłóż go na części.</span></a><a href="/sprawdz-wiele-numerow-ksef/"><strong>Wiele numerów naraz</strong><span>Lista, plik CSV lub wyciąg bankowy – wyniki do pobrania w CSV.</span></a><a href="/przelew-z-faktury-xml-ksef/"><strong>Przelew z faktury XML</strong><span>Wczytaj fakturę FA(3) i skopiuj rachunek, kwotę, tytuł i komunikat MPP.</span></a><a href="/kod-qr-ksef/"><strong>Kod QR KSeF</strong><span>Wygeneruj KOD I z pliku XML albo sprawdź link z kodu QR na fakturze.</span></a><a href="/ksef-od-2027-jdg/"><strong>KSeF dla JDG od 2027</strong><span>Odpowiedz na kilka pytań i zobacz, co zmienia się 1 stycznia 2027 r.</span></a></div><p class="updated">Ostatnia aktualizacja: <time datetime="2026-11-13">13 listopada 2026 r.</time> · Dane nie opuszczają Twojej przeglądarki.</p></article>
+</main>
+<footer class="site-foot"><div class="wrap"><div class="foot-grid"><div><h2>Numer KSeF – darmowe narzędzia</h2><p>Bezpłatne narzędzia do numerów KSeF, przelewów i faktur ustrukturyzowanych. Bez reklam, bez rejestracji. Wszystkie obliczenia wykonuje Twoja przeglądarka – Dane nie opuszczają Twojej przeglądarki.</p><p>Serwis niezależny, niezwiązany z Ministerstwem Finansów. Treści mają charakter informacyjny i nie stanowią porady podatkowej.</p></div><div><h2>Narzędzia</h2><ul><li><a href="/">Walidator numeru KSeF</a></li><li><a href="/przelew-mpp-numer-ksef/">Komunikat przelewu MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/">Wiele numerów naraz</a></li><li><a href="/przelew-z-faktury-xml-ksef/">Przelew z faktury XML</a></li><li><a href="/kod-qr-ksef/">Kod QR KSeF</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG od 2027</a></li></ul></div><div><h2>Serwis i źródła</h2><ul><li><a href="/o-serwisie/">O serwisie</a></li><li><a href="/polityka-prywatnosci/">Polityka prywatności</a></li><li><a href="https://ksef.podatki.gov.pl/" rel="noopener" target="_blank">ksef.podatki.gov.pl (MF)</a></li><li><a href="https://github.com/CIRFMF/ksef-docs" rel="noopener" target="_blank">Dokumentacja KSeF 2.0 (MF, GitHub)</a></li><li><a href="/sitemap.xml">Mapa strony</a></li></ul></div></div><p class="foot-note">© 2026 NumerKSeF · Ostatnia aktualizacja: 13 listopada 2026 r. · Kod działa bez serwera, bez ciasteczek i bez śledzenia.</p></div></footer><p id="live" class="sr-only" aria-live="polite"></p>
+<script src="/assets/core.js?v=2" defer></script>
+<script src="/assets/ui.js?v=2" defer></script>
+<script src="/assets/page-home.js?v=2" defer></script>
+</body>
 </html>

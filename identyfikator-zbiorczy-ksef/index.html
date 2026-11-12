@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identyfikator zbiorczy KSeF – sprawdź poprawność online</title>
+<meta name="description" content="Sprawdź identyfikator zbiorczy KSeF: format IZ, NIP, rok i miesiąc, suma kontrolna CRC-8. Limity 500/50/132, przykład MF i zasady użycia w przelewie.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://numerksef.dpdns.org/identyfikator-zbiorczy-ksef/">
+<meta name="theme-color" content="#1747c9">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:site_name" content="Numer KSeF – darmowe narzędzia">
+<meta property="og:title" content="Identyfikator zbiorczy KSeF – sprawdź poprawność online">
+<meta property="og:description" content="Sprawdź identyfikator zbiorczy KSeF: format IZ, NIP, rok i miesiąc, suma kontrolna CRC-8. Limity 500/50/132, przykład MF i zasady użycia w przelewie.">
+<meta property="og:url" content="https://numerksef.dpdns.org/identyfikator-zbiorczy-ksef/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/assets/style.css?v=2">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "Walidator identyfikatora zbiorczego KSeF",
+   "url": "https://numerksef.dpdns.org/identyfikator-zbiorczy-ksef/",
+   "description": "Sprawdź identyfikator zbiorczy KSeF: format IZ, NIP, rok i miesiąc, suma kontrolna CRC-8. Limity 500/50/132, przykład MF i zasady użycia w przelewie.",
+   "applicationCategory": "FinanceApplication",
+   "operatingSystem": "Dowolny (przeglądarka internetowa)",
+   "browserRequirements": "Wymaga JavaScript",
+   "inLanguage": "pl-PL",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "PLN"
+   },
+   "dateModified": "2026-11-13",
+   "publisher": {
+    "@type": "Organization",
+    "name": "Numer KSeF – darmowe narzędzia",
+    "url": "https://numerksef.dpdns.org/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Jak wygląda identyfikator zbiorczy KSeF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Ma 35 znaków według wzoru 9999999999-IZRRRRMM-FFFFFFFFFFFF-FF, np. 1111111111-IZ202607-65ED02180000-E7 (przykład MF)."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Ile faktur może obejmować identyfikator zbiorczy?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Od 2 do 500 numerów KSeF; w Aplikacji Podatnika KSeF do 50. Jedna faktura może trafić do maks. 132 identyfikatorów w danym kontekście."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy faktury od różnych sprzedawców mogą być w jednym identyfikatorze?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nie. Wszystkie faktury w identyfikatorze zbiorczym muszą mieć tego samego sprzedawcę."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy to narzędzie pokaże, jakie faktury obejmuje identyfikator?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nie – to wie tylko KSeF. Sprawdzisz to po zalogowaniu w Aplikacji Podatnika KSeF lub w programie połączonym z KSeF. Tu sprawdzisz poprawność zapisu."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Gdzie wpisać identyfikator zbiorczy w przelewie MPP?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "W pole /INV/ – zamiast numeru faktury lub okresu. Gotowy komunikat ułożysz w naszym generatorze MPP."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy identyfikator zbiorczy ma sumę kontrolną?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Tak. Ostatnie dwa znaki to suma kontrolna – według naszych testów liczona tym samym algorytmem CRC-8 co w numerze KSeF."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Strona główna",
+     "item": "https://numerksef.dpdns.org/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Identyfikator zbiorczy KSeF",
+     "item": "https://numerksef.dpdns.org/identyfikator-zbiorczy-ksef/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#tresc">Przejdź do treści</a><header class="site-head"><div class="wrap"><a class="brand" href="/" aria-label="NumerKSeF – strona główna"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="#1747c9"/><path d="M9 9h3v6.2L17.6 9h3.7l-6 6.6L21.6 23h-3.8l-4.6-5.4-1.2 1.3V23H9z" fill="#fff"/><circle cx="24.5" cy="24.5" r="4.5" fill="#22c55e" stroke="#fff" stroke-width="1.5"/><path d="M22.4 24.6l1.4 1.4 2.7-2.8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>NumerKSeF<small>darmowe narzędzia KSeF</small></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav" aria-label="Narzędzia"><ul><li><a href="/">Walidator numeru</a></li><li><a href="/przelew-mpp-numer-ksef/">Przelew MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/" aria-current="page">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/">Wiele numerów</a></li><li><a href="/przelew-z-faktury-xml-ksef/">Faktura XML</a></li><li><a href="/kod-qr-ksef/">Kod QR</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG</a></li></ul></nav></div></header>
+<main id="tresc" class="wrap" tabindex="-1">
+<nav class="crumbs" aria-label="Okruszki"><ol><li><a href="/">Strona główna</a></li><li aria-current="page">Identyfikator zbiorczy KSeF</li></ol></nav>
+<div class="hero"><h1>Identyfikator zbiorczy KSeF – sprawdź poprawność i rozłóż na części</h1><p class="lead">Płacisz jednym przelewem za kilka faktur? Wklej identyfikator zbiorczy – sprawdzimy jego budowę, NIP, miesiąc wygenerowania i sumę kontrolną, zanim trafi do tytułu przelewu lub komunikatu MPP.</p>
+<ul class="trust"><li>Za darmo, bez rejestracji</li><li>Dane nie opuszczają Twojej przeglądarki.</li><li>Bez reklam i śledzenia</li></ul>
+</div>
+
+<section class="tool" aria-labelledby="h-iz">
+  <h2 id="h-iz">Walidator identyfikatora zbiorczego</h2>
+  <div class="field">
+    <label for="iz-in">Identyfikator zbiorczy</label>
+    <input id="iz-in" class="mono" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="1111111111-IZ202607-65ED02180000-E7" aria-describedby="iz-hint">
+    <p class="hint" id="iz-hint">Wzór: 9999999999-IZRRRRMM-FFFFFFFFFFFF-FF (35 znaków).</p>
+  </div>
+  <div class="btns"><button type="button" class="btn" id="iz-check">Sprawdź</button><button type="button" class="btn ghost" id="iz-ex">Przykład MF</button><button type="button" class="btn ghost" id="iz-clear">Wyczyść</button></div>
+  <div id="iz-res" class="status" role="status" aria-live="polite"></div>
+  <p class="privacy">🔒 Dane nie opuszczają Twojej przeglądarki.</p>
+</section>
+<article class="content">
+<h2>Czym jest identyfikator zbiorczy</h2>
+<p>Identyfikator zbiorczy (w skrócie IZ) to jeden zapis, który zastępuje w przelewie wiele numerów KSeF. Ministerstwo Finansów przewiduje go dla <q>płatności za więcej niż jedną fakturę</q>: zamiast kilku numerów KSeF możesz podać zbiorczy identyfikator. W przelewie MPP identyfikator zbiorczy podaje się w polu <code>/INV/</code> <q>zamiast wpisywania okresu</q>. Obowiązek podawania numeru KSeF lub identyfikatora w płatnościach między czynnymi podatnikami VAT obowiązuje od 1 stycznia 2027 r.</p>
+
+<h2>Budowa identyfikatora zbiorczego</h2>
+<p>Według grafiki MF identyfikator ma wzór <code>9999999999-IZRRRRMM-FFFFFFFFFFFF-FF</code> i – tak jak numer KSeF – 35 znaków. Oficjalny przykład ze specyfikacji API KSeF 2.0 to <code>1111111111-IZ202607-65ED02180000-E7</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Część</th><th scope="col">Znaczenie</th><th scope="col">W przykładzie</th></tr></thead>
+<tbody>
+<tr><th scope="row">10 cyfr</th><td>NIP kontekstu uwierzytelnienia generującego identyfikator (nowsza grafika MF z 09.11.2026 opisuje to pole jako „NIP sprzedawcy”)</td><td class="mono">1111111111</td></tr>
+<tr><th scope="row">IZ + RRRRMM</th><td>Oznaczenie „IZ” oraz rok i miesiąc wygenerowania</td><td class="mono">IZ202607</td></tr>
+<tr><th scope="row">12 znaków HEX</th><td>Część techniczna</td><td class="mono">65ED02180000</td></tr>
+<tr><th scope="row">2 znaki HEX</th><td>Suma kontrolna (wyliczana automatycznie)</td><td class="mono">E7</td></tr>
+</tbody></table></div>
+<p>Sprawdziliśmy, że identyfikator zbiorczy używa <strong>tej samej sumy kontrolnej CRC-8</strong> co numer KSeF (polinom 0x07, wartość początkowa 0x00, liczona z pierwszych 32 znaków). Przykład MF daje sumę E7 – dokładnie taką, jak w identyfikatorze. Dzięki temu walidator wychwyci literówkę także w identyfikatorze zbiorczym.</p>
+
+<h2>Limity identyfikatora zbiorczego</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Zasada</th><th scope="col">Limit</th></tr></thead>
+<tbody>
+<tr><th scope="row">Liczba numerów KSeF w jednym identyfikatorze</th><td>od 2 do 500</td></tr>
+<tr><th scope="row">… gdy generujesz w Aplikacji Podatnika KSeF</th><td>do 50</td></tr>
+<tr><th scope="row">W ilu identyfikatorach może być jedna faktura</th><td>maks. 132 (w danym kontekście)</td></tr>
+<tr><th scope="row">Sprzedawca</th><td>wszystkie faktury muszą mieć tego samego sprzedawcę (Podmiot1)</td></tr>
+</tbody></table></div>
+
+<h2>Jak wygenerować identyfikator zbiorczy</h2>
+<ol class="steps">
+<li>Zaloguj się do Aplikacji Podatnika KSeF albo otwórz program księgowy połączony z API KSeF.</li>
+<li>Zaznacz faktury od jednego sprzedawcy, które chcesz zapłacić jednym przelewem.</li>
+<li>Wygeneruj identyfikator zbiorczy i skopiuj go.</li>
+<li>Sprawdź go tutaj, a potem wklej do <a href="/">tytułu przelewu</a> lub do <a href="/przelew-mpp-numer-ksef/">komunikatu MPP</a>.</li>
+</ol>
+<p>Generowanie i odczytanie, jakie faktury obejmuje identyfikator, wymaga zalogowania do KSeF. Dlatego żadna strona bez dostępu do Twojego konta – także ta – nie powie, które faktury kryją się za identyfikatorem. Walidator sprawdza wyłącznie poprawność zapisu.</p>
+
+<h2>Najczęstsze pomyłki</h2>
+<ul>
+<li><strong>Numer KSeF zamiast identyfikatora</strong> – po NIP-ie jest 8 cyfr daty, a nie „IZ”. Walidator to rozpozna i powie, z czym masz do czynienia.</li>
+<li><strong>Mylenie z IPKSeF</strong> – w schemacie FA(3) jest też element <code>IPKSeF</code> („Identyfikator płatności Krajowego Systemu e-Faktur”). To inny, 13-znakowy identyfikator używany w linku do płatności, a nie identyfikator zbiorczy.</li>
+<li><strong>Litery O i I</strong> – w części technicznej mogą być tylko cyfry 0–9 i litery A–F.</li>
+<li><strong>Miesiąc z przyszłości</strong> – identyfikator nie może mieć daty wygenerowania późniejszej niż bieżący miesiąc. Przykłady z instrukcji banków (np. <code>3786417439-IZ202708-AB12CD34EF56-78</code>) są ilustracyjne.</li>
+</ul>
+
+<h2>Identyfikator zbiorczy w tytule przelewu – przykłady</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Sytuacja</th><th scope="col">Co wpisać</th></tr></thead>
+<tbody>
+<tr><th scope="row">Zwykły przelew za 12 faktur od jednego dostawcy</th><td class="mono">1111111111-IZ202607-65ED02180000-E7</td></tr>
+<tr><th scope="row">To samo, ale w MPP</th><td class="mono">/VAT/4600,00/IDC/1111111111/INV/1111111111-IZ202607-65ED02180000-E7</td></tr>
+<tr><th scope="row">Dwie faktury – bez generowania identyfikatora</th><td>dwa numery KSeF oddzielone przecinkiem (zmieszczą się w 140 znakach)</td></tr>
+<tr><th scope="row">Faktury od dwóch różnych sprzedawców</th><td>dwa osobne przelewy – identyfikator obejmuje tylko jednego sprzedawcę</td></tr>
+</tbody></table></div>
+
+<h2>Identyfikator zbiorczy czy kilka numerów KSeF?</h2>
+<p>Przy dwóch lub trzech fakturach najprościej wpisać ich numery KSeF – w typowym polu tytułu o długości 140 znaków zmieszczą się trzy numery. Identyfikator zbiorczy opłaca się, gdy faktur jest więcej albo gdy płacisz w MPP: w komunikacie split payment pole <code>/INV/</code> mieści tylko 35 znaków, czyli dokładnie jeden numer KSeF lub jeden identyfikator zbiorczy. Wtedy identyfikator to jedyny sposób, żeby jednym przelewem MPP zapłacić za kilka faktur z KSeF.</p>
+<p>Pamiętaj, że kwota przelewu powinna odpowiadać fakturom objętym identyfikatorem. Jeśli część faktur płacisz później, wygeneruj nowy identyfikator dla właściwego zestawu – jedna faktura może występować w wielu identyfikatorach (do 132 w danym kontekście), więc nie musisz się obawiać, że raz użyta faktura „przepadnie”.</p>
+
+<h2>Jesteś odbiorcą płatności?</h2>
+<p>Jeśli kontrahent zapłacił z identyfikatorem zbiorczym, sprawdź go tutaj, a następnie odczytaj w KSeF listę objętych nim faktur i rozlicz je w programie księgowym. Wpłaty z wielu tytułów naraz przejrzysz w <a href="/sprawdz-wiele-numerow-ksef/">masowym walidatorze</a> w trybie wyciągu bankowego.</p>
+
+<h2>Bezpieczeństwo danych</h2>
+<p>Walidator działa w całości w Twojej przeglądarce: identyfikator nie jest wysyłany na żaden serwer ani zapisywany. Możesz bezpiecznie sprawdzać identyfikatory klientów i dostawców, także na telefonie, bez logowania i bez instalowania aplikacji.</p>
+<h2 id="faq">Najczęstsze pytania</h2><div class="faq"><details><summary>Jak wygląda identyfikator zbiorczy KSeF?</summary><p>Ma 35 znaków według wzoru 9999999999-IZRRRRMM-FFFFFFFFFFFF-FF, np. 1111111111-IZ202607-65ED02180000-E7 (przykład MF).</p></details><details><summary>Ile faktur może obejmować identyfikator zbiorczy?</summary><p>Od 2 do 500 numerów KSeF; w Aplikacji Podatnika KSeF do 50. Jedna faktura może trafić do maks. 132 identyfikatorów w danym kontekście.</p></details><details><summary>Czy faktury od różnych sprzedawców mogą być w jednym identyfikatorze?</summary><p>Nie. Wszystkie faktury w identyfikatorze zbiorczym muszą mieć tego samego sprzedawcę.</p></details><details><summary>Czy to narzędzie pokaże, jakie faktury obejmuje identyfikator?</summary><p>Nie – to wie tylko KSeF. Sprawdzisz to po zalogowaniu w Aplikacji Podatnika KSeF lub w programie połączonym z KSeF. Tu sprawdzisz poprawność zapisu.</p></details><details><summary>Gdzie wpisać identyfikator zbiorczy w przelewie MPP?</summary><p>W pole /INV/ – zamiast numeru faktury lub okresu. Gotowy komunikat ułożysz w naszym generatorze MPP.</p></details><details><summary>Czy identyfikator zbiorczy ma sumę kontrolną?</summary><p>Tak. Ostatnie dwa znaki to suma kontrolna – według naszych testów liczona tym samym algorytmem CRC-8 co w numerze KSeF.</p></details></div><h2 id="zrodla">Źródła</h2><ul class="sources"><li><a href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" rel="noopener" target="_blank">Ministerstwo Finansów: Numer KSeF i zbiorczy identyfikator</a> – strona zmodyfikowana 10.11.2026</li><li><a href="https://ksef.podatki.gov.pl/media/2z4jjjce/ksef-identyfikato-zbiorczy.pdf" rel="noopener" target="_blank">MF: grafika – budowa identyfikatora zbiorczego</a></li><li><a href="https://ksef.podatki.gov.pl/media/omem3la2/grafika-ksef-identyfikator-zbiorczy-09112026.pdf" rel="noopener" target="_blank">MF: grafika – identyfikator zbiorczy (09.11.2026)</a></li><li><a href="https://github.com/CIRFMF/ksef-docs/blob/main/faktury/numer-ksef.md" rel="noopener" target="_blank">Dokumentacja API KSeF 2.0 (MF): Numer KSeF – struktura i CRC-8</a></li><li><a href="https://github.com/CIRFMF/ksef-docs/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd" rel="noopener" target="_blank">Schemat FA(3) v1-0E (XSD) – repozytorium MF</a></li><li><a href="https://www.mbank.pl/pdf/msp-korporacje/bankowosc-elektroniczna/multicash-pain00100109-pl.pdf" rel="noopener" target="_blank">mBank: specyfikacja MultiCash pain.001.001.09 v2.0.7 – płatność podzielona w polu Ustrd</a> – 29.09.2026</li></ul><h2 id="inne-narzedzia">Inne darmowe narzędzia KSeF</h2><div class="hub"><a href="/"><strong>Walidator numeru KSeF</strong><span>Sprawdź numer KSeF (CRC-8, NIP, data) i ułóż tytuł przelewu.</span></a><a href="/przelew-mpp-numer-ksef/"><strong>Komunikat przelewu MPP</strong><span>Generator /VAT/ /IDC/ /INV/ /TXT/ z numerem KSeF dla split payment.</span></a><a href="/sprawdz-wiele-numerow-ksef/"><strong>Wiele numerów naraz</strong><span>Lista, plik CSV lub wyciąg bankowy – wyniki do pobrania w CSV.</span></a><a href="/przelew-z-faktury-xml-ksef/"><strong>Przelew z faktury XML</strong><span>Wczytaj fakturę FA(3) i skopiuj rachunek, kwotę, tytuł i komunikat MPP.</span></a><a href="/kod-qr-ksef/"><strong>Kod QR KSeF</strong><span>Wygeneruj KOD I z pliku XML albo sprawdź link z kodu QR na fakturze.</span></a><a href="/ksef-od-2027-jdg/"><strong>KSeF dla JDG od 2027</strong><span>Odpowiedz na kilka pytań i zobacz, co zmienia się 1 stycznia 2027 r.</span></a></div><p class="updated">Ostatnia aktualizacja: <time datetime="2026-11-13">13 listopada 2026 r.</time> · Dane nie opuszczają Twojej przeglądarki.</p></article>
+</main>
+<footer class="site-foot"><div class="wrap"><div class="foot-grid"><div><h2>Numer KSeF – darmowe narzędzia</h2><p>Bezpłatne narzędzia do numerów KSeF, przelewów i faktur ustrukturyzowanych. Bez reklam, bez rejestracji. Wszystkie obliczenia wykonuje Twoja przeglądarka – Dane nie opuszczają Twojej przeglądarki.</p><p>Serwis niezależny, niezwiązany z Ministerstwem Finansów. Treści mają charakter informacyjny i nie stanowią porady podatkowej.</p></div><div><h2>Narzędzia</h2><ul><li><a href="/">Walidator numeru KSeF</a></li><li><a href="/przelew-mpp-numer-ksef/">Komunikat przelewu MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/">Wiele numerów naraz</a></li><li><a href="/przelew-z-faktury-xml-ksef/">Przelew z faktury XML</a></li><li><a href="/kod-qr-ksef/">Kod QR KSeF</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG od 2027</a></li></ul></div><div><h2>Serwis i źródła</h2><ul><li><a href="/o-serwisie/">O serwisie</a></li><li><a href="/polityka-prywatnosci/">Polityka prywatności</a></li><li><a href="https://ksef.podatki.gov.pl/" rel="noopener" target="_blank">ksef.podatki.gov.pl (MF)</a></li><li><a href="https://github.com/CIRFMF/ksef-docs" rel="noopener" target="_blank">Dokumentacja KSeF 2.0 (MF, GitHub)</a></li><li><a href="/sitemap.xml">Mapa strony</a></li></ul></div></div><p class="foot-note">© 2026 NumerKSeF · Ostatnia aktualizacja: 13 listopada 2026 r. · Kod działa bez serwera, bez ciasteczek i bez śledzenia.</p></div></footer><p id="live" class="sr-only" aria-live="polite"></p>
+<script src="/assets/core.js?v=2" defer></script>
+<script src="/assets/ui.js?v=2" defer></script>
+<script src="/assets/page-iz.js?v=2" defer></script>
+</body>
+</html>

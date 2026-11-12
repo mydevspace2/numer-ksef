@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Przelew z faktury XML KSeF – dane do przelewu z pliku FA(3)</title>
+<meta name="description" content="Wczytaj fakturę XML z KSeF (FA3) i skopiuj dane do przelewu: odbiorca, NIP, numer rachunku, kwota, termin, tytuł z numerem KSeF i komunikat MPP. Bez wysyłania pliku.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://numerksef.dpdns.org/przelew-z-faktury-xml-ksef/">
+<meta name="theme-color" content="#1747c9">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:site_name" content="Numer KSeF – darmowe narzędzia">
+<meta property="og:title" content="Przelew z faktury XML KSeF – dane do przelewu z pliku FA(3)">
+<meta property="og:description" content="Wczytaj fakturę XML z KSeF (FA3) i skopiuj dane do przelewu: odbiorca, NIP, numer rachunku, kwota, termin, tytuł z numerem KSeF i komunikat MPP. Bez wysyłania pliku.">
+<meta property="og:url" content="https://numerksef.dpdns.org/przelew-z-faktury-xml-ksef/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/assets/style.css?v=2">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "Faktura XML z KSeF – dane do przelewu",
+   "url": "https://numerksef.dpdns.org/przelew-z-faktury-xml-ksef/",
+   "description": "Wczytaj fakturę XML z KSeF (FA3) i skopiuj dane do przelewu: odbiorca, NIP, numer rachunku, kwota, termin, tytuł z numerem KSeF i komunikat MPP. Bez wysyłania pliku.",
+   "applicationCategory": "FinanceApplication",
+   "operatingSystem": "Dowolny (przeglądarka internetowa)",
+   "browserRequirements": "Wymaga JavaScript",
+   "inLanguage": "pl-PL",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "PLN"
+   },
+   "dateModified": "2026-11-13",
+   "publisher": {
+    "@type": "Organization",
+    "name": "Numer KSeF – darmowe narzędzia",
+    "url": "https://numerksef.dpdns.org/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Czy plik faktury jest wysyłany na serwer?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nie. Plik XML czyta tylko Twoja przeglądarka. Strona nie ma serwera, który mógłby go odebrać."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Dlaczego narzędzie nie widzi numeru KSeF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Bo numeru KSeF nie ma w pliku XML – system nadaje go po przyjęciu faktury i podaje w UPO. Odczytamy go z nazwy pliku z KSeF albo wpisz go ręcznie."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Jakie pliki są obsługiwane?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Faktury XML w strukturze FA(3) (przestrzeń nazw http://crd.gov.pl/wzor/2025/06/25/13775/). Starsze FA(2) odczytamy z ostrzeżeniem. Nie obsługujemy PDF ani UPO."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Skąd wiadomo, że trzeba zapłacić w MPP?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Z adnotacji P_18A = 1 („mechanizm podzielonej płatności”). Wtedy pokażemy gotowy komunikat /VAT/ /IDC/ /INV/ /TXT/."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Którą kwotę zapłacić: P_15 czy DoZaplaty?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Jeśli faktura ma sekcję Rozliczenie z polem DoZaplaty (kwota po potrąceniach i obciążeniach), bierzemy ją. W przeciwnym razie należność ogółem z P_15."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy mogę wczytać kilka faktur naraz?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Tak, wybierz kilka plików – dla każdego powstanie osobna karta płatności."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Strona główna",
+     "item": "https://numerksef.dpdns.org/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Przelew z faktury XML KSeF",
+     "item": "https://numerksef.dpdns.org/przelew-z-faktury-xml-ksef/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#tresc">Przejdź do treści</a><header class="site-head"><div class="wrap"><a class="brand" href="/" aria-label="NumerKSeF – strona główna"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="#1747c9"/><path d="M9 9h3v6.2L17.6 9h3.7l-6 6.6L21.6 23h-3.8l-4.6-5.4-1.2 1.3V23H9z" fill="#fff"/><circle cx="24.5" cy="24.5" r="4.5" fill="#22c55e" stroke="#fff" stroke-width="1.5"/><path d="M22.4 24.6l1.4 1.4 2.7-2.8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>NumerKSeF<small>darmowe narzędzia KSeF</small></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav" aria-label="Narzędzia"><ul><li><a href="/">Walidator numeru</a></li><li><a href="/przelew-mpp-numer-ksef/">Przelew MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/">Wiele numerów</a></li><li><a href="/przelew-z-faktury-xml-ksef/" aria-current="page">Faktura XML</a></li><li><a href="/kod-qr-ksef/">Kod QR</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG</a></li></ul></nav></div></header>
+<main id="tresc" class="wrap" tabindex="-1">
+<nav class="crumbs" aria-label="Okruszki"><ol><li><a href="/">Strona główna</a></li><li aria-current="page">Przelew z faktury XML KSeF</li></ol></nav>
+<div class="hero"><h1>Faktura XML z KSeF → gotowe dane do przelewu (z numerem KSeF i MPP)</h1><p class="lead">Upuść plik XML faktury pobrany z KSeF. Odczytamy sprzedawcę, NIP, numer rachunku, kwotę i termin płatności, a potem przygotujemy tytuł przelewu z numerem KSeF i – jeśli faktura ma adnotację MPP – gotowy komunikat split payment.</p>
+<ul class="trust"><li>Za darmo, bez rejestracji</li><li>Dane nie opuszczają Twojej przeglądarki.</li><li>Bez reklam i śledzenia</li></ul>
+</div>
+
+<section class="tool" aria-labelledby="h-xml">
+  <h2 id="h-xml">Wczytaj fakturę XML (FA3)</h2>
+  <label class="file" id="x-drop" for="x-file"><strong>Upuść plik .xml faktury lub kliknij, aby wybrać</strong><br><span class="hint">Możesz wybrać kilka plików. Plik czyta tylko Twoja przeglądarka.</span><input type="file" id="x-file" accept=".xml,application/xml,text/xml" multiple></label>
+  <div class="field" style="margin-top:14px"><label for="x-ksef">Numer KSeF faktury <span class="hint">(jeśli nie ma go w nazwie pliku)</span></label>
+  <input id="x-ksef" class="mono" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="5265877635-20250826-0100001AF629-AF" aria-describedby="x-ksef-msg"><p class="hint" id="x-ksef-msg" aria-live="polite"></p></div>
+  <div class="btns"><button type="button" class="btn ghost" id="x-ex">Przykład: faktura MPP</button><a class="btn ghost" href="/assets/przyklad-fa3.xml" download>Pobierz przykładowy XML</a></div>
+  <p class="privacy">🔒 Dane nie opuszczają Twojej przeglądarki.</p>
+</section>
+<div id="x-cards" aria-live="polite"></div>
+<article class="content">
+<h2>Jak zapłacić fakturę z KSeF w trzy minuty</h2>
+<p>Od 1 lutego 2026 r. faktury w KSeF mają strukturę FA(3) – MF pisze, że <q>struktura logiczna FA(3) zastąpiła strukturę logiczną FA(2)</q>. Plik XML to dokument dla programów, nie dla ludzi: numer rachunku, kwota i termin płatności są ukryte w elementach o nazwach takich jak <code>NrRB</code>, <code>P_15</code> czy <code>Termin</code>. Darmowych przeglądarek faktur XML jest dużo, ale zwykle kończą się na wydruku. To narzędzie robi jedną rzecz: zamienia fakturę w gotowe dane do przelewu z przyciskami „Kopiuj”.</p>
+<ol class="steps">
+<li><strong>Pobierz XML</strong> z Aplikacji Podatnika KSeF lub z programu księgowego. Pliki eksportowane z KSeF mają zwykle numer KSeF w nazwie.</li>
+<li><strong>Upuść plik</strong> w polu powyżej. Odczyt odbywa się lokalnie (DOMParser w przeglądarce).</li>
+<li><strong>Sprawdź numer KSeF.</strong> Weźmiemy go z nazwy pliku albo wpisz go ręcznie – w obu przypadkach sprawdzimy sumę kontrolną.</li>
+<li><strong>Kopiuj i płać:</strong> odbiorca, rachunek, kwota, tytuł, a przy fakturze z adnotacją MPP – komunikat <code>/VAT/…/IDC/…/INV/…</code>.</li>
+</ol>
+
+<h2>Skąd bierzemy dane – pola FA(3)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Dane do przelewu</th><th scope="col">Element XML (FA3)</th><th scope="col">Uwagi</th></tr></thead>
+<tbody>
+<tr><th scope="row">Odbiorca i NIP</th><td><code>Podmiot1/DaneIdentyfikacyjne/Nazwa</code>, <code>NIP</code></td><td>NIP sprawdzamy cyfrą kontrolną</td></tr>
+<tr><th scope="row">Numer rachunku</th><td><code>Platnosc/RachunekBankowy/NrRB</code></td><td>10–34 znaki; polski NRB/IBAN sprawdzamy sumą kontrolną; osobno rachunek faktora</td></tr>
+<tr><th scope="row">Kwota do zapłaty</th><td><code>Rozliczenie/DoZaplaty</code>, a gdy go brak – <code>P_15</code></td><td>P_15 to należność ogółem</td></tr>
+<tr><th scope="row">Kwota VAT</th><td>suma <code>P_14_1</code>…<code>P_14_5</code> (w walucie obcej: <code>P_14_xW</code> w PLN)</td><td>potrzebna do /VAT/ w MPP</td></tr>
+<tr><th scope="row">Termin płatności</th><td><code>Platnosc/TerminPlatnosci/Termin</code></td><td>lub opis terminu (np. 14 dni od doręczenia)</td></tr>
+<tr><th scope="row">Forma płatności</th><td><code>FormaPlatnosci</code></td><td>1 gotówka, 2 karta, 3 bon, 4 czek, 5 kredyt, 6 przelew, 7 mobilna</td></tr>
+<tr><th scope="row">Split payment</th><td><code>Adnotacje/P_18A</code></td><td>1 = „mechanizm podzielonej płatności”</td></tr>
+<tr><th scope="row">Numer faktury</th><td><code>P_2</code></td><td>trafia do tytułu lub do /TXT/</td></tr>
+</tbody></table></div>
+
+<h2>Dlaczego numeru KSeF nie ma w pliku XML</h2>
+<p>To najczęstsze zaskoczenie. Ministerstwo Finansów wyjaśnia, że numer KSeF <q>zwracany jest w UPO … i sam w sobie nie stanowi elementu pliku xml</q>. Nadaje go system dopiero po przyjęciu faktury. Dlatego numer KSeF znajdziesz:</p>
+<ul>
+<li>w nazwie pliku pobranego z KSeF (narzędzie odczyta go automatycznie),</li>
+<li>w UPO (Urzędowym Poświadczeniu Odbioru),</li>
+<li>w Aplikacji Podatnika KSeF lub w programie księgowym.</li>
+</ul>
+<p>Wyjątek to faktura korygująca: zawiera numer KSeF faktury korygowanej (<code>NrKSeFFaKorygowanej</code>), ale nie własny.</p>
+
+<h2>Tytuł przelewu i komunikat MPP</h2>
+<p>Dla zwykłego przelewu przygotujemy tytuł: najpierw numer KSeF, a jeśli zostanie miejsce – numer faktury z pola P_2, w limicie 140 znaków. Gdy faktura ma adnotację <code>P_18A = 1</code> („mechanizm podzielonej płatności”), pokażemy komunikat MPP: kwota VAT z przecinkiem, NIP sprzedawcy w <code>/IDC/</code>, numer KSeF w <code>/INV/</code> i numer faktury w <code>/TXT/</code> (do 33 znaków). Komunikat możesz poprawić w <a href="/przelew-mpp-numer-ksef/">generatorze MPP</a> – dane przeniesiemy jednym kliknięciem.</p>
+
+<h2>Na co uważać</h2>
+<ul>
+<li><strong>Rachunek z faktury a biała lista.</strong> Przy płatnościach powyżej 15 000 zł sprawdź rachunek w wykazie podatników VAT (białej liście). To narzędzie tego nie robi – wymagałoby wysłania danych na serwer.</li>
+<li><strong>Faktura w walucie obcej.</strong> Pokażemy kwotę w walucie faktury, a do MPP weźmiemy VAT w złotych z pól <code>P_14_xW</code>.</li>
+<li><strong>Starsze faktury FA(2).</strong> Też je odczytamy (po nazwach elementów), ale oznaczymy ostrzeżeniem.</li>
+<li><strong>Faktura opłacona.</strong> Jeśli w XML jest <code>Zaplacono = 1</code>, ostrzeżemy, żeby nie zapłacić drugi raz.</li>
+</ul>
+
+<h2>Kilka faktur od jednego dostawcy</h2>
+<p>Wczytaj wszystkie pliki naraz – każda faktura dostanie własną kartę z danymi do przelewu. Jeśli chcesz zapłacić je jednym przelewem, wpisz w tytule do trzech numerów KSeF (zrobisz to w <a href="/">generatorze tytułu</a>) albo wygeneruj w KSeF <a href="/identyfikator-zbiorczy-ksef/">identyfikator zbiorczy</a>. W przelewie MPP jedynym sposobem na zapłatę kilku faktur z KSeF jest identyfikator zbiorczy, bo pole <code>/INV/</code> mieści jeden numer.</p>
+
+<h2>Bezpieczeństwo i prywatność</h2>
+<p>Faktura to dane handlowe: kontrahenci, ceny, numery rachunków. Dlatego narzędzie nie wysyła pliku nigdzie – parsuje go przeglądarka za pomocą wbudowanego DOMParsera, z obsługą przestrzeni nazw FA(3). Możesz to sprawdzić, odłączając internet po załadowaniu strony: narzędzie dalej działa. Nie zapisujemy też niczego w pamięci przeglądarki; po odświeżeniu strony dane znikają.</p>
+<p>Przed zapłatą zawsze porównaj numer rachunku z wcześniejszymi płatnościami dla tego dostawcy. Zmiana rachunku „na nowy” w fakturze to klasyczny sposób wyłudzeń – w razie wątpliwości potwierdź rachunek telefonicznie.</p>
+<h2 id="faq">Najczęstsze pytania</h2><div class="faq"><details><summary>Czy plik faktury jest wysyłany na serwer?</summary><p>Nie. Plik XML czyta tylko Twoja przeglądarka. Strona nie ma serwera, który mógłby go odebrać.</p></details><details><summary>Dlaczego narzędzie nie widzi numeru KSeF?</summary><p>Bo numeru KSeF nie ma w pliku XML – system nadaje go po przyjęciu faktury i podaje w UPO. Odczytamy go z nazwy pliku z KSeF albo wpisz go ręcznie.</p></details><details><summary>Jakie pliki są obsługiwane?</summary><p>Faktury XML w strukturze FA(3) (przestrzeń nazw http://crd.gov.pl/wzor/2025/06/25/13775/). Starsze FA(2) odczytamy z ostrzeżeniem. Nie obsługujemy PDF ani UPO.</p></details><details><summary>Skąd wiadomo, że trzeba zapłacić w MPP?</summary><p>Z adnotacji P_18A = 1 („mechanizm podzielonej płatności”). Wtedy pokażemy gotowy komunikat /VAT/ /IDC/ /INV/ /TXT/.</p></details><details><summary>Którą kwotę zapłacić: P_15 czy DoZaplaty?</summary><p>Jeśli faktura ma sekcję Rozliczenie z polem DoZaplaty (kwota po potrąceniach i obciążeniach), bierzemy ją. W przeciwnym razie należność ogółem z P_15.</p></details><details><summary>Czy mogę wczytać kilka faktur naraz?</summary><p>Tak, wybierz kilka plików – dla każdego powstanie osobna karta płatności.</p></details></div><h2 id="zrodla">Źródła</h2><ul class="sources"><li><a href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/struktura-logiczna-fa-3/" rel="noopener" target="_blank">Ministerstwo Finansów: Struktura logiczna FA(3)</a></li><li><a href="https://github.com/CIRFMF/ksef-docs/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd" rel="noopener" target="_blank">Schemat FA(3) v1-0E (XSD) – repozytorium MF</a></li><li><a href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" rel="noopener" target="_blank">Ministerstwo Finansów: Numer KSeF i zbiorczy identyfikator</a> – strona zmodyfikowana 10.11.2026</li><li><a href="https://www.mbank.pl/pdf/msp-korporacje/bankowosc-elektroniczna/multicash-pain00100109-pl.pdf" rel="noopener" target="_blank">mBank: specyfikacja MultiCash pain.001.001.09 v2.0.7 – płatność podzielona w polu Ustrd</a> – 29.09.2026</li></ul><h2 id="inne-narzedzia">Inne darmowe narzędzia KSeF</h2><div class="hub"><a href="/"><strong>Walidator numeru KSeF</strong><span>Sprawdź numer KSeF (CRC-8, NIP, data) i ułóż tytuł przelewu.</span></a><a href="/przelew-mpp-numer-ksef/"><strong>Komunikat przelewu MPP</strong><span>Generator /VAT/ /IDC/ /INV/ /TXT/ z numerem KSeF dla split payment.</span></a><a href="/identyfikator-zbiorczy-ksef/"><strong>Identyfikator zbiorczy</strong><span>Sprawdź identyfikator zbiorczy KSeF i rozłóż go na części.</span></a><a href="/sprawdz-wiele-numerow-ksef/"><strong>Wiele numerów naraz</strong><span>Lista, plik CSV lub wyciąg bankowy – wyniki do pobrania w CSV.</span></a><a href="/kod-qr-ksef/"><strong>Kod QR KSeF</strong><span>Wygeneruj KOD I z pliku XML albo sprawdź link z kodu QR na fakturze.</span></a><a href="/ksef-od-2027-jdg/"><strong>KSeF dla JDG od 2027</strong><span>Odpowiedz na kilka pytań i zobacz, co zmienia się 1 stycznia 2027 r.</span></a></div><p class="updated">Ostatnia aktualizacja: <time datetime="2026-11-13">13 listopada 2026 r.</time> · Dane nie opuszczają Twojej przeglądarki.</p></article>
+</main>
+<footer class="site-foot"><div class="wrap"><div class="foot-grid"><div><h2>Numer KSeF – darmowe narzędzia</h2><p>Bezpłatne narzędzia do numerów KSeF, przelewów i faktur ustrukturyzowanych. Bez reklam, bez rejestracji. Wszystkie obliczenia wykonuje Twoja przeglądarka – Dane nie opuszczają Twojej przeglądarki.</p><p>Serwis niezależny, niezwiązany z Ministerstwem Finansów. Treści mają charakter informacyjny i nie stanowią porady podatkowej.</p></div><div><h2>Narzędzia</h2><ul><li><a href="/">Walidator numeru KSeF</a></li><li><a href="/przelew-mpp-numer-ksef/">Komunikat przelewu MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/">Wiele numerów naraz</a></li><li><a href="/przelew-z-faktury-xml-ksef/">Przelew z faktury XML</a></li><li><a href="/kod-qr-ksef/">Kod QR KSeF</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG od 2027</a></li></ul></div><div><h2>Serwis i źródła</h2><ul><li><a href="/o-serwisie/">O serwisie</a></li><li><a href="/polityka-prywatnosci/">Polityka prywatności</a></li><li><a href="https://ksef.podatki.gov.pl/" rel="noopener" target="_blank">ksef.podatki.gov.pl (MF)</a></li><li><a href="https://github.com/CIRFMF/ksef-docs" rel="noopener" target="_blank">Dokumentacja KSeF 2.0 (MF, GitHub)</a></li><li><a href="/sitemap.xml">Mapa strony</a></li></ul></div></div><p class="foot-note">© 2026 NumerKSeF · Ostatnia aktualizacja: 13 listopada 2026 r. · Kod działa bez serwera, bez ciasteczek i bez śledzenia.</p></div></footer><p id="live" class="sr-only" aria-live="polite"></p>
+<script src="/assets/core.js?v=2" defer></script>
+<script src="/assets/ui.js?v=2" defer></script>
+<script src="/assets/page-xml.js?v=2" defer></script>
+</body>
+</html>

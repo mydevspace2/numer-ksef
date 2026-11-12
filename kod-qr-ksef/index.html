@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kod QR KSeF – generator KOD I i sprawdzanie linku weryfikacyjnego</title>
+<meta name="description" content="Wygeneruj KOD I KSeF z pliku XML (SHA-256 Base64URL, NIP, data) i sprawdź link z kodu QR na fakturze. Ochrona przed fałszywymi domenami. Bez wysyłania pliku.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://numerksef.dpdns.org/kod-qr-ksef/">
+<meta name="theme-color" content="#1747c9">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:site_name" content="Numer KSeF – darmowe narzędzia">
+<meta property="og:title" content="Kod QR KSeF – generator KOD I i sprawdzanie linku weryfikacyjnego">
+<meta property="og:description" content="Wygeneruj KOD I KSeF z pliku XML (SHA-256 Base64URL, NIP, data) i sprawdź link z kodu QR na fakturze. Ochrona przed fałszywymi domenami. Bez wysyłania pliku.">
+<meta property="og:url" content="https://numerksef.dpdns.org/kod-qr-ksef/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/assets/style.css?v=2">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "Kod QR KSeF – generator KOD I i dekoder linków",
+   "url": "https://numerksef.dpdns.org/kod-qr-ksef/",
+   "description": "Wygeneruj KOD I KSeF z pliku XML (SHA-256 Base64URL, NIP, data) i sprawdź link z kodu QR na fakturze. Ochrona przed fałszywymi domenami. Bez wysyłania pliku.",
+   "applicationCategory": "FinanceApplication",
+   "operatingSystem": "Dowolny (przeglądarka internetowa)",
+   "browserRequirements": "Wymaga JavaScript",
+   "inLanguage": "pl-PL",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "PLN"
+   },
+   "dateModified": "2026-11-13",
+   "publisher": {
+    "@type": "Organization",
+    "name": "Numer KSeF – darmowe narzędzia",
+    "url": "https://numerksef.dpdns.org/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Jak sprawdzić kod QR na fakturze KSeF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Zeskanuj go telefonem, ale zanim otworzysz link, wklej go tutaj. Sprawdzimy domenę (musi być qr.ksef.mf.gov.pl), NIP, datę i format skrótu. Potem otwórz link – strona MF potwierdzi fakturę."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Jaka jest prawdziwa domena kodów QR KSeF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "https://qr.ksef.mf.gov.pl dla faktur produkcyjnych oraz qr-test.ksef.mf.gov.pl i qr-demo.ksef.mf.gov.pl dla środowisk testowych bez skutków podatkowych."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Co oznacza napis OFFLINE pod kodem QR?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Faktura nie miała jeszcze numeru KSeF, gdy nadawano kod (np. wystawiona w trybie offline). Taka faktura ma też KOD II z napisem CERTYFIKAT."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy mogę wygenerować KOD II w tym narzędziu?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nie. KOD II wymaga podpisu kluczem prywatnym certyfikatu KSeF. Nigdy nie wpisuj klucza prywatnego na stronach internetowych. Dekoder pokaże tylko budowę KOD II."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Dlaczego mój skrót różni się od tego w kodzie?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Plik XML różni się choćby jednym bajtem od faktury w KSeF – np. został zapisany ponownie w edytorze. Pobierz oryginał z KSeF."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy plik XML jest wysyłany na serwer?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nie. Skrót SHA-256 liczy Twoja przeglądarka (WebCrypto), a kod QR rysuje wbudowany koder bez zewnętrznych bibliotek."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Strona główna",
+     "item": "https://numerksef.dpdns.org/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Kod QR KSeF",
+     "item": "https://numerksef.dpdns.org/kod-qr-ksef/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#tresc">Przejdź do treści</a><header class="site-head"><div class="wrap"><a class="brand" href="/" aria-label="NumerKSeF – strona główna"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="#1747c9"/><path d="M9 9h3v6.2L17.6 9h3.7l-6 6.6L21.6 23h-3.8l-4.6-5.4-1.2 1.3V23H9z" fill="#fff"/><circle cx="24.5" cy="24.5" r="4.5" fill="#22c55e" stroke="#fff" stroke-width="1.5"/><path d="M22.4 24.6l1.4 1.4 2.7-2.8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>NumerKSeF<small>darmowe narzędzia KSeF</small></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav" aria-label="Narzędzia"><ul><li><a href="/">Walidator numeru</a></li><li><a href="/przelew-mpp-numer-ksef/">Przelew MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/">Wiele numerów</a></li><li><a href="/przelew-z-faktury-xml-ksef/">Faktura XML</a></li><li><a href="/kod-qr-ksef/" aria-current="page">Kod QR</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG</a></li></ul></nav></div></header>
+<main id="tresc" class="wrap" tabindex="-1">
+<nav class="crumbs" aria-label="Okruszki"><ol><li><a href="/">Strona główna</a></li><li aria-current="page">Kod QR KSeF</li></ol></nav>
+<div class="hero"><h1>Kod QR KSeF – odczytaj link weryfikacyjny i sprawdź, czy faktura nie jest podróbką</h1><p class="lead">Wklej link z kodu QR na fakturze – sprawdzimy, czy prowadzi do prawdziwej domeny Ministerstwa Finansów i czy jego dane mają sens. Masz plik XML? Wygenerujemy KOD I i obraz QR prosto w przeglądarce.</p>
+<ul class="trust"><li>Za darmo, bez rejestracji</li><li>Dane nie opuszczają Twojej przeglądarki.</li><li>Bez reklam i śledzenia</li></ul>
+</div>
+
+<section class="tool" aria-labelledby="h-dec">
+  <h2 id="h-dec">Sprawdź link z kodu QR</h2>
+  <div class="field"><label for="d-in">Link z kodu QR na fakturze</label>
+  <input id="d-in" class="mono" type="url" autocomplete="off" spellcheck="false" placeholder="https://qr.ksef.mf.gov.pl/invoice/…"></div>
+  <div id="d-scan" class="field" hidden><label for="d-img">…albo zrób zdjęcie kodu QR / wybierz obraz</label><input id="d-img" type="file" accept="image/*" capture="environment"></div>
+  <div class="btns"><button type="button" class="btn" id="d-check">Sprawdź link</button><button type="button" class="btn ghost" id="d-ex">Przykład MF</button><button type="button" class="btn ghost" id="d-ex-bad">Przykład fałszywego linku</button></div>
+  <div id="d-res" class="status" role="status" aria-live="polite"></div>
+</section>
+<section class="tool" aria-labelledby="h-gen">
+  <h2 id="h-gen">Generator KOD I z pliku XML</h2>
+  <label class="file" id="g-drop" for="g-file"><strong>Upuść plik XML faktury</strong><br><span class="hint">Skrót SHA-256 liczymy z oryginalnych bajtów pliku (WebCrypto).</span><input type="file" id="g-file" accept=".xml,application/xml,text/xml"></label>
+  <p class="hint" id="g-hash" aria-live="polite" style="margin-top:8px"></p>
+  <div class="grid2" style="margin-top:10px">
+    <div class="field"><label for="g-nip">NIP sprzedawcy</label><input id="g-nip" type="text" inputmode="numeric" autocomplete="off"></div>
+    <div class="field"><label for="g-date">Data wystawienia (P_1)</label><input id="g-date" type="date"></div>
+    <div class="field"><label for="g-ksef">Numer KSeF <span class="hint">(etykieta; puste = OFFLINE)</span></label><input id="g-ksef" class="mono" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters"></div>
+    <div class="field"><label for="g-env">Środowisko</label><select id="g-env"><option value="PROD">Produkcyjne – qr.ksef.mf.gov.pl</option><option value="TE">Testowe – qr-test.ksef.mf.gov.pl</option><option value="DEMO">Demo – qr-demo.ksef.mf.gov.pl</option></select></div>
+  </div>
+  <div class="btns"><button type="button" class="btn ghost" id="g-ex">Przykład: wczytaj przykładowy XML</button></div>
+  <div id="g-stat" class="status" role="status" aria-live="polite"></div>
+  <div id="g-out" hidden>
+    <p class="label" id="g-link-l">Link KOD I</p>
+    <p class="out" id="g-link" aria-labelledby="g-link-l"></p>
+    <div class="out-row"><button type="button" class="btn small" data-copy="g-link">Kopiuj link</button><button type="button" class="btn ghost small" id="g-dl">Pobierz QR (SVG)</button></div>
+    <div class="qrbox"><div id="g-qr"></div><div class="qrlabel" id="g-label"></div></div>
+  </div>
+  <p class="privacy">🔒 Dane nie opuszczają Twojej przeglądarki. Kod QR rysuje wbudowany koder – bez zewnętrznych bibliotek.</p>
+</section>
+<article class="content">
+<h2>Po co jest kod QR na fakturze KSeF</h2>
+<p>Faktura z KSeF przekazana poza systemem – w PDF, na papierze, mailem – ma kod QR, który pozwala każdemu sprawdzić, czy faktura naprawdę jest w KSeF i czy nikt jej nie zmienił. Według MF kod zawiera <q>adres zasobu …, datę wystawienia faktury … z pola P_1, identyfikator NIP sprzedawcy, wyróżnik faktury</q>. Wyróżnik to skrót SHA-256 pliku XML – zmiana choćby jednego znaku w fakturze daje zupełnie inny skrót.</p>
+
+<h2>Budowa linku KOD I</h2>
+<p>Dokumentacja KSeF 2.0 opisuje KOD I jako adres złożony z <q>daty wystawienia faktury (pole P_1) w formacie DD-MM-RRRR, NIP-u sprzedawcy, skrótu pliku faktury obliczonego algorytmem SHA-256 … w formacie Base64URL</q>. Kolejność w ścieżce: <code>/invoice/{NIP}/{DD-MM-RRRR}/{skrót}</code>. Oficjalny przykład:</p>
+<blockquote class="mono">https://qr-test.ksef.mf.gov.pl/invoice/1111111111/01-02-2026/UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE</blockquote>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Środowisko</th><th scope="col">Domena</th><th scope="col">Skutki podatkowe</th></tr></thead>
+<tbody>
+<tr><th scope="row">Produkcyjne</th><td class="mono">https://qr.ksef.mf.gov.pl</td><td>tak</td></tr>
+<tr><th scope="row">Testowe (TE)</th><td class="mono">https://qr-test.ksef.mf.gov.pl</td><td>nie</td></tr>
+<tr><th scope="row">Demo</th><td class="mono">https://qr-demo.ksef.mf.gov.pl</td><td>nie</td></tr>
+</tbody></table></div>
+<p>Skrót ma 43 znaki Base64URL bez znaków „=” (32 bajty SHA-256). Pod kodem drukuje się numer KSeF, a jeśli faktury jeszcze nie przyjęto do systemu – napis <strong>OFFLINE</strong>. Kod musi być zgodny z normą ISO/IEC 18004:2024; nasz generator używa poziomu korekcji błędów M.</p>
+
+<h2>Jak rozpoznać fałszywy kod QR</h2>
+<ol class="steps">
+<li><strong>Sprawdź domenę.</strong> Prawdziwy link zaczyna się dokładnie od <code>https://qr.ksef.mf.gov.pl/</code> (lub qr-test / qr-demo). Adresy typu „qr-ksef-mf.pl”, „ksef-weryfikacja.com” albo „qr.ksef.mf.gov.pl.cos.tam” to podróbki – nasz dekoder oznaczy je na czerwono.</li>
+<li><strong>Porównaj dane.</strong> NIP i data w linku muszą zgadzać się z fakturą, którą trzymasz w ręku.</li>
+<li><strong>Porównaj skrót.</strong> Wczytaj plik XML w generatorze – dekoder pokaże, czy skrót z linku pasuje do pliku.</li>
+<li><strong>Otwórz link dopiero na końcu.</strong> Strona MF potwierdzi, czy faktura jest w KSeF. Nigdy nie podawaj na stronie z kodu QR loginu, hasła ani danych karty.</li>
+</ol>
+
+<h2>KOD II (CERTYFIKAT) – tylko objaśniamy</h2>
+<p>Faktury wystawione offline mają drugi kod z napisem <strong>CERTYFIKAT</strong>. KOD II potwierdza tożsamość wystawcy i ma postać <code>/certificate/{typ kontekstu}/{identyfikator}/{NIP sprzedawcy}/{nr certyfikatu}/{skrót}/{podpis}</code>. Podpis tworzy się kluczem prywatnym certyfikatu KSeF (RSASSA-PSS z SHA-256 albo ECDSA P-256). Dlatego nie generujemy KOD II – wymagałoby to Twojego klucza prywatnego, którego nigdy nie należy wpisywać na żadnej stronie. Dekoder rozpozna KOD II i rozłoży go na części, a podpis weryfikuje serwis MF po otwarciu linku.</p>
+
+<h2>Ważne przy generowaniu KOD I</h2>
+<ul>
+<li>Skrót liczymy z <strong>oryginalnych bajtów</strong> pliku. Nie otwieraj i nie zapisuj XML-a w edytorze przed generowaniem – zmiana kodowania, znaku BOM czy końców linii zmienia skrót.</li>
+<li>Datę bierzemy z pola P_1 (data wystawienia), a nie z daty przyjęcia do KSeF.</li>
+<li>Kod QR do płatności (standard ZBP) to coś innego – nie zmieści numeru KSeF, bo jego tytuł ma maks. 32 znaki.</li>
+</ul>
+
+<h2>Jak sprawdzić fakturę w praktyce</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Sytuacja</th><th scope="col">Co zrobić</th></tr></thead>
+<tbody>
+<tr><th scope="row">Dostajesz PDF faktury mailem</th><td>Zeskanuj kod QR telefonem lub skopiuj link, wklej go w dekoderze powyżej i porównaj NIP oraz datę z treścią faktury.</td></tr>
+<tr><th scope="row">Dostajesz fakturę papierową</th><td>Zrób zdjęcie kodu (w przeglądarkach z obsługą rozpoznawania kodów odczytamy je bezpośrednio) albo zeskanuj aparatem i wklej link.</td></tr>
+<tr><th scope="row">Masz też plik XML</th><td>Wczytaj go w generatorze – dekoder porówna skrót z linku ze skrótem pliku. Zgodność oznacza, że PDF i XML opisują tę samą fakturę.</td></tr>
+<tr><th scope="row">Pod kodem jest napis OFFLINE</th><td>Faktura nie miała jeszcze numeru KSeF. Sprawdź także KOD II (CERTYFIKAT) i upewnij się później, że faktura trafiła do KSeF.</td></tr>
+<tr><th scope="row">Link prowadzi do innej domeny</th><td>Nie otwieraj go. Skontaktuj się z wystawcą innym kanałem niż mail, z którego przyszła faktura.</td></tr>
+</tbody></table></div>
+
+<h2>Dlaczego fałszywe kody QR to realne zagrożenie</h2>
+<p>Kod QR ukrywa adres – człowiek nie widzi go, dopóki nie zeskanuje kodu. To ułatwia oszustwa typu „quishing”: podrobiona faktura z kodem prowadzącym do strony, która wygląda jak serwis Ministerstwa Finansów, a w rzeczywistości wyłudza dane logowania do banku albo do KSeF. Prawdziwa weryfikacja KOD I nie wymaga logowania ani podawania żadnych danych. Jeśli strona otwarta z kodu prosi o login, hasło, kod SMS albo dane karty – to oszustwo.</p>
+<p>Nasz dekoder akceptuje wyłącznie trzy domeny MF i dodatkowo ostrzega przed adresami, które zawierają słowa „ksef” czy „mf-gov”, ale prowadzą gdzie indziej, a także przed linkami z loginem, portem lub nietypowymi parametrami. Kontrola działa lokalnie – link nie jest nigdzie wysyłany ani otwierany.</p>
+<h2 id="faq">Najczęstsze pytania</h2><div class="faq"><details><summary>Jak sprawdzić kod QR na fakturze KSeF?</summary><p>Zeskanuj go telefonem, ale zanim otworzysz link, wklej go tutaj. Sprawdzimy domenę (musi być qr.ksef.mf.gov.pl), NIP, datę i format skrótu. Potem otwórz link – strona MF potwierdzi fakturę.</p></details><details><summary>Jaka jest prawdziwa domena kodów QR KSeF?</summary><p>https://qr.ksef.mf.gov.pl dla faktur produkcyjnych oraz qr-test.ksef.mf.gov.pl i qr-demo.ksef.mf.gov.pl dla środowisk testowych bez skutków podatkowych.</p></details><details><summary>Co oznacza napis OFFLINE pod kodem QR?</summary><p>Faktura nie miała jeszcze numeru KSeF, gdy nadawano kod (np. wystawiona w trybie offline). Taka faktura ma też KOD II z napisem CERTYFIKAT.</p></details><details><summary>Czy mogę wygenerować KOD II w tym narzędziu?</summary><p>Nie. KOD II wymaga podpisu kluczem prywatnym certyfikatu KSeF. Nigdy nie wpisuj klucza prywatnego na stronach internetowych. Dekoder pokaże tylko budowę KOD II.</p></details><details><summary>Dlaczego mój skrót różni się od tego w kodzie?</summary><p>Plik XML różni się choćby jednym bajtem od faktury w KSeF – np. został zapisany ponownie w edytorze. Pobierz oryginał z KSeF.</p></details><details><summary>Czy plik XML jest wysyłany na serwer?</summary><p>Nie. Skrót SHA-256 liczy Twoja przeglądarka (WebCrypto), a kod QR rysuje wbudowany koder bez zewnętrznych bibliotek.</p></details></div><h2 id="zrodla">Źródła</h2><ul class="sources"><li><a href="https://github.com/CIRFMF/ksef-docs/blob/main/kody-qr.md" rel="noopener" target="_blank">Dokumentacja KSeF 2.0 (MF): Kody QR – KOD I i KOD II</a></li><li><a href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/kody-weryfikujace-qr/" rel="noopener" target="_blank">Ministerstwo Finansów: Kody weryfikujące QR</a></li><li><a href="https://github.com/CIRFMF/ksef-docs/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd" rel="noopener" target="_blank">Schemat FA(3) v1-0E (XSD) – repozytorium MF</a></li><li><a href="https://www.zbp.pl/getContentAsset/806da831-e7e0-43e8-b361-c45f922cf529/1b52933d-ceff-4d97-bee2-094d491a3634/2013-12-03_-_Rekomendacja_-_Standard_2D.pdf?language=pl" rel="noopener" target="_blank">Związek Banków Polskich: Rekomendacja „Standard 2D” (kod QR do płatności)</a> – 2013</li></ul><h2 id="inne-narzedzia">Inne darmowe narzędzia KSeF</h2><div class="hub"><a href="/"><strong>Walidator numeru KSeF</strong><span>Sprawdź numer KSeF (CRC-8, NIP, data) i ułóż tytuł przelewu.</span></a><a href="/przelew-mpp-numer-ksef/"><strong>Komunikat przelewu MPP</strong><span>Generator /VAT/ /IDC/ /INV/ /TXT/ z numerem KSeF dla split payment.</span></a><a href="/identyfikator-zbiorczy-ksef/"><strong>Identyfikator zbiorczy</strong><span>Sprawdź identyfikator zbiorczy KSeF i rozłóż go na części.</span></a><a href="/sprawdz-wiele-numerow-ksef/"><strong>Wiele numerów naraz</strong><span>Lista, plik CSV lub wyciąg bankowy – wyniki do pobrania w CSV.</span></a><a href="/przelew-z-faktury-xml-ksef/"><strong>Przelew z faktury XML</strong><span>Wczytaj fakturę FA(3) i skopiuj rachunek, kwotę, tytuł i komunikat MPP.</span></a><a href="/ksef-od-2027-jdg/"><strong>KSeF dla JDG od 2027</strong><span>Odpowiedz na kilka pytań i zobacz, co zmienia się 1 stycznia 2027 r.</span></a></div><p class="updated">Ostatnia aktualizacja: <time datetime="2026-11-13">13 listopada 2026 r.</time> · Dane nie opuszczają Twojej przeglądarki.</p></article>
+</main>
+<footer class="site-foot"><div class="wrap"><div class="foot-grid"><div><h2>Numer KSeF – darmowe narzędzia</h2><p>Bezpłatne narzędzia do numerów KSeF, przelewów i faktur ustrukturyzowanych. Bez reklam, bez rejestracji. Wszystkie obliczenia wykonuje Twoja przeglądarka – Dane nie opuszczają Twojej przeglądarki.</p><p>Serwis niezależny, niezwiązany z Ministerstwem Finansów. Treści mają charakter informacyjny i nie stanowią porady podatkowej.</p></div><div><h2>Narzędzia</h2><ul><li><a href="/">Walidator numeru KSeF</a></li><li><a href="/przelew-mpp-numer-ksef/">Komunikat przelewu MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/">Wiele numerów naraz</a></li><li><a href="/przelew-z-faktury-xml-ksef/">Przelew z faktury XML</a></li><li><a href="/kod-qr-ksef/">Kod QR KSeF</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG od 2027</a></li></ul></div><div><h2>Serwis i źródła</h2><ul><li><a href="/o-serwisie/">O serwisie</a></li><li><a href="/polityka-prywatnosci/">Polityka prywatności</a></li><li><a href="https://ksef.podatki.gov.pl/" rel="noopener" target="_blank">ksef.podatki.gov.pl (MF)</a></li><li><a href="https://github.com/CIRFMF/ksef-docs" rel="noopener" target="_blank">Dokumentacja KSeF 2.0 (MF, GitHub)</a></li><li><a href="/sitemap.xml">Mapa strony</a></li></ul></div></div><p class="foot-note">© 2026 NumerKSeF · Ostatnia aktualizacja: 13 listopada 2026 r. · Kod działa bez serwera, bez ciasteczek i bez śledzenia.</p></div></footer><p id="live" class="sr-only" aria-live="polite"></p>
+<script src="/assets/core.js?v=2" defer></script>
+<script src="/assets/ui.js?v=2" defer></script>
+<script src="/assets/qr.js?v=2" defer></script><script src="/assets/page-qr.js?v=2" defer></script>
+</body>
+</html>

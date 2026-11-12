@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Przelew MPP z numerem KSeF – generator komunikatu split payment</title>
+<meta name="description" content="Darmowy generator komunikatu MPP 2027: /VAT/ /IDC/ /INV/ /TXT/ z numerem KSeF lub identyfikatorem zbiorczym. Walidacja pól, limit 140 znaków, przecinek w kwocie VAT.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://numerksef.dpdns.org/przelew-mpp-numer-ksef/">
+<meta name="theme-color" content="#1747c9">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pl_PL">
+<meta property="og:site_name" content="Numer KSeF – darmowe narzędzia">
+<meta property="og:title" content="Przelew MPP z numerem KSeF – generator komunikatu split payment">
+<meta property="og:description" content="Darmowy generator komunikatu MPP 2027: /VAT/ /IDC/ /INV/ /TXT/ z numerem KSeF lub identyfikatorem zbiorczym. Walidacja pól, limit 140 znaków, przecinek w kwocie VAT.">
+<meta property="og:url" content="https://numerksef.dpdns.org/przelew-mpp-numer-ksef/">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/assets/style.css?v=2">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebApplication",
+   "name": "Generator komunikatu przelewu MPP z numerem KSeF",
+   "url": "https://numerksef.dpdns.org/przelew-mpp-numer-ksef/",
+   "description": "Darmowy generator komunikatu MPP 2027: /VAT/ /IDC/ /INV/ /TXT/ z numerem KSeF lub identyfikatorem zbiorczym. Walidacja pól, limit 140 znaków, przecinek w kwocie VAT.",
+   "applicationCategory": "FinanceApplication",
+   "operatingSystem": "Dowolny (przeglądarka internetowa)",
+   "browserRequirements": "Wymaga JavaScript",
+   "inLanguage": "pl-PL",
+   "isAccessibleForFree": true,
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "PLN"
+   },
+   "dateModified": "2026-11-13",
+   "publisher": {
+    "@type": "Organization",
+    "name": "Numer KSeF – darmowe narzędzia",
+    "url": "https://numerksef.dpdns.org/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Co wpisać w /INV/ od 2027 roku?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Numer KSeF faktury (35 znaków). Gdy płacisz jednym przelewem za kilka faktur z KSeF od tego samego sprzedawcy – identyfikator zbiorczy. Między własnymi rachunkami VAT – „PRZEKAZANIE WLASNE”."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Gdzie wpisać swój numer faktury, skoro /INV/ zajmuje numer KSeF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "W polu /TXT/, które mieści do 33 znaków. Pole jest opcjonalne."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy kwotę VAT piszę z kropką czy z przecinkiem?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Z przecinkiem, np. 23,00 – tego wymaga format banku. Generator sam zamieni kropkę na przecinek i usunie spacje."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Jaki jest limit długości komunikatu MPP?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "140 znaków dla całego komunikatu. /IDC/ do 14 znaków, /INV/ do 35, /TXT/ do 33. Z numerem KSeF i 10-cyfrowym NIP-em zostaje zwykle wystarczająco miejsca na krótki tekst."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy mogę zapłacić w MPP za kilka faktur jednym przelewem?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Tak – w /INV/ podajesz wtedy identyfikator zbiorczy KSeF zamiast okresu. Wszystkie faktury w identyfikatorze muszą mieć tego samego sprzedawcę."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Które znaki są niedozwolone?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Między innymi : * ; ‘ “ ! + ? | #. Dozwolone są cyfry, litery (także polskie), spacja oraz & % ( ) - { } / , ."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Czy generator wysyła dane do banku?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nie. Wszystko dzieje się w Twojej przeglądarce. Kopiujesz gotowy tekst i wklejasz go w bankowości."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Strona główna",
+     "item": "https://numerksef.dpdns.org/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Przelew MPP z numerem KSeF",
+     "item": "https://numerksef.dpdns.org/przelew-mpp-numer-ksef/"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#tresc">Przejdź do treści</a><header class="site-head"><div class="wrap"><a class="brand" href="/" aria-label="NumerKSeF – strona główna"><svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="#1747c9"/><path d="M9 9h3v6.2L17.6 9h3.7l-6 6.6L21.6 23h-3.8l-4.6-5.4-1.2 1.3V23H9z" fill="#fff"/><circle cx="24.5" cy="24.5" r="4.5" fill="#22c55e" stroke="#fff" stroke-width="1.5"/><path d="M22.4 24.6l1.4 1.4 2.7-2.8" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>NumerKSeF<small>darmowe narzędzia KSeF</small></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button><nav id="site-nav" class="site-nav" aria-label="Narzędzia"><ul><li><a href="/">Walidator numeru</a></li><li><a href="/przelew-mpp-numer-ksef/" aria-current="page">Przelew MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/">Wiele numerów</a></li><li><a href="/przelew-z-faktury-xml-ksef/">Faktura XML</a></li><li><a href="/kod-qr-ksef/">Kod QR</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG</a></li></ul></nav></div></header>
+<main id="tresc" class="wrap" tabindex="-1">
+<nav class="crumbs" aria-label="Okruszki"><ol><li><a href="/">Strona główna</a></li><li aria-current="page">Przelew MPP z numerem KSeF</li></ol></nav>
+<div class="hero"><h1>Komunikat przelewu MPP z numerem KSeF – generator split payment 2027</h1><p class="lead">Wpisz kwotę VAT, NIP sprzedawcy i numer KSeF – dostaniesz gotowy komunikat <code>/VAT/…/IDC/…/INV/…/TXT/…</code> sprawdzony pole po polu, w trzech układach: jedna linia, cztery linie i podział po 35 znaków.</p>
+<ul class="trust"><li>Za darmo, bez rejestracji</li><li>Dane nie opuszczają Twojej przeglądarki.</li><li>Bez reklam i śledzenia</li></ul>
+</div>
+
+<section class="tool" aria-labelledby="h-mpp">
+  <h2 id="h-mpp">Generator komunikatu MPP</h2>
+  <div class="grid2">
+    <div class="field"><label for="m-vat">Kwota VAT (zł) <span class="hint">– /VAT/</span></label><input id="m-vat" type="text" inputmode="decimal" autocomplete="off" placeholder="230,00" aria-describedby="m-vat-msg"><p class="hint" id="m-vat-msg" aria-live="polite"></p></div>
+    <div class="field"><label for="m-gross">Kwota przelewu brutto (zł) <span class="hint">– do kontroli</span></label><input id="m-gross" type="text" inputmode="decimal" autocomplete="off" placeholder="1230,00" aria-describedby="m-gross-msg"><p class="hint" id="m-gross-msg" aria-live="polite"></p></div>
+    <div class="field"><label for="m-nip">NIP sprzedawcy <span class="hint">– /IDC/</span></label><input id="m-nip" type="text" inputmode="numeric" autocomplete="off" placeholder="5265877635" aria-describedby="m-nip-msg"><p class="hint" id="m-nip-msg" aria-live="polite"></p></div>
+    <div class="field"><label for="m-date">Data przelewu <span class="hint">(opcjonalnie)</span></label><input id="m-date" type="date"><p class="hint">Przed 1.01.2027 w /INV/ może być numer faktury.</p></div>
+  </div>
+  <div class="field" id="m-inv-wrap"><label for="m-inv">Numer KSeF, identyfikator zbiorczy lub numer faktury <span class="hint">– /INV/ (maks. 35 znaków)</span></label><input id="m-inv" class="mono" type="text" autocomplete="off" spellcheck="false" placeholder="5265877635-20250826-0100001AF629-AF" aria-describedby="m-inv-msg m-inv-kind"><p class="hint" id="m-inv-kind" aria-live="polite"></p><p class="hint" id="m-inv-msg" aria-live="polite"></p></div>
+  <div class="field"><label for="m-txt">Dodatkowy tekst <span class="hint">– /TXT/ (opcjonalnie, maks. 33 znaki)</span></label><input id="m-txt" type="text" autocomplete="off" maxlength="60" placeholder="FV 12/11/2026" aria-describedby="m-txt-msg"><p class="hint" id="m-txt-msg" aria-live="polite"></p></div>
+  <label class="check"><input type="checkbox" id="m-own"> Przekazanie własne między moimi rachunkami VAT (w /INV/ wpiszemy „PRZEKAZANIE WLASNE”)</label>
+  <div class="btns" style="margin-top:14px"><button type="button" class="btn ghost" id="m-ex">Przykład: jedna faktura</button><button type="button" class="btn ghost" id="m-ex-iz">Przykład: identyfikator zbiorczy</button><button type="button" class="btn ghost" id="m-clear">Wyczyść</button></div>
+  <p class="label" id="m-out-l">Komunikat MPP (jedna linia)</p>
+  <p class="out placeholder" id="m-out" aria-labelledby="m-out-l" aria-live="polite">Uzupełnij kwotę VAT, NIP i numer KSeF – komunikat pojawi się tutaj.</p>
+  <div class="out-row"><span class="counter" id="m-count">0 / 140 znaków</span><button type="button" class="btn small" id="m-copy" data-copy="m-out" disabled>Kopiuj komunikat</button></div>
+  <div id="m-stat" class="status" role="status" aria-live="polite"></div>
+  <div id="m-split" hidden>
+    <h3>Układ w 4 liniach – do formularzy z osobnymi polami</h3>
+    <dl class="kv" id="m-lines4"></dl>
+    <h3>Podział po 35 znaków (import Elixir / CSV)</h3>
+    <ol class="lines35" id="m-lines35"></ol>
+  </div>
+  <p class="privacy">🔒 Dane nie opuszczają Twojej przeglądarki.</p>
+</section>
+<article class="content">
+<h2>Jak wygląda komunikat MPP z numerem KSeF</h2>
+<p>Przelew w mechanizmie podzielonej płatności (split payment) nie ma zwykłego tytułu. Zamiast niego bank oczekuje komunikatu ze słowami kodowymi w ściśle określonej kolejności. Specyfikacja mBanku dla pola <code>Ustrd</code> (140 znaków) opisuje format <code>/VAT/10n,2n/IDC/14x/INV/35x/TXT/33x</code> i dwie zasady: <q>Obowiązkowe jest zachowanie kolejności poszczególnych słów kodowych. Każde słowo kodowe może wystąpić wyłącznie jeden raz.</q> oraz <q>Niedozwolone są spacje pomiędzy słowem kodowym a znakiem.</q></p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Słowo kodowe</th><th scope="col">Co wpisać</th><th scope="col">Format</th><th scope="col">Wymagane</th></tr></thead>
+<tbody>
+<tr><th scope="row"><code>/VAT/</code></th><td>Kwota VAT z przecinkiem jako separatorem, np. 23,00. Musi być większa od 0,00 i nie wyższa niż kwota przelewu.</td><td>do 10 cyfr, przecinek, 2 cyfry</td><td>tak</td></tr>
+<tr><th scope="row"><code>/IDC/</code></th><td>Identyfikator dostawcy – zwykle NIP sprzedawcy (wystawcy faktury); przy przekazaniu własnym Twój identyfikator</td><td>do 14 znaków</td><td>tak</td></tr>
+<tr><th scope="row"><code>/INV/</code></th><td>Numer faktury albo numer KSeF; przy kilku fakturach z KSeF – identyfikator zbiorczy; „PRZEKAZANIE WLASNE” między własnymi rachunkami VAT</td><td>do 35 znaków</td><td>tak</td></tr>
+<tr><th scope="row"><code>/TXT/</code></th><td>Dowolny tekst, np. Twój numer faktury</td><td>do 33 znaków</td><td>nie</td></tr>
+</tbody></table></div>
+<p>Przykłady ze specyfikacji banku (ilustracyjne, z niepoprawną sumą kontrolną):</p>
+<blockquote class="mono">/VAT/23035,90/IDC/3786417439/INV/3786417439-20260928-AB12CD34EF56-78/TXT/dowolny tekst<br>/VAT/75809,43/IDC/3786417439/INV/3786417439-IZ202708-AB12CD34EF56-78/TXT/dowolny tekst</blockquote>
+
+<h2>Co zmienia się 1 stycznia 2027 r.</h2>
+<p>Ministerstwo Finansów potwierdza, że <q>w komunikacie przelewu MPP podaje się między innymi numer KSeF faktury</q>, a przy płatności za wiele faktur <q>zamiast wpisywania okresu … podaje identyfikator zbiorczy</q>. Do końca 2026 r. obowiązek jest odroczony – dlatego generator ma pole daty: przed 1 stycznia 2027 r. możesz wpisać numer faktury, a od tego dnia za faktury z KSeF podajesz numer KSeF lub identyfikator zbiorczy.</p>
+<p>Numer KSeF ma dokładnie 35 znaków, czyli wypełnia całe pole <code>/INV/</code>. Twój numer faktury (pole P_2) zmieści się już tylko w <code>/TXT/</code> (do 33 znaków). Tak robi część narzędzi do płatności – to praktyka, a nie wymóg prawa.</p>
+
+<h2>Jak użyć generatora – krok po kroku</h2>
+<ol class="steps">
+<li><strong>Kwota VAT.</strong> Wpisz ją z przecinkiem lub kropką – zamienimy na format banku (np. <code>1230,00</code>), bez spacji i separatorów tysięcy.</li>
+<li><strong>Kwota brutto.</strong> Opcjonalnie: sprawdzimy, czy VAT nie przekracza kwoty przelewu.</li>
+<li><strong>NIP sprzedawcy.</strong> Usuniemy myślniki i prefiks PL oraz sprawdzimy cyfrę kontrolną.</li>
+<li><strong>Numer KSeF albo identyfikator zbiorczy.</strong> Rozpoznamy typ i sprawdzimy sumę kontrolną CRC-8. Numer w starym, 36-znakowym formacie nie zmieści się w <code>/INV/</code>.</li>
+<li><strong>Tekst.</strong> Opcjonalnie, maks. 33 znaki. Zablokujemy znaki niedozwolone i słowa kodowe.</li>
+<li><strong>Skopiuj.</strong> Całą linię albo poszczególne pola – w zależności od formularza Twojego banku.</li>
+</ol>
+
+<h2>Dozwolone i zabronione znaki</h2>
+<p>W szczegółach płatności dozwolone są: <q>0-9, a-z, A-Z, &amp;%()-{}/,. oraz polskie znaki</q>. Zabronione są m.in. <code>: * ; ‘ “ ! + ? | #</code>. Generator wskaże każdy niedozwolony znak w polu <code>/INV/</code> i <code>/TXT/</code>.</p>
+
+<h2>Trzy układy tego samego komunikatu</h2>
+<ul>
+<li><strong>Jedna linia</strong> – do pola „Tytuł” w bankowości internetowej i do plików XML (pain.001).</li>
+<li><strong>Cztery linie</strong> – część banków ma osobne pola. Deutsche Bank opisuje układ: <q>Linia 1:/VAT/1230,00 · Linia 2:/IDC/1234567890 · Linia 3:/INV/ABC123 · Linia 4:/TXT/dodatkowy opis</q>. mBank zapowiedział, że <q>w polu Numer faktury będzie można wprowadzić również numer faktury KSeF</q>, a <q>pole Tytuł przelewu zastąpimy polem Dodatkowe dane do faktury</q>.</li>
+<li><strong>Po 35 znaków</strong> – w imporcie Elixir/CSV tytuł dzieli się na sekcje <q>maksymalnie 35 znaków na sekcję</q>. Dla MPP kod dokumentu to „53”, a w tytule muszą być trzy słowa kodowe (VAT, IDC, INV) w ściśle określonej kolejności.</li>
+</ul>
+<p class="note">Banki wciąż publikują swoje zasady dla numeru KSeF w MPP. Przed pierwszą płatnością w 2027 r. wyślij jeden przelew próbny i sprawdź, czy bank przyjął komunikat bez zmian.</p>
+
+<h2>Najczęstsze błędy w komunikacie MPP</h2>
+<ul>
+<li><strong>Kropka zamiast przecinka w kwocie VAT</strong> (<code>/VAT/230.00</code>) – bank może odrzucić przelew. Poprawnie: <code>/VAT/230,00</code>.</li>
+<li><strong>Spacja po słowie kodowym</strong> (<code>/VAT/ 230,00</code>) – spacje między słowem kodowym a wartością są niedozwolone.</li>
+<li><strong>Zła kolejność</strong> – zawsze VAT, IDC, INV, a na końcu opcjonalnie TXT. Każde słowo kodowe tylko raz.</li>
+<li><strong>NIP nabywcy zamiast NIP sprzedawcy</strong> w <code>/IDC/</code> – wpisujesz identyfikator dostawcy, czyli wystawcy faktury (wyjątek: przekazanie własne).</li>
+<li><strong>Numer faktury i numer KSeF razem w /INV/</strong> – nie zmieszczą się. Numer KSeF w /INV/, numer faktury w /TXT/.</li>
+<li><strong>Literówka w numerze KSeF</strong> – generator liczy sumę kontrolną CRC-8, więc zablokuje komunikat z błędnym numerem.</li>
+</ul>
+
+<p>Jeśli płacisz wiele faktur w MPP, przygotuj numery KSeF w <a href="/sprawdz-wiele-numerow-ksef/">masowym walidatorze</a>, a dane z pliku faktury przeniesiesz do generatora jednym kliknięciem z narzędzia <a href="/przelew-z-faktury-xml-ksef/">przelew z faktury XML</a>.</p>
+<h2 id="faq">Najczęstsze pytania</h2><div class="faq"><details><summary>Co wpisać w /INV/ od 2027 roku?</summary><p>Numer KSeF faktury (35 znaków). Gdy płacisz jednym przelewem za kilka faktur z KSeF od tego samego sprzedawcy – identyfikator zbiorczy. Między własnymi rachunkami VAT – „PRZEKAZANIE WLASNE”.</p></details><details><summary>Gdzie wpisać swój numer faktury, skoro /INV/ zajmuje numer KSeF?</summary><p>W polu /TXT/, które mieści do 33 znaków. Pole jest opcjonalne.</p></details><details><summary>Czy kwotę VAT piszę z kropką czy z przecinkiem?</summary><p>Z przecinkiem, np. 23,00 – tego wymaga format banku. Generator sam zamieni kropkę na przecinek i usunie spacje.</p></details><details><summary>Jaki jest limit długości komunikatu MPP?</summary><p>140 znaków dla całego komunikatu. /IDC/ do 14 znaków, /INV/ do 35, /TXT/ do 33. Z numerem KSeF i 10-cyfrowym NIP-em zostaje zwykle wystarczająco miejsca na krótki tekst.</p></details><details><summary>Czy mogę zapłacić w MPP za kilka faktur jednym przelewem?</summary><p>Tak – w /INV/ podajesz wtedy identyfikator zbiorczy KSeF zamiast okresu. Wszystkie faktury w identyfikatorze muszą mieć tego samego sprzedawcę.</p></details><details><summary>Które znaki są niedozwolone?</summary><p>Między innymi : * ; ‘ “ ! + ? | #. Dozwolone są cyfry, litery (także polskie), spacja oraz &amp; % ( ) - { } / , .</p></details><details><summary>Czy generator wysyła dane do banku?</summary><p>Nie. Wszystko dzieje się w Twojej przeglądarce. Kopiujesz gotowy tekst i wklejasz go w bankowości.</p></details></div><h2 id="zrodla">Źródła</h2><ul class="sources"><li><a href="https://www.mbank.pl/pdf/msp-korporacje/bankowosc-elektroniczna/multicash-pain00100109-pl.pdf" rel="noopener" target="_blank">mBank: specyfikacja MultiCash pain.001.001.09 v2.0.7 – płatność podzielona w polu Ustrd</a> – 29.09.2026</li><li><a href="https://www.mbank.pl/firmy/uslugi-serwis-transakcyjny/import-przelewow" rel="noopener" target="_blank">mBank: import przelewów (Elixir/CSV) – zasady MPP</a></li><li><a href="https://www.mbank.pl/komunikaty/klienci-firmowi/planowane-zmiany-w-przelewach-podzielonych-split-payment" rel="noopener" target="_blank">mBank: planowane zmiany w przelewach podzielonych (split payment)</a> – 19.10.2026</li><li><a href="https://www.deutsche-bank.com.cn/poland/documents/kk/platnosci-split-informacja-dla-klientow.pdf" rel="noopener" target="_blank">Deutsche Bank Polska: płatności split – informacja dla klientów</a></li><li><a href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" rel="noopener" target="_blank">Ministerstwo Finansów: Numer KSeF i zbiorczy identyfikator</a> – strona zmodyfikowana 10.11.2026</li><li><a href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" rel="noopener" target="_blank">Ministerstwo Finansów: Podstawy prawne oraz kluczowe terminy KSeF</a></li></ul><h2 id="inne-narzedzia">Inne darmowe narzędzia KSeF</h2><div class="hub"><a href="/"><strong>Walidator numeru KSeF</strong><span>Sprawdź numer KSeF (CRC-8, NIP, data) i ułóż tytuł przelewu.</span></a><a href="/identyfikator-zbiorczy-ksef/"><strong>Identyfikator zbiorczy</strong><span>Sprawdź identyfikator zbiorczy KSeF i rozłóż go na części.</span></a><a href="/sprawdz-wiele-numerow-ksef/"><strong>Wiele numerów naraz</strong><span>Lista, plik CSV lub wyciąg bankowy – wyniki do pobrania w CSV.</span></a><a href="/przelew-z-faktury-xml-ksef/"><strong>Przelew z faktury XML</strong><span>Wczytaj fakturę FA(3) i skopiuj rachunek, kwotę, tytuł i komunikat MPP.</span></a><a href="/kod-qr-ksef/"><strong>Kod QR KSeF</strong><span>Wygeneruj KOD I z pliku XML albo sprawdź link z kodu QR na fakturze.</span></a><a href="/ksef-od-2027-jdg/"><strong>KSeF dla JDG od 2027</strong><span>Odpowiedz na kilka pytań i zobacz, co zmienia się 1 stycznia 2027 r.</span></a></div><p class="updated">Ostatnia aktualizacja: <time datetime="2026-11-13">13 listopada 2026 r.</time> · Dane nie opuszczają Twojej przeglądarki.</p></article>
+</main>
+<footer class="site-foot"><div class="wrap"><div class="foot-grid"><div><h2>Numer KSeF – darmowe narzędzia</h2><p>Bezpłatne narzędzia do numerów KSeF, przelewów i faktur ustrukturyzowanych. Bez reklam, bez rejestracji. Wszystkie obliczenia wykonuje Twoja przeglądarka – Dane nie opuszczają Twojej przeglądarki.</p><p>Serwis niezależny, niezwiązany z Ministerstwem Finansów. Treści mają charakter informacyjny i nie stanowią porady podatkowej.</p></div><div><h2>Narzędzia</h2><ul><li><a href="/">Walidator numeru KSeF</a></li><li><a href="/przelew-mpp-numer-ksef/">Komunikat przelewu MPP</a></li><li><a href="/identyfikator-zbiorczy-ksef/">Identyfikator zbiorczy</a></li><li><a href="/sprawdz-wiele-numerow-ksef/">Wiele numerów naraz</a></li><li><a href="/przelew-z-faktury-xml-ksef/">Przelew z faktury XML</a></li><li><a href="/kod-qr-ksef/">Kod QR KSeF</a></li><li><a href="/ksef-od-2027-jdg/">KSeF dla JDG od 2027</a></li></ul></div><div><h2>Serwis i źródła</h2><ul><li><a href="/o-serwisie/">O serwisie</a></li><li><a href="/polityka-prywatnosci/">Polityka prywatności</a></li><li><a href="https://ksef.podatki.gov.pl/" rel="noopener" target="_blank">ksef.podatki.gov.pl (MF)</a></li><li><a href="https://github.com/CIRFMF/ksef-docs" rel="noopener" target="_blank">Dokumentacja KSeF 2.0 (MF, GitHub)</a></li><li><a href="/sitemap.xml">Mapa strony</a></li></ul></div></div><p class="foot-note">© 2026 NumerKSeF · Ostatnia aktualizacja: 13 listopada 2026 r. · Kod działa bez serwera, bez ciasteczek i bez śledzenia.</p></div></footer><p id="live" class="sr-only" aria-live="polite"></p>
+<script src="/assets/core.js?v=2" defer></script>
+<script src="/assets/ui.js?v=2" defer></script>
+<script src="/assets/page-mpp.js?v=2" defer></script>
+</body>
+</html>
