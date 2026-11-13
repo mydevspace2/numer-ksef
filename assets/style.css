@@ -196,3 +196,33 @@ legend{font-weight:700;padding:0 6px}
 .foot-note{border-top:1px solid #2a3a5c;margin-top:22px;padding-top:14px;color:#a9b6cb;font-size:.85rem}
 .err-page{text-align:center;padding:40px 0}
 @media print{.site-head,.site-foot,.btns,.tool .btn{display:none}}
+
+/* v3: przełącznik motywu i tryb ciemny */
+.theme-toggle{display:inline-grid;place-items:center;width:44px;height:44px;flex:none;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);border-radius:var(--r-s);cursor:pointer;padding:0}
+.theme-toggle svg{width:20px;height:20px}
+.theme-toggle:hover{border-color:var(--brand);color:var(--brand)}
+.theme-toggle:focus-visible,.nav-toggle:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+@media (min-width:1000px){.site-nav a{padding:8px 8px;font-size:.9rem}}
+html[data-theme=dark]{color-scheme:dark;
+  --bg:#0b1220; --surface:#111a2e; --ink:#e6ebf3; --ink-2:#c3cbd8; --muted:#9aa6ba;
+  --line:#26334b; --line-2:#3a4a66;
+  --brand:#7ea4ff; --brand-ink:#0b1220; --brand-soft:#1a2747; --brand-dark:#b3c8ff;
+  --ok:#62d597; --ok-bg:#0f2a1c; --ok-line:#2d6b48;
+  --bad:#ff8f86; --bad-bg:#3a1714; --bad-line:#7a302a;
+  --warn:#ffc46b; --warn-bg:#33250b; --warn-line:#7a5a1c;
+  --info:#93c0ff; --info-bg:#10213b;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3)}
+html[data-theme=dark] .btn:hover{color:#0b1220}
+html[data-theme=dark] .btn.ghost,html[data-theme=dark] .kv>div,html[data-theme=dark] .table-wrap,html[data-theme=dark] .faq details,html[data-theme=dark] .hub a,html[data-theme=dark] .checklist li{background:var(--surface)}
+html[data-theme=dark] .checklist li.pending{background:var(--warn-bg)}
+html[data-theme=dark] input[type=text],html[data-theme=dark] input[type=date],html[data-theme=dark] input[type=url],html[data-theme=dark] input[type=search],html[data-theme=dark] textarea,html[data-theme=dark] select{background:#0e1628}
+html[data-theme=dark] .file,html[data-theme=dark] .out{background:#0e1628}
+html[data-theme=dark] thead th,html[data-theme=dark] .content code{background:#1b2640}
+html[data-theme=dark] blockquote{background:#131d33}
+html[data-theme=dark] .status.info,html[data-theme=dark] .badge.info{border-color:#2d4c78}
+html[data-theme=dark] .parts,html[data-theme=dark] .parts div{border-color:rgba(255,255,255,.1)}
+html[data-theme=dark] .ico,html[data-theme=dark] .steps li::before{color:#0b1220}
+html[data-theme=dark] .warn .ico{background:var(--warn)}
+html[data-theme=dark] .qrbox{background:#fff;color:#0f172a}
+html[data-theme=dark] .site-foot{background:#070d18}
+html[data-theme=dark] input:focus,html[data-theme=dark] textarea:focus,html[data-theme=dark] select:focus{outline-color:rgba(126,164,255,.35)}

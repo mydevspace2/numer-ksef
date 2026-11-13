@@ -575,7 +575,7 @@
       else items.push({ level: "info", date: "1 stycznia 2027", text: "Jako podatnik zwolniony z VAT nie masz obowiązku podawania numeru KSeF w przelewach – możesz go podawać dobrowolnie." });
     }
     if (a.mpp === "tak" && active) items.push({ level: "must", date: "1 stycznia 2027", text: "W komunikacie przelewu MPP w polu /INV/ podajesz numer KSeF faktury albo identyfikator zbiorczy zamiast okresu." });
-    if (b2b) items.push({ level: "pending", date: "1 stycznia 2028 (planowane)", text: "Kary za niewystawienie faktury w KSeF (art. 106ni): obecnie mają obowiązywać od 1 stycznia 2027 r. Sejm 6 listopada 2026 r. uchwalił przesunięcie na 1 stycznia 2028 r. – ustawa jest w Senacie i nie jest jeszcze obowiązującym prawem." });
+    if (b2b) items.push({ level: "pending", date: "w toku zmian", text: "Kary za niewystawienie faktury w KSeF (art. 106ni): przepisy są obecnie zmieniane w toku prac legislacyjnych – termin i zasady ich stosowania nie są jeszcze przesądzone. Same obowiązki od 1 stycznia 2027 r. pozostają." });
     return items;
   }
 
