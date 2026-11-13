@@ -1,5 +1,7 @@
 # numerksef.dpdns.org – handover guide
 
+> Continuing with another AI? Start with [AI-HANDOVER.md](AI-HANDOVER.md).
+
 Free Polish KSeF tools site. Owner: Yasir Ali. Everything here belongs to you and keeps running without Hark.
 
 ## Where everything lives
