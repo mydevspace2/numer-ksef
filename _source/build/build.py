@@ -95,10 +95,11 @@ REPO = os.path.abspath(os.path.join(OUT, "..", "repo"))
 _old = {}
 try:
     for _loc, _lm in _re.findall(r"<loc>([^<]+)</loc><lastmod>([^<]+)</lastmod>", open(os.path.join(REPO, "sitemap.xml"), encoding="utf-8").read()):
-        _old[_loc.replace(DOMAIN, "")] = _lm
+        if re.match(r"^\d{4}-\d{2}-\d{2}", _lm or ""):
+            _old[_loc.replace(DOMAIN, "")] = _lm
 except OSError:
     pass
-NOW = os.environ.get("NUMERKSEF_LASTMOD") or _dt.datetime.now(_dt.timezone(_dt.timedelta(hours=5))).replace(microsecond=0).isoformat()
+NOW = (os.environ.get("NUMERKSEF_LASTMOD") if re.match(r"^\d{4}-\d{2}-\d{2}", os.environ.get("NUMERKSEF_LASTMOD") or "") else None) or _dt.datetime.now(_dt.timezone(_dt.timedelta(hours=5))).replace(microsecond=0).isoformat()
 def lastmod(u):
     newf = os.path.join(OUT, u.lstrip("/"), "index.html")
     oldf = os.path.join(REPO, u.lstrip("/"), "index.html")
@@ -116,7 +117,7 @@ for u in urls:
     sm.append("  <url><loc>%s%s</loc><lastmod>%s</lastmod><priority>%s</priority></url>" % (DOMAIN, u, lastmod(u), pr))
 sm.append("</urlset>\n")
 write("/sitemap.xml", "\n".join(sm))
-write("/robots.txt", "User-agent: *\nAllow: /\n\nSitemap: %s/sitemap.xml\n" % DOMAIN)
+write("/robots.txt", "User-agent: *\nAllow: /\nDisallow: /_source/\n\nSitemap: %s/sitemap.xml\n" % DOMAIN)
 
 FAV = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#1747c9"/>'
        '<path d="M9 9h3v6.2L17.6 9h3.7l-6 6.6L21.6 23h-3.8l-4.6-5.4-1.2 1.3V23H9z" fill="#fff"/>'

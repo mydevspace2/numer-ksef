@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /_source/
 
 Sitemap: https://numerksef.dpdns.org/sitemap.xml
