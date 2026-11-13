@@ -19,9 +19,20 @@
       U.showCheck(res, r);
     }
     inp.setAttribute("aria-invalid", r.status === "bad" ? "true" : "false");
+    if (r.valid) {
+      var row = document.createElement("div");
+      row.className = "btns mt10 mb0";
+      var cb = document.createElement("button");
+      cb.type = "button"; cb.className = "btn ghost"; cb.id = "iz-copy";
+      cb.setAttribute("data-copy-text", r.input);
+      cb.textContent = r.kind === "iz" ? "Kopiuj identyfikator" : "Kopiuj numer";
+      row.appendChild(cb); res.appendChild(row);
+    }
   }
+  function checkShow() { check(); U.reveal(inp, res); }
   inp.addEventListener("input", check);
-  $("iz-check").addEventListener("click", check);
+  $("iz-check").addEventListener("click", checkShow);
+  U.onEnter(inp, checkShow);
   $("iz-ex").addEventListener("click", function () { inp.value = K.EXAMPLE_IZ; check(); inp.focus(); });
   $("iz-clear").addEventListener("click", function () { inp.value = ""; check(); inp.focus(); });
 })();

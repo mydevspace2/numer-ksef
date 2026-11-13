@@ -5,7 +5,12 @@
   var form = $("j-form"), out = $("j-out");
   var LVL = { must: "Obowiązek", info: "Informacja", pending: "W toku legislacji" };
   function get(name) { var el = form.querySelector('input[name="' + name + '"]:checked'); return el ? el.value : ""; }
-  function run(e) {
+  function allAnswered() {
+    var names = {};
+    form.querySelectorAll('input[type="radio"]').forEach(function (r) { names[r.name] = 1; });
+    return Object.keys(names).every(function (n) { return !!get(n); });
+  }
+  function run(e, auto) {
     if (e) e.preventDefault();
     var a = { b2b: get("b2b"), vat: get("vat"), small: get("small"), cash: get("cash"), pays: get("pays"), mpp: get("mpp") };
     var missing = ["b2b", "vat", "pays"].filter(function (k) { return !a[k]; });
@@ -15,8 +20,14 @@
       return '<li class="' + it.level + '"><span class="when">' + K.esc(it.date) + " · " + LVL[it.level] + "</span>" + K.esc(it.text) + "</li>";
     }).join("") + '</ul><p class="hint">To orientacyjna lista, nie porada podatkowa. W razie wątpliwości zapytaj księgową lub doradcę.</p>';
     out.querySelector("h3").setAttribute("tabindex", "-1");
-    out.querySelector("h3").focus();
+    if (auto) U.reveal(null, out); else out.querySelector("h3").focus();
   }
   form.addEventListener("submit", run);
-  $("j-reset").addEventListener("click", function () { form.reset(); out.innerHTML = ""; });
+  // wynik pojawia się sam, gdy wszystkie pytania mają odpowiedź (przycisk zostaje)
+  var shown = false;
+  form.addEventListener("change", function () {
+    if (!allAnswered()) return;
+    run(null, !shown); shown = true;
+  });
+  $("j-reset").addEventListener("click", function () { form.reset(); out.innerHTML = ""; shown = false; });
 })();

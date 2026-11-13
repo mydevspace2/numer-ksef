@@ -40,7 +40,7 @@ cd _source/build && python3 build.py        # writes ../site-v2/
 cd tools && npm install && node minify.js    # minify JS
 ```
 Then copy the output over the repo root (keep CNAME, the IndexNow key .txt and .nojekyll).
-Tests: `_source/qa/` (`npm install`, then `node test-site.js`).
+Tests: `_source/qa/` (`npm install`, then `node test-core.js`, `node test-site.js`; with Playwright also `node test-browser-csp.js` and `node test-mobile-375.js` for the 375×812 phone check).
 Small edits are easier straight in the HTML, as above.
 
 ## Rules worth keeping

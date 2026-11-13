@@ -140,11 +140,21 @@
     document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
   }
+  // Enter / „Sprawdź”: zamknij klawiaturę i pokaż wynik (UX 2026-11-13)
+  function reveal(inp, res) {
+    if (inp && document.activeElement === inp) inp.blur();
+    if (!res || !res.scrollIntoView) return;
+    var smooth = !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    setTimeout(function () { res.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "nearest" }); }, 60);
+  }
+  function onEnter(inp, fn) {
+    inp.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.isComposing) { e.preventDefault(); fn(); } });
+  }
   function counter(el, n, max) {
     el.textContent = n + " / " + max + " " + K.plural(n);
     el.classList.toggle("over", n > max);
   }
 
   window.UI = { $: $, copyText: copyText, statusBox: statusBox, mark: mark, parts: parts, describe: describe, showCheck: showCheck,
-    readFile: readFile, dropZone: dropZone, download: download, counter: counter, ymdToPl: ymdToPl, isoToPl: isoToPl };
+    readFile: readFile, dropZone: dropZone, reveal: reveal, onEnter: onEnter, download: download, counter: counter, ymdToPl: ymdToPl, isoToPl: isoToPl };
 })();

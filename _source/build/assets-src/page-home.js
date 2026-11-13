@@ -14,7 +14,9 @@
     useBtn.hidden = !last.valid;
   }
   inp.addEventListener("input", check);
-  $("k-check").addEventListener("click", check);
+  function checkShow() { check(); U.reveal(inp, res); }
+  $("k-check").addEventListener("click", checkShow);
+  U.onEnter(inp, checkShow);
   $("k-ex").addEventListener("click", function () { inp.value = K.EXAMPLE_KSEF; check(); inp.focus(); });
   $("k-clear").addEventListener("click", function () { inp.value = ""; check(); inp.focus(); });
   useBtn.addEventListener("click", function () {

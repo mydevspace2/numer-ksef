@@ -77,7 +77,9 @@
     }
   }
   $("d-in").addEventListener("input", dec);
-  $("d-check").addEventListener("click", dec);
+  function decShow() { dec(); U.reveal($("d-in"), $("d-res")); }
+  $("d-check").addEventListener("click", decShow);
+  U.onEnter($("d-in"), decShow);
   $("d-ex").addEventListener("click", function () { $("d-in").value = "https://qr-test.ksef.mf.gov.pl/invoice/1111111111/01-02-2026/UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE"; dec(); });
   $("d-ex-bad").addEventListener("click", function () { $("d-in").value = "https://qr.ksef-mf-gov.pl.weryfikacja.example/invoice/1111111111/01-02-2026/UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE"; dec(); });
   // skan obrazu / aparatu przez BarcodeDetector (jeśli przeglądarka wspiera)

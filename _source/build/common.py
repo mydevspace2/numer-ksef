@@ -87,7 +87,7 @@ def footer():
     return (
         '<footer class="site-foot"><div class="wrap"><div class="foot-grid">'
         '<div><h2>%s</h2><p>Bezpłatne narzędzia do numerów KSeF, przelewów i faktur ustrukturyzowanych. '
-        'Bez reklam, bez rejestracji. Wszystkie obliczenia wykonuje Twoja przeglądarka – %s</p>'
+        'Bez rejestracji. Wszystkie obliczenia wykonuje Twoja przeglądarka – %s</p>'
         '<p>Serwis niezależny, niezwiązany z Ministerstwem Finansów. Treści mają charakter informacyjny i nie stanowią porady podatkowej.</p></div>'
         '<div><h2>Narzędzia</h2><ul>%s</ul></div>'
         '<div><h2>Serwis i źródła</h2><ul>%s'
@@ -199,9 +199,14 @@ def render(page, path):
     robots = '<meta name="robots" content="noindex">' if page.get("noindex") else '<meta name="robots" content="index,follow,max-image-preview:large">'
     body_parts = []
     body_parts.append(crumbs_html(page["trail"]) if len(page["trail"]) > 1 else "")
-    body_parts.append('<div class="hero"><h1>%s</h1><p class="lead">%s</p>' % (e(page["h1"]), page["intro"]))
+    if page.get("intro_m"):
+        # mobile (<600px): one short line under the H1 so the tool and its result fit on the first screen
+        lead = '<p class="lead"><span class="lead-d">%s</span><span class="lead-m">%s</span></p>' % (page["intro"], page["intro_m"])
+    else:
+        lead = '<p class="lead">%s</p>' % page["intro"]
+    body_parts.append('<div class="hero%s"><h1>%s</h1>%s' % (" hero-tool" if page.get("intro_m") else "", e(page["h1"]), lead))
     if page.get("trust", True):
-        body_parts.append('<ul class="trust"><li>Za darmo, bez rejestracji</li><li>%s</li><li>Bez reklam i śledzenia</li></ul>' % PRIVACY_NOTE)
+        body_parts.append('<ul class="trust"><li>Za darmo, bez rejestracji</li><li>%s</li></ul>' % PRIVACY_NOTE)
     body_parts.append("</div>")
     body_parts.append(page.get("tool", ""))
     content = page.get("content", "")

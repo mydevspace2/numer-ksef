@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, sys, shutil
+import os, re, sys, shutil
 sys.path.insert(0, os.path.dirname(__file__))
 import common
 from common import render, DOMAIN, UPDATED_ISO
@@ -47,6 +47,15 @@ JDG["title"] = "KSeF JDG od kiedy? Sprawdź, co zmienia się w 2027"
 JDG["h1"] = "KSeF dla JDG – od kiedy i co zmienia się 1 stycznia 2027?"
 BULK["title"] = "Sprawdź wiele numerów KSeF naraz – lista, CSV, wyciąg"
 IZ["title"] = "Identyfikator zbiorczy KSeF – sprawdź poprawność online"
+
+# --- UX 2026-11-13: krótkie intro na telefonie (hero = H1 + jedna linia; pełne intro na ekranach ≥600px)
+HOME["intro_m"] = "Wklej numer KSeF – od razu zobaczysz, czy jest poprawny."
+MPP["intro_m"] = "Wpisz VAT, NIP i numer KSeF – dostaniesz gotowy komunikat MPP."
+IZ["intro_m"] = "Wklej identyfikator zbiorczy – sprawdzimy budowę i sumę kontrolną."
+BULK["intro_m"] = "Wklej listę, plik CSV lub wyciąg – sprawdzimy każdy numer."
+XMLP["intro_m"] = "Wczytaj plik XML faktury – przygotujemy dane do przelewu."
+QRP["intro_m"] = "Sprawdź link z kodu QR albo wygeneruj KOD I z pliku XML."
+JDG["intro_m"] = "Odpowiedz na kilka pytań i zobacz listę zmian z datami."
 
 # Blok powiązanych narzędzi i artykułów na każdej stronie (także prawnych)
 PRIV["related"] = True; VP.KONTAKT["related"] = True; VP.REGULAMIN["related"] = True
