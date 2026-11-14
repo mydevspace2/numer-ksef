@@ -61,11 +61,19 @@ JDG["intro_m"] = "Odpowiedz na kilka pytań i zobacz listę zmian z datami."
 PRIV["related"] = True; VP.KONTAKT["related"] = True; VP.REGULAMIN["related"] = True
 # Blok „Powiązane artykuły” na dole stron
 common.ARTICLES[:] = [("/blog/%s/" % p["slug"], p["h1"], p["desc"]) for p in VP.POSTS]
-_A1, _A2, _A3 = ["/blog/%s/" % p["slug"] for p in VP.POSTS]  # tytuł przelewu, gdzie znaleźć, identyfikator zbiorczy
+_A1, _A2, _A3 = ["/blog/%s/" % p["slug"] for p in VP.POSTS[:3]]
+_B = {p["slug"]: "/blog/%s/" % p["slug"] for p in VP.POSTS}  # tytuł przelewu, gdzie znaleźć, identyfikator zbiorczy
 common.ARTICLE_MAP.update({
     "/": [_A1, _A2, _A3], "/przelew-mpp-numer-ksef/": [_A1, _A3, _A2], "/identyfikator-zbiorczy-ksef/": [_A3, _A1, _A2],
     "/sprawdz-wiele-numerow-ksef/": [_A2, _A1, _A3], "/przelew-z-faktury-xml-ksef/": [_A2, _A1, _A3],
     "/kod-qr-ksef/": [_A2, _A1, _A3], "/ksef-od-2027-jdg/": [_A1, _A2, _A3],
+})
+# 2026-11-14: nowe posty z kalendarza w blokach „Powiązane artykuły”
+_W, _Z, _S = _B["jak-wyglada-numer-ksef-przyklad"], _B["z-czego-sklada-sie-numer-ksef"], _B["jak-sprawdzic-czy-numer-ksef-jest-poprawny"]
+common.ARTICLE_MAP.update({
+    "/": [_S, _A1, _W], "/sprawdz-wiele-numerow-ksef/": [_S, _A2, _A1],
+    _A2: [_W, _S, _A1], _A1: [_S, _A2, _A3], _A3: [_W, _A1, _A2],
+    _W: [_Z, _S, _A2], _Z: [_S, _W, _A3], _S: [_Z, _W, _A1],
 })
 
 PAGES = [

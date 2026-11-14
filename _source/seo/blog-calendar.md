@@ -3,11 +3,13 @@
 Ułożone wg przewidywanej wartości (popyt z autocomplete × słaba konkurencja × naturalne przejście do naszego narzędzia). Pominięte 3 istniejące: jak-wpisac-numer-ksef-w-tytule-przelewu, gdzie-znalezc-numer-ksef-faktury, identyfikator-zbiorczy-ksef-co-to-jest.
 Rytm wg playbooka: 1 post dziennie przez ~30 dni (przydatne też przy „Low value content” w AdSense). Każdy post: 800–1 200 słów, tabela lub przykład, FAQ z 3–5 pytań, link do narzędzia nad zgięciem i w podsumowaniu. Zasada: bez dat i kwot kar.
 
+Legenda statusu: „✅ RRRR-MM-DD” przy numerze = opublikowano tego dnia (treść w `build/posts_cal.py`).
+
 | # | Slug | Tytuł (<60 znaków) | Zapytanie docelowe | Link do narzędzia |
 |---|---|---|---|---|
-| 1 | jak-wyglada-numer-ksef-przyklad | Jak wygląda numer KSeF? Przykład i budowa numeru | jak wygląda numer ksef / numer ksef przykład | / (walidator) |
-| 2 | z-czego-sklada-sie-numer-ksef | Z czego składa się numer KSeF? 35 znaków krok po kroku | numer ksef z czego się składa | / |
-| 3 | jak-sprawdzic-czy-numer-ksef-jest-poprawny | Jak sprawdzić, czy numer KSeF jest poprawny? | jak sprawdzić czy numer ksef jest poprawny | / |
+| 1 ✅ 2026-11-14 | jak-wyglada-numer-ksef-przyklad | Jak wygląda numer KSeF? Przykład i budowa numeru | jak wygląda numer ksef / numer ksef przykład | / (walidator) |
+| 2 ✅ 2026-11-14 | z-czego-sklada-sie-numer-ksef | Z czego składa się numer KSeF? 35 znaków krok po kroku | numer ksef z czego się składa | / |
+| 3 ✅ 2026-11-14 | jak-sprawdzic-czy-numer-ksef-jest-poprawny | Jak sprawdzić, czy numer KSeF jest poprawny? | jak sprawdzić czy numer ksef jest poprawny | / |
 | 4 | numer-ksef-w-przelewie-mpp | Numer KSeF w przelewie MPP – gdzie go wpisać? | numer ksef w przelewie mpp | /przelew-mpp-numer-ksef/ |
 | 5 | czy-numer-ksef-to-numer-faktury | Czy numer KSeF to numer faktury? Różnice | czy numer ksef to numer faktury | / |
 | 6 | numer-ksef-faktury-korygujacej | Numer KSeF faktury korygującej – co wpisać? | numer ksef faktury korygującej | / |

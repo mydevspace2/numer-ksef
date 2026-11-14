@@ -191,9 +191,11 @@ t("SEO: tytuły zawierają najmocniejsze frazy z autocomplete", () => {
   assert.ok(T("/przelew-z-faktury-xml-ksef/").includes("faktura xml ksef"));
   Object.keys(titles).forEach(x => assert.ok(x.length <= 60, "title > 60: " + x));
 });
-t("sitemap: 15 URL, lastmod 2026-11-13; robots wskazuje sitemap; manifest JSON; CNAME", () => {
-  assert.strictEqual((sitemap.match(/<url>/g) || []).length, 15);
-  assert.strictEqual((sitemap.match(/<lastmod>2026-11-13(T\d\d:\d\d:\d\d\+05:00)?<\/lastmod>/g) || []).length, 15);
+t("sitemap: wszystkie strony indeksowalne, lastmod w formacie daty; robots wskazuje sitemap; manifest JSON; CNAME", () => {
+  const nUrl = (sitemap.match(/<url>/g) || []).length;
+  const nIdx = pages.filter(f => !/404\.html$/.test(f) && !f.includes(path.sep + "_source" + path.sep)).length;
+  assert.strictEqual(nUrl, nIdx, "URL w sitemap = strony HTML bez 404");
+  assert.strictEqual((sitemap.match(/<lastmod>20\d\d-\d\d-\d\d(T\d\d:\d\d:\d\d\+05:00)?<\/lastmod>/g) || []).length, nUrl);
   sitemap.match(/<loc>([^<]+)<\/loc>/g).forEach(l => { const u = l.replace(/<\/?loc>/g, "").replace("https://numerksef.dpdns.org", ""); assert.ok(fs.existsSync(urlToFile(u)), u); });
   assert.ok(/Sitemap: https:\/\/numerksef\.dpdns\.org\/sitemap\.xml/.test(fs.readFileSync(path.join(ROOT, "robots.txt"), "utf8")));
   JSON.parse(fs.readFileSync(path.join(ROOT, "site.webmanifest"), "utf8"));

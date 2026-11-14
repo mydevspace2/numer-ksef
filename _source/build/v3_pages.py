@@ -106,6 +106,7 @@ POST1 = dict(
 <li><strong>Ułóż tytuł.</strong> W polu opisu dopisuje „FV 12/11/2026”. Wynik: <code>5265877635-20250826-0100001AF629-AF FV 12/11/2026</code>.</li>
 <li><strong>Skopiuj do banku.</strong> Przycisk „Kopiuj” przenosi tekst do schowka – wystarczy wkleić go w polu „Tytuł” przelewu.</li>
 </ol>
+<p>Co dokładnie sprawdza walidator i jak rozpoznać typowe literówki, opisujemy w artykule <a href="/blog/jak-sprawdzic-czy-numer-ksef-jest-poprawny/">jak sprawdzić, czy numer KSeF jest poprawny</a>.</p>
 <p>Kolejność ma znaczenie praktyczne: numer KSeF na początku tytułu nie zostanie obcięty nawet wtedy, gdy bank lub program odbiorcy skraca długie opisy.</p>
 
 <h2 id="mpp">Numer KSeF w przelewie MPP</h2>
@@ -169,7 +170,7 @@ POST2 = dict(
 <li>12 znaków szesnastkowych to część techniczna,</li>
 <li>2 ostatnie znaki to suma kontrolna CRC-8.</li>
 </ul>
-<p>Jeśli widzisz ciąg pasujący do tego wzoru, to prawie na pewno numer KSeF. Potwierdzisz to w kilka sekund w <a href="/">walidatorze numeru KSeF</a>.</p>
+<p>Jeśli widzisz ciąg pasujący do tego wzoru, to prawie na pewno numer KSeF. Potwierdzisz to w kilka sekund w <a href="/">walidatorze numeru KSeF</a>. Więcej przykładów i podobnych numerów pokazujemy w artykule <a href="/blog/jak-wyglada-numer-ksef-przyklad/">jak wygląda numer KSeF</a>.</p>
 
 <h2 id="szesc-miejsc">6 miejsc, w których znajdziesz numer KSeF</h2>
 <div class="table-wrap"><table>
@@ -310,6 +311,8 @@ POST3 = dict(
 )
 
 POSTS = [POST1, POST2, POST3]
+from posts_cal import CAL_POSTS
+POSTS += CAL_POSTS
 
 
 def post_page(p):
@@ -317,20 +320,21 @@ def post_page(p):
     lead_url, lead_anchor = p["lead_tool"]
     cta = ('<p class="note">Narzędzie do tego artykułu: <a href="%s">%s</a> – za darmo, dane nie opuszczają przeglądarki.</p>'
            % (lead_url, lead_anchor))
+    d_iso, d_pl = p.get("date", ("2026-11-13", "13 listopada 2026"))
     return dict(
-        title=p["title"], desc=p["desc"], app=False, trust=False, article=True,
+        title=p["title"], desc=p["desc"], app=False, trust=False, article=True, date_iso=d_iso, faq=p.get("faq"),
         h1=p["h1"], intro=p["intro"],
         trail=[("Strona główna", "/"), ("Blog", "/blog/"), (p["h1"].split(" – ")[0], url)],
-        content='<p class="updated">Opublikowano: <time datetime="2026-11-13">13 listopada 2026 r.</time></p>' + cta + p["content"],
+        content='<p class="updated">Opublikowano: <time datetime="%s">%s r.</time></p>' % (d_iso, d_pl) + cta + p["content"],
         sources=p["sources"],
     ), url
 
 
 def blog_index():
-    cards = "".join('<a href="/blog/%s/"><strong>%s</strong><span>%s</span></a>' % (p["slug"], p["h1"], p["desc"]) for p in POSTS)
+    cards = "".join('<a href="/blog/%s/"><strong>%s</strong><span>%s</span></a>' % (p["slug"], p["h1"], p["desc"]) for p in reversed(POSTS))
     return dict(
         title="Blog NumerKSeF – poradniki o numerze KSeF i przelewach",
-        desc="Praktyczne poradniki o KSeF: jak wpisać numer KSeF w tytule przelewu, gdzie znaleźć numer KSeF faktury i czym jest identyfikator zbiorczy.",
+        desc="Poradniki o KSeF: jak wygląda i jak sprawdzić numer KSeF, jak wpisać go w tytule przelewu, gdzie go znaleźć i czym jest identyfikator zbiorczy.",
         app=False, trust=False,
         h1="Blog: poradniki o KSeF i płatnościach",
         intro="Krótkie, konkretne artykuły o numerach KSeF, przelewach i MPP. Każdy odsyła do darmowego narzędzia, które pomoże od razu zastosować wiedzę.",

@@ -156,8 +156,8 @@ def jsonld(page, path):
     if page.get("article"):
         org = org_ref()
         graph.append({"@type": "Article", "headline": page["h1"], "description": page["desc"], "url": url,
-                      "mainEntityOfPage": url, "inLanguage": "pl-PL", "datePublished": UPDATED_ISO,
-                      "dateModified": UPDATED_ISO, "author": org, "publisher": org,
+                      "mainEntityOfPage": url, "inLanguage": "pl-PL", "datePublished": page.get("date_iso", UPDATED_ISO),
+                      "dateModified": page.get("date_iso", UPDATED_ISO), "author": org, "publisher": org,
                       "isAccessibleForFree": True, "image": DOMAIN + OG_IMAGE})
     if page.get("faq"):
         graph.append({"@type": "FAQPage", "mainEntity": [
