@@ -10,9 +10,9 @@ Legenda statusu: „✅ RRRR-MM-DD” przy numerze = opublikowano tego dnia (tre
 | 1 ✅ 2026-11-14 | jak-wyglada-numer-ksef-przyklad | Jak wygląda numer KSeF? Przykład i budowa numeru | jak wygląda numer ksef / numer ksef przykład | / (walidator) |
 | 2 ✅ 2026-11-14 | z-czego-sklada-sie-numer-ksef | Z czego składa się numer KSeF? 35 znaków krok po kroku | numer ksef z czego się składa | / |
 | 3 ✅ 2026-11-14 | jak-sprawdzic-czy-numer-ksef-jest-poprawny | Jak sprawdzić, czy numer KSeF jest poprawny? | jak sprawdzić czy numer ksef jest poprawny | / |
-| 4 | numer-ksef-w-przelewie-mpp | Numer KSeF w przelewie MPP – gdzie go wpisać? | numer ksef w przelewie mpp | /przelew-mpp-numer-ksef/ |
-| 5 | czy-numer-ksef-to-numer-faktury | Czy numer KSeF to numer faktury? Różnice | czy numer ksef to numer faktury | / |
-| 6 | numer-ksef-faktury-korygujacej | Numer KSeF faktury korygującej – co wpisać? | numer ksef faktury korygującej | / |
+| 4 ✅ 2026-11-15 | numer-ksef-w-przelewie-mpp | Numer KSeF w przelewie MPP – gdzie go wpisać? | numer ksef w przelewie mpp | /przelew-mpp-numer-ksef/ |
+| 5 ✅ 2026-11-15 | czy-numer-ksef-to-numer-faktury | Czy numer KSeF to numer faktury? Różnice | czy numer ksef to numer faktury | / |
+| 6 ✅ 2026-11-15 | numer-ksef-faktury-korygujacej | Numer KSeF faktury korygującej – co wpisać? | numer ksef faktury korygującej | / |
 | 7 | numer-ksef-faktury-zaliczkowej | Numer KSeF faktury zaliczkowej i przelew zaliczki | numer ksef faktury zaliczkowej | / |
 | 8 | czy-numer-ksef-musi-byc-w-tytule-przelewu | Czy numer KSeF musi być w tytule przelewu? | czy numer ksef musi być w tytule przelewu | / |
 | 9 | numer-ksef-ile-znakow | Numer KSeF – ile ma znaków i czemu 35? | numer ksef ile znaków | / |

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://numerksef.dpdns.org/</loc><lastmod>2026-11-14T12:36:41+05:00</lastmod><priority>1.0</priority></url>
-  <url><loc>https://numerksef.dpdns.org/przelew-mpp-numer-ksef/</loc><lastmod>2026-11-13T23:50:00+05:00</lastmod><priority>0.8</priority></url>
-  <url><loc>https://numerksef.dpdns.org/identyfikator-zbiorczy-ksef/</loc><lastmod>2026-11-13T23:50:00+05:00</lastmod><priority>0.8</priority></url>
+  <url><loc>https://numerksef.dpdns.org/</loc><lastmod>2026-11-15T12:35:03+05:00</lastmod><priority>1.0</priority></url>
+  <url><loc>https://numerksef.dpdns.org/przelew-mpp-numer-ksef/</loc><lastmod>2026-11-15T12:35:03+05:00</lastmod><priority>0.8</priority></url>
+  <url><loc>https://numerksef.dpdns.org/identyfikator-zbiorczy-ksef/</loc><lastmod>2026-11-15T12:35:03+05:00</lastmod><priority>0.8</priority></url>
   <url><loc>https://numerksef.dpdns.org/sprawdz-wiele-numerow-ksef/</loc><lastmod>2026-11-14T12:36:41+05:00</lastmod><priority>0.8</priority></url>
   <url><loc>https://numerksef.dpdns.org/przelew-z-faktury-xml-ksef/</loc><lastmod>2026-11-13T23:50:00+05:00</lastmod><priority>0.8</priority></url>
   <url><loc>https://numerksef.dpdns.org/kod-qr-ksef/</loc><lastmod>2026-11-13T23:50:00+05:00</lastmod><priority>0.8</priority></url>
@@ -11,11 +11,14 @@
   <url><loc>https://numerksef.dpdns.org/o-serwisie/</loc><lastmod>2026-11-13T23:50:00+05:00</lastmod><priority>0.3</priority></url>
   <url><loc>https://numerksef.dpdns.org/kontakt/</loc><lastmod>2026-11-13T23:50:00+05:00</lastmod><priority>0.3</priority></url>
   <url><loc>https://numerksef.dpdns.org/regulamin/</loc><lastmod>2026-11-13T23:50:00+05:00</lastmod><priority>0.3</priority></url>
-  <url><loc>https://numerksef.dpdns.org/blog/</loc><lastmod>2026-11-14T12:36:41+05:00</lastmod><priority>0.6</priority></url>
+  <url><loc>https://numerksef.dpdns.org/blog/</loc><lastmod>2026-11-15T12:35:03+05:00</lastmod><priority>0.6</priority></url>
   <url><loc>https://numerksef.dpdns.org/blog/jak-wpisac-numer-ksef-w-tytule-przelewu/</loc><lastmod>2026-11-14T12:36:41+05:00</lastmod><priority>0.6</priority></url>
   <url><loc>https://numerksef.dpdns.org/blog/gdzie-znalezc-numer-ksef-faktury/</loc><lastmod>2026-11-14T12:36:41+05:00</lastmod><priority>0.6</priority></url>
   <url><loc>https://numerksef.dpdns.org/blog/identyfikator-zbiorczy-ksef-co-to-jest/</loc><lastmod>2026-11-14T12:36:41+05:00</lastmod><priority>0.6</priority></url>
-  <url><loc>https://numerksef.dpdns.org/blog/jak-wyglada-numer-ksef-przyklad/</loc><lastmod>2026-11-14T12:36:41+05:00</lastmod><priority>0.6</priority></url>
-  <url><loc>https://numerksef.dpdns.org/blog/z-czego-sklada-sie-numer-ksef/</loc><lastmod>2026-11-14T12:36:41+05:00</lastmod><priority>0.6</priority></url>
-  <url><loc>https://numerksef.dpdns.org/blog/jak-sprawdzic-czy-numer-ksef-jest-poprawny/</loc><lastmod>2026-11-14T12:36:41+05:00</lastmod><priority>0.6</priority></url>
+  <url><loc>https://numerksef.dpdns.org/blog/jak-wyglada-numer-ksef-przyklad/</loc><lastmod>2026-11-15T12:35:03+05:00</lastmod><priority>0.6</priority></url>
+  <url><loc>https://numerksef.dpdns.org/blog/z-czego-sklada-sie-numer-ksef/</loc><lastmod>2026-11-15T12:35:03+05:00</lastmod><priority>0.6</priority></url>
+  <url><loc>https://numerksef.dpdns.org/blog/jak-sprawdzic-czy-numer-ksef-jest-poprawny/</loc><lastmod>2026-11-15T12:35:03+05:00</lastmod><priority>0.6</priority></url>
+  <url><loc>https://numerksef.dpdns.org/blog/numer-ksef-w-przelewie-mpp/</loc><lastmod>2026-11-15T12:35:03+05:00</lastmod><priority>0.6</priority></url>
+  <url><loc>https://numerksef.dpdns.org/blog/czy-numer-ksef-to-numer-faktury/</loc><lastmod>2026-11-15T12:35:03+05:00</lastmod><priority>0.6</priority></url>
+  <url><loc>https://numerksef.dpdns.org/blog/numer-ksef-faktury-korygujacej/</loc><lastmod>2026-11-15T12:35:03+05:00</lastmod><priority>0.6</priority></url>
 </urlset>
