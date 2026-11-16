@@ -13,9 +13,9 @@ Legenda statusu: „✅ RRRR-MM-DD” przy numerze = opublikowano tego dnia (tre
 | 4 ✅ 2026-11-15 | numer-ksef-w-przelewie-mpp | Numer KSeF w przelewie MPP – gdzie go wpisać? | numer ksef w przelewie mpp | /przelew-mpp-numer-ksef/ |
 | 5 ✅ 2026-11-15 | czy-numer-ksef-to-numer-faktury | Czy numer KSeF to numer faktury? Różnice | czy numer ksef to numer faktury | / |
 | 6 ✅ 2026-11-15 | numer-ksef-faktury-korygujacej | Numer KSeF faktury korygującej – co wpisać? | numer ksef faktury korygującej | / |
-| 7 | numer-ksef-faktury-zaliczkowej | Numer KSeF faktury zaliczkowej i przelew zaliczki | numer ksef faktury zaliczkowej | / |
-| 8 | czy-numer-ksef-musi-byc-w-tytule-przelewu | Czy numer KSeF musi być w tytule przelewu? | czy numer ksef musi być w tytule przelewu | / |
-| 9 | numer-ksef-ile-znakow | Numer KSeF – ile ma znaków i czemu 35? | numer ksef ile znaków | / |
+| 7 ✅ 2026-11-16 | numer-ksef-faktury-zaliczkowej | Numer KSeF faktury zaliczkowej i przelew zaliczki | numer ksef faktury zaliczkowej | / |
+| 8 ✅ 2026-11-16 | czy-numer-ksef-musi-byc-w-tytule-przelewu | Czy numer KSeF musi być w tytule przelewu? | czy numer ksef musi być w tytule przelewu | / |
+| 9 ✅ 2026-11-16 | numer-ksef-ile-znakow | Numer KSeF – ile ma znaków i czemu 35? | numer ksef ile znaków | / |
 | 10 | przelew-za-kilka-faktur-ksef | Przelew za kilka faktur KSeF jednym przelewem | przelew zbiorczy ksef | /identyfikator-zbiorczy-ksef/ |
 | 11 | jak-wygenerowac-identyfikator-zbiorczy-ksef | Jak wygenerować identyfikator zbiorczy KSeF? | identyfikator zbiorczy ksef jak wygenerować | /identyfikator-zbiorczy-ksef/ |
 | 12 | komunikat-przelewu-mpp-wzor | Komunikat przelewu MPP – wzór /VAT/ /IDC/ /INV/ | komunikat przelewu mpp | /przelew-mpp-numer-ksef/ |

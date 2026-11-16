@@ -84,6 +84,15 @@ common.ARTICLE_MAP.update({
     _M: [_N, _K, _A1], _N: [_K, _M, _W], _K: [_N, _M, _A1],
 })
 
+# 2026-11-16: posty #7-9
+_Za, _Ty, _Zn = _B["numer-ksef-faktury-zaliczkowej"], _B["czy-numer-ksef-musi-byc-w-tytule-przelewu"], _B["numer-ksef-ile-znakow"]
+common.ARTICLE_MAP.update({
+    "/przelew-mpp-numer-ksef/": [_M, _Ty, _Za], "/identyfikator-zbiorczy-ksef/": [_Ty, _Zn, _M],
+    "/": [_Ty, _Zn, _N], _W: [_Zn, _N, _Ty], _Z: [_Zn, _N, _Ty], _S: [_Zn, _K, _Ty],
+    _M: [_Ty, _Za, _N], _N: [_Zn, _K, _M], _K: [_Za, _N, _M],
+    _Za: [_K, _Ty, _M], _Ty: [_M, _Zn, _Za], _Zn: [_Z, _S, _Ty],
+})
+
 PAGES = [
     ("/", HOME), ("/przelew-mpp-numer-ksef/", MPP), ("/identyfikator-zbiorczy-ksef/", IZ),
     ("/sprawdz-wiele-numerow-ksef/", BULK), ("/przelew-z-faktury-xml-ksef/", XMLP), ("/kod-qr-ksef/", QRP),

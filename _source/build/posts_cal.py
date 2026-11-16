@@ -528,4 +528,243 @@ C06 = dict(
     sources=[DOC_NUM, MF_NUM, MF_FA3, XSD, APP],
 )
 
-CAL_POSTS = [C01, C02, C03, C04, C05, C06]
+
+# ---------------------------------------------------------------- #7-9 (2026-11-16)
+C07 = dict(
+    slug="numer-ksef-faktury-zaliczkowej",
+    title="Numer KSeF faktury zaliczkowej i przelew zaliczki",
+    desc="Numer KSeF faktury zaliczkowej: jak nadawany jest numer, które pole FA(3) wskazuje zaliczkę na fakturze końcowej i jaki numer wpisać w tytule przelewu.",
+    h1="Numer KSeF faktury zaliczkowej – gdzie go wpisać i co z przelewem zaliczki",
+    intro="Faktura zaliczkowa to zwykła faktura w KSeF, więc dostaje własny numer. Pokazujemy, gdzie ten numer wraca na fakturze końcowej i jak go użyć przy płatności.",
+    lead_tool=("/", "walidator numeru KSeF"),
+    date=("2026-11-16", "16 listopada 2026"),
+    content="""
+<h2 id="zaliczka">Faktura zaliczkowa w KSeF – własny numer</h2>
+<p>Faktura dokumentująca otrzymanie zapłaty przed wykonaniem czynności ma w schemacie FA(3) osobny rodzaj. W pliku XSD udostępnionym przez Ministerstwo Finansów w polu RodzajFaktury występuje wartość <code>ZAL</code>, opisana jako faktura dokumentująca otrzymanie zapłaty lub jej części przed dokonaniem czynności. Dla KSeF to po prostu kolejna faktura: po przyjęciu przez system dostaje numer KSeF o tej samej budowie co każdy inny, czyli 35 znaków (NIP sprzedawcy, data przyjęcia, część techniczna i suma kontrolna).</p>
+<p>Oznacza to, że przy zaliczce nie ma żadnego specjalnego formatu numeru. Zanim go użyjesz w przelewie, możesz sprawdzić go w <a href="/">walidatorze numeru KSeF</a>: narzędzie zweryfikuje długość, NIP, datę i sumę kontrolną.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Dokument</th><th scope="col">Rodzaj w FA(3)</th><th scope="col">Numer KSeF</th></tr></thead>
+<tbody>
+<tr><td>Faktura zaliczkowa</td><td class="mono">ZAL</td><td>własny, nadany przy przyjęciu</td></tr>
+<tr><td>Faktura końcowa (rozliczająca)</td><td class="mono">ROZ</td><td>własny, nadany przy przyjęciu</td></tr>
+<tr><td>Korekta faktury zaliczkowej</td><td class="mono">KOR_ZAL</td><td>własny, nadany przy przyjęciu</td></tr>
+</tbody></table></div>
+<p>Skróty rodzajów pochodzą z wyliczenia w schemacie FA(3): ZAL dotyczy faktur zaliczkowych, ROZ faktury wystawianej w związku z art. 106f ust. 3 ustawy o VAT, a KOR_ZAL korekty faktury zaliczkowej.</p>
+
+<h2 id="koncowa">Gdzie numer zaliczki trafia na fakturze końcowej</h2>
+<p>Faktura końcowa musi wskazywać wcześniejsze zaliczki. Schemat FA(3) przewiduje na to element FakturaZaliczkowa, który może wystąpić do 100 razy. Opis pola w XSD brzmi: numery faktur zaliczkowych lub ich numery KSeF, jeśli zostały wystawione z użyciem KSeF. Wybór zależy od tego, jak powstała zaliczka:</p>
+<ul>
+<li><strong>NrKSeFFaZaliczkowej</strong> – numer identyfikujący fakturę zaliczkową w KSeF. Pole obowiązkowe, gdy zaliczka była wystawiona za pomocą KSeF.</li>
+<li><strong>NrKSeFZN</strong> razem z <strong>NrFaZaliczkowej</strong> – znacznik zaliczki wystawionej poza KSeF i jej zwykły numer nadany przez sprzedawcę.</li>
+</ul>
+<p>Dokumentacja schematu zaznacza, że numer faktury zaliczkowej jest obowiązkowy na fakturze wystawianej po wydaniu towaru lub wykonaniu usługi, o której mowa w art. 106f ust. 3 ustawy. Praktyczny wniosek: przy rozliczaniu zaliczek trzymaj numery KSeF wszystkich zaliczek pod ręką, bo program fakturujący będzie ich potrzebował.</p>
+
+<h2 id="przyklad">Przykład: dwie zaliczki i faktura końcowa</h2>
+<p>Załóżmy zlecenie za 30 000 zł netto rozliczane w trzech etapach. Numery poniżej są wymyślone na potrzeby przykładu i mają tylko pokazać układ:</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Etap</th><th scope="col">Dokument</th><th scope="col">Co zawiera pole FakturaZaliczkowa</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Zaliczka 30%</td><td>nic, to pierwsza faktura w serii</td></tr>
+<tr><td>2</td><td>Zaliczka 30%</td><td>nic (zależnie od układu dokumentów)</td></tr>
+<tr><td>3</td><td>Faktura końcowa</td><td>numery KSeF obu zaliczek</td></tr>
+</tbody></table></div>
+<p>Na fakturze końcowej program wypełni dwa elementy FakturaZaliczkowa, każdy z numerem KSeF jednej zaliczki. Jeśli któraś zaliczka została wystawiona poza KSeF, dla niej zostanie użyty znacznik NrKSeFZN i zwykły numer faktury. Kwoty i podatek rozlicza się według ustawy o VAT, a ten wpis opisuje tylko numery.</p>
+
+<h2 id="przelew">Jaki numer wpisać w przelewie zaliczki</h2>
+<p>Ministerstwo Finansów opisuje zasadę ogólnie: przy płatności za pojedynczą fakturę podawany jest numer KSeF tej faktury. Zaliczka jest fakturą, więc przelew zaliczki dotyczy numeru KSeF faktury zaliczkowej, a przelew reszty należności dotyczy numeru faktury końcowej. Obowiązek podawania numeru w płatnościach między czynnymi podatnikami VAT zaczyna się 1 stycznia 2027 r. (art. 108g ustawy o VAT), a do końca 2026 r. jest odroczony.</p>
+<p>Jeśli płacisz zaliczkę jeszcze przed wystawieniem faktury (np. na podstawie proformy), numeru KSeF po prostu jeszcze nie ma. W takiej sytuacji uzgodnij ze sprzedawcą, jak oznaczyć płatność, i zapytaj księgową, czy w twoim przypadku obowiązek w ogóle dotyczy takiej płatności. Gotowy tytuł zbudujesz w <a href="/przelew-mpp-numer-ksef/">kreatorze przelewu MPP</a> lub w walidatorze.</p>
+<p>Przykład tytułu zaliczki, gdy numer KSeF faktury zaliczkowej to oficjalny przykład MF:</p>
+<p class="mono">5265877635-20250826-0100001AF629-AF</p>
+<p>W polu tytułu wpisujesz sam numer, ewentualnie z krótkim opisem, pamiętając o limicie 140 znaków.</p>
+
+<h2 id="bledy">Typowe pomyłki</h2>
+<ul>
+<li><strong>Podanie numeru faktury końcowej w przelewie zaliczki.</strong> Faktura końcowa jeszcze nie istnieje, kiedy płacisz zaliczkę.</li>
+<li><strong>Pominięcie zaliczki w fakturze końcowej.</strong> Każda zaliczka rozliczana w KSeF powinna mieć swój element z numerem.</li>
+<li><strong>Ręczne przepisywanie numeru.</strong> W numerze są litery A–F i cyfry, a pomyłka psuje sumę kontrolną. Kopiuj i wklejaj.</li>
+<li><strong>Mylenie korekty zaliczki z zaliczką.</strong> Korekta (KOR_ZAL) ma własny numer, tak samo jak opisujemy w tekście o <a href="/blog/numer-ksef-faktury-korygujacej/">numerze KSeF faktury korygującej</a>.</li>
+</ul>
+<h2 id="kontrola">Jak sprawdzić zaliczki przed wystawieniem faktury końcowej</h2>
+<p>Przy dłuższych zleceniach, gdzie zaliczek jest kilka, łatwo o pomyłkę w numerach. Prosta kontrola zajmuje kilka minut i oszczędza poprawiania dokumentów.</p>
+<ol class="steps">
+<li>Wypisz wszystkie wystawione zaliczki ze zleceniem, którego dotyczą, wraz z numerami KSeF.</li>
+<li>Wklej każdy numer do <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarki wielu numerów KSeF</a>. Narzędzie przetworzy całą listę naraz i wskaże numery z błędem formatu.</li>
+<li>Porównaj liczbę zaliczek na liście z liczbą elementów FakturaZaliczkowa w projekcie faktury końcowej.</li>
+<li>Upewnij się, że zaliczki wystawione poza KSeF są oznaczone znacznikiem NrKSeFZN i mają zwykły numer.</li>
+<li>Dopiero potem wyślij fakturę końcową do KSeF.</li>
+</ol>
+<p>Warto wiedzieć, że zaliczki wystawione jeszcze przed wdrożeniem KSeF u danego sprzedawcy nie mają numeru KSeF w ogóle. Dla nich schemat przewiduje właśnie wariant z numerem zwykłym. Jeśli masz wątpliwości, który wariant dotyczy konkretnej zaliczki, sprawdź, czy dokument figuruje w Aplikacji Podatnika.</p>
+<h2 id="program">Co robi za ciebie program fakturujący</h2>
+<p>Większość programów do fakturowania sama wypełnia element FakturaZaliczkowa, jeśli faktura końcowa jest powiązana z wcześniejszymi zaliczkami. Wiedza o polach XML przydaje się jednak wtedy, gdy trzeba zweryfikować wynik. Gdy odbierasz fakturę końcową jako nabywca, możesz otworzyć plik XML i zobaczyć, jakie numery KSeF zaliczek na niej wskazano, a następnie porównać je ze swoimi zapisami. Pomaga w tym <a href="/przelew-z-faktury-xml-ksef/">narzędzie do wczytywania faktury XML</a>, które pokazuje dane płatności z pliku.</p>
+<p>Nabywca powinien też pilnować, żeby kwota przelewu końcowego odpowiadała kwocie do zapłaty z faktury końcowej, a nie jej pełnej wartości brutto. Zaliczki już zapłacone pomniejszają należność. Numer KSeF w przelewie nie zastępuje tej kontroli, jest tylko identyfikatorem dokumentu, którego dotyczy płatność. Dlatego dobrze jest zapisywać w ewidencji osobno: numer KSeF zaliczki, kwotę wpłaty i datę przelewu, a przy fakturze końcowej dopisać, które zaliczki zostały rozliczone.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Zaliczka ma własny, standardowy numer KSeF, a faktura końcowa wskazuje go w polu NrKSeFFaZaliczkowej. W przelewie zaliczki podajesz numer faktury zaliczkowej, o ile już istnieje. Każdy numer sprawdź w <a href="/">walidatorze numeru KSeF</a> przed zapłatą. Szczegóły rozliczeń podatkowych zostaw księgowej i przepisom, bo ten tekst wyjaśnia tylko numerację.</p>
+""",
+    faq=[
+        ("Czy faktura zaliczkowa ma numer KSeF?", "Tak. Jeśli została wystawiona w KSeF, po przyjęciu dostaje numer o standardowej budowie, 35 znaków, taki sam jak każda inna faktura."),
+        ("Które pole FA(3) wskazuje zaliczkę na fakturze końcowej?", "Element FakturaZaliczkowa, a w nim NrKSeFFaZaliczkowej dla zaliczki z KSeF albo NrKSeFZN z NrFaZaliczkowej dla zaliczki wystawionej poza KSeF."),
+        ("Ile zaliczek można wskazać na jednej fakturze końcowej?", "Schemat FA(3) pozwala powtórzyć element FakturaZaliczkowa maksymalnie 100 razy."),
+        ("Co wpisać w tytule przelewu, gdy faktury zaliczkowej jeszcze nie ma?", "Numeru KSeF nie da się podać, bo nie został nadany. Ustal ze sprzedawcą sposób oznaczenia płatności i potwierdź z księgową, czy obowiązek obejmuje taką płatność."),
+    ],
+    sources=[DOC_NUM, MF_NUM, MF_FA3, XSD, MF_TERM],
+)
+
+C08 = dict(
+    slug="czy-numer-ksef-musi-byc-w-tytule-przelewu",
+    title="Czy numer KSeF musi być w tytule przelewu?",
+    desc="Czy numer KSeF musi być w tytule przelewu: od kiedy obowiązuje art. 108g, kogo dotyczy, co z kilkoma fakturami i MPP oraz ile numerów mieści się w 140 znakach.",
+    h1="Czy numer KSeF musi być w tytule przelewu? Zasady od 1 stycznia 2027",
+    intro="Krótko: od 1 stycznia 2027 r. tak, ale nie w każdej sytuacji. Sprawdź, kogo dotyczy obowiązek, jak wygląda tytuł przy jednej i wielu fakturach i co z płatnością w MPP.",
+    lead_tool=("/", "walidator numeru KSeF i generator tytułu przelewu"),
+    date=("2026-11-16", "16 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Ministerstwo Finansów w zestawieniu kluczowych terminów KSeF pisze, że do końca 2026 r. odroczony jest obowiązek podawania numeru KSeF faktury podczas płatności pomiędzy podatnikami czynnymi (art. 108g ustawy o VAT) oraz w ramach MPP. Z tego wynika, że obowiązek zaczyna się 1 stycznia 2027 r. Dotyczy płatności za faktury wystawione w KSeF, a nie każdego przelewu w ogóle.</p>
+<p>Zanim zbudujesz tytuł, wklej numer do <a href="/">generatora tytułu przelewu</a>. Sprawdzi on poprawność numeru i ułoży gotowy tekst.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Sytuacja</th><th scope="col">Co podajesz w płatności (wg MF)</th></tr></thead>
+<tbody>
+<tr><td>Jedna faktura</td><td>numer KSeF tej faktury</td></tr>
+<tr><td>Kilka faktur</td><td>identyfikator zbiorczy albo kilka numerów KSeF albo kilka identyfikatorów zbiorczych</td></tr>
+<tr><td>Płatność w MPP</td><td>numer KSeF w komunikacie przelewu; zamiast okresu można podać identyfikator zbiorczy</td></tr>
+<tr><td>Faktura w trybie awaryjnym lub offline niewprowadzona do systemu z powodu awarii</td><td>wyjątek opisany przez MF, numeru KSeF nie ma</td></tr>
+</tbody></table></div>
+
+<h2 id="kogo">Kogo dotyczy obowiązek</h2>
+<p>Przepis, na który powołuje się MF, mówi o płatnościach pomiędzy podatnikami czynnymi. Czynny podatnik VAT to firma zarejestrowana jako czynna, a nie podatnik zwolniony. Jeśli nie jesteś pewien statusu swojego lub kontrahenta, sprawdź go na stronach podatki.gov.pl albo zapytaj księgową. Ten tekst nie rozstrzyga indywidualnych przypadków, tylko streszcza stanowisko MF.</p>
+<p>Obowiązek nie dotyczy też faktur wystawionych poza KSeF, bo takie faktury nie mają numeru KSeF. W ich przypadku podaje się zwykły numer faktury, tak jak dotychczas.</p>
+
+<h2 id="jedna">Jedna faktura – najprostszy przypadek</h2>
+<p>W tytule wpisujesz numer KSeF faktury, którą płacisz. Używając oficjalnego przykładu MF:</p>
+<p class="mono">5265877635-20250826-0100001AF629-AF</p>
+<p>Numer ma 35 znaków, więc zostaje jeszcze 105 znaków z limitu 140 na ewentualny dodatkowy opis. Jak zapisać numer w różnych bankach, opisujemy w poradniku <a href="/blog/jak-wpisac-numer-ksef-w-tytule-przelewu/">jak wpisać numer KSeF w tytule przelewu</a>.</p>
+
+<h2 id="wiele">Kilka faktur i limit znaków</h2>
+<p>MF wskazuje trzy możliwości dla płatności za więcej niż jedną fakturę, z zastrzeżeniem ograniczeń technicznych pola tytułu. Prosty rachunek pokazuje, skąd wynikają: przy limicie 140 znaków zmieszczą się trzy numery po 35 znaków oddzielone dwoma separatorami, czyli 107 znaków. Czwarty numer wymaga kolejnych 36 znaków (separator plus numer), co daje 143, a więc przekracza limit. Dlatego przy większej liczbie faktur sensownym wyjściem jest identyfikator zbiorczy, który omawiamy w tekście <a href="/identyfikator-zbiorczy-ksef/">o identyfikatorze zbiorczym KSeF</a>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Liczba numerów</th><th scope="col">Długość (35 znaków + separatory)</th><th scope="col">Mieści się w 140?</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>35</td><td>tak</td></tr>
+<tr><td>2</td><td>71</td><td>tak</td></tr>
+<tr><td>3</td><td>107</td><td>tak</td></tr>
+<tr><td>4</td><td>143</td><td>nie</td></tr>
+</tbody></table></div>
+<p>To obliczenia na podstawie długości numeru. Limit pola w twoim banku może być inny, więc sprawdź go w formularzu przelewu.</p>
+
+<h2 id="mpp">Płatność w MPP</h2>
+<p>MF pisze, że w komunikacie przelewu MPP podaje się między innymi numer KSeF faktury. Szczegółowy zapis słów kodowych /VAT/, /IDC/, /INV/ i /TXT/ znajdziesz w <a href="/przelew-mpp-numer-ksef/">kreatorze przelewu MPP</a>. Pole /INV/ może zawierać numer KSeF albo identyfikator zbiorczy.</p>
+
+<h2 id="co-robic">Co zrobić przed 1 stycznia 2027</h2>
+<ol class="steps">
+<li>Ustal, którzy kontrahenci wystawiają faktury w KSeF i czy są czynnymi podatnikami.</li>
+<li>Zdecyduj, kto w firmie pobiera numery KSeF z faktur i jak trafiają do przelewów.</li>
+<li>Przetestuj zapis numeru w swoim banku, szczególnie przy MPP.</li>
+<li>Przy wielu fakturach do jednego kontrahenta rozważ identyfikator zbiorczy.</li>
+</ol>
+<h2 id="przyklady">Trzy przykłady z życia firmy</h2>
+<p>Poniższe sytuacje są uproszczone i mają pokazać sposób myślenia, a nie zastąpić interpretacji przepisów. Numery KSeF w przykładach to oficjalny wzór z dokumentacji MF.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Przykład</th><th scope="col">Co robisz przy płatności</th></tr></thead>
+<tbody>
+<tr><td>Firma A (czynny VAT) płaci firmie B (czynny VAT) za jedną fakturę z KSeF</td><td>wpisuje numer KSeF tej faktury w tytule</td></tr>
+<tr><td>Firma A płaci za pięć faktur tego samego sprzedawcy jednym przelewem</td><td>używa identyfikatora zbiorczego lub grupuje płatności tak, by numery mieściły się w polu</td></tr>
+<tr><td>Firma A płaci za fakturę wystawioną poza KSeF</td><td>wpisuje zwykły numer faktury, bo numeru KSeF nie ma</td></tr>
+</tbody></table></div>
+<p>Najczęściej kłopot sprawia drugi przypadek, bo wielu księgowych płaci hurtowo raz w tygodniu. Tu przydaje się tekst o tym, <a href="/blog/identyfikator-zbiorczy-ksef-co-to-jest/">czym jest identyfikator zbiorczy</a>. Według MF jeden identyfikator może obejmować maksymalnie 500 numerów KSeF, a wszystkie faktury w nim muszą pochodzić od tego samego sprzedawcy.</p>
+<h2 id="bank">Czy bank sprawdzi numer w tytule</h2>
+<p>Banki przyjmują tytuł przelewu jako zwykły tekst i same nie weryfikują, czy numer KSeF jest prawdziwy. Pomyłka w numerze zostanie więc wykryta dopiero przez odbiorcę, który nie będzie mógł dopasować wpłaty do faktury. Dlatego sprawdzenie sumy kontrolnej przed wysłaniem przelewu ma sens: wyłapuje literówki, zanim pieniądze wyjdą z konta. W płatnościach MPP formularz banku jest bardziej wymagający, bo wymaga słów kodowych w ściśle określonej kolejności, co opisujemy w specyfikacji mBanku cytowanej w naszym kreatorze.</p>
+<p>Warto też pamiętać o dopuszczalnych znakach. W specyfikacji mBanku dla pola szczegółów płatności wymienione są litery, cyfry oraz znaki &amp;%()-{}/,. oraz polskie znaki, a niedozwolone są między innymi dwukropek, gwiazdka, średnik, wykrzyknik, plus, znak zapytania i kreska pionowa. Numer KSeF składa się tylko z cyfr, wielkich liter A–F i myślników, więc mieści się w dozwolonym zestawie, ale dodatkowy opis dopisany obok może już go naruszyć.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Od 1 stycznia 2027 r. numer KSeF w tytule jest wymagany w płatnościach między czynnymi podatnikami VAT za faktury z KSeF. Jedna faktura to jeden numer, wiele faktur to numery lub identyfikator zbiorczy. Sprawdź numer w <a href="/">walidatorze</a> przed wysłaniem przelewu.</p>
+""",
+    faq=[
+        ("Od kiedy numer KSeF musi być w przelewie?", "Według Ministerstwa Finansów obowiązek podawania numeru KSeF w płatnościach między podatnikami czynnymi był odroczony do końca 2026 r., więc zaczyna się 1 stycznia 2027 r."),
+        ("Czy przelew do kontrahenta bez faktury z KSeF też wymaga numeru?", "Nie ma wtedy numeru KSeF do podania. Faktura wystawiona poza KSeF ma tylko zwykły numer."),
+        ("Ile numerów KSeF zmieści się w tytule przelewu?", "Przy limicie 140 znaków trzy numery po 35 znaków z separatorami to 107 znaków, a cztery to 143, więc nie zmieszczą się. Limit w twoim banku sprawdź w formularzu."),
+        ("Co zamiast kilku numerów KSeF?", "MF wskazuje identyfikator zbiorczy, który obejmuje wiele faktur jednego sprzedawcy."),
+    ],
+    sources=[MF_TERM, MF_NUM, DOC_NUM, MBANK_SPEC, APP],
+)
+
+C09 = dict(
+    slug="numer-ksef-ile-znakow",
+    title="Numer KSeF – ile ma znaków i dlaczego 35?",
+    desc="Numer KSeF ma 35 znaków: 10 cyfr NIP, 8 cyfr daty, 12 znaków części technicznej i 2 sumy kontrolnej plus 3 myślniki. Wyjaśniamy też stary format 36 znaków.",
+    h1="Numer KSeF – ile ma znaków i dlaczego dokładnie 35",
+    intro="Numer KSeF ma zawsze 35 znaków razem z myślnikami. Rozbijamy tę liczbę na części i pokazujemy, co zrobić, gdy ktoś podaje numer o innej długości.",
+    lead_tool=("/", "walidator numeru KSeF"),
+    date=("2026-11-16", "16 listopada 2026"),
+    content="""
+<h2 id="35">35 znaków – skąd ta liczba</h2>
+<p>Dokumentacja KSeF 2.0 opublikowana przez Ministerstwo Finansów mówi wprost, że numer KSeF zawsze ma długość 35 znaków. Ogólny wzór to <code>9999999999-RRRRMMDD-FFFFFFFFFFFF-FF</code>. Liczba 35 to po prostu suma czterech bloków i trzech myślników:</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Część</th><th scope="col">Przykład</th><th scope="col">Znaki</th></tr></thead>
+<tbody>
+<tr><td>NIP sprzedawcy</td><td class="mono">5265877635</td><td>10</td></tr>
+<tr><td>Myślnik</td><td class="mono">-</td><td>1</td></tr>
+<tr><td>Data przyjęcia (RRRRMMDD)</td><td class="mono">20250826</td><td>8</td></tr>
+<tr><td>Myślnik</td><td class="mono">-</td><td>1</td></tr>
+<tr><td>Część techniczna</td><td class="mono">0100001AF629</td><td>12</td></tr>
+<tr><td>Myślnik</td><td class="mono">-</td><td>1</td></tr>
+<tr><td>Suma kontrolna CRC-8</td><td class="mono">AF</td><td>2</td></tr>
+<tr><td colspan="2"><strong>Razem</strong></td><td><strong>35</strong></td></tr>
+</tbody></table></div>
+<p>Rachunek: 10 + 8 + 12 + 2 = 32 znaki danych, do tego 3 myślniki, razem 35. To dokładnie te 32 znaki (razem z dwoma myślnikami między blokami) są podstawą do obliczenia sumy kontrolnej, o czym piszemy w tekście <a href="/blog/z-czego-sklada-sie-numer-ksef/">z czego składa się numer KSeF</a>.</p>
+
+<h2 id="bez-myslnikow">A bez myślników?</h2>
+<p>Bez trzech myślników zostaje 32 znaki. Taki zapis bywa spotykany w nazwach plików i arkuszach, ale oficjalny numer zawiera myślniki, więc w tytule przelewu i w XML podajesz go w pełnej postaci 35-znakowej. Walidator zaczyna od sprawdzenia długości, więc numer bez myślników zostanie zgłoszony jako błędny.</p>
+
+<h2 id="36">Stary format 36 znaków</h2>
+<p>W starszej wersji KSeF (1.0) numer miał jeden dodatkowy myślnik w części technicznej i długość 36 znaków. Schemat FA(3) w polu typu TNumerKSeF nadal dopuszcza ten starszy zapis, żeby można było odwołać się do faktur wystawionych w poprzednim systemie. Nowo nadawane numery w KSeF 2.0 mają 35 znaków. Jeśli widzisz numer 36-znakowy, to najpewniej pochodzi on z poprzedniej wersji systemu, a nie jest zwykłą literówką.</p>
+
+<h2 id="sprawdz">Jak szybko policzyć długość</h2>
+<ol class="steps">
+<li>Skopiuj numer z faktury lub UPO – nie przepisuj go ręcznie.</li>
+<li>Policz bloki: 10, 8, 12 i 2 znaki, rozdzielone trzema myślnikami.</li>
+<li>Upewnij się, że na końcu nie ma spacji ani znaku nowej linii, które wydłużają ciąg.</li>
+<li>Wklej numer do <a href="/">walidatora</a>, który sprawdzi też NIP, datę i sumę kontrolną.</li>
+</ol>
+
+<h2 id="inne">Co z innymi długościami</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Długość</th><th scope="col">Najczęstsza przyczyna</th></tr></thead>
+<tbody>
+<tr><td>32</td><td>numer bez myślników</td></tr>
+<tr><td>34 lub mniej</td><td>ucięty końcowy fragment przy kopiowaniu</td></tr>
+<tr><td>35</td><td>poprawna długość, sprawdź jeszcze sumę kontrolną</td></tr>
+<tr><td>36</td><td>stary format KSeF 1.0 albo dodatkowy znak (np. spacja)</td></tr>
+<tr><td>powyżej 36</td><td>numer z dopisanym tekstem lub dwa numery sklejone razem</td></tr>
+</tbody></table></div>
+<p>Dobra długość nie gwarantuje, że numer jest prawdziwy: mówi tylko, że ma właściwy format. Czy faktura istnieje w KSeF, potwierdzisz w Aplikacji Podatnika lub w systemie, z którego korzystasz. Identyfikator zbiorczy ma podobną długość i budowę, ale zamiast daty zawiera oznaczenie IZ oraz rok i miesiąc, jak opisujemy w tekście o <a href="/identyfikator-zbiorczy-ksef/">identyfikatorze zbiorczym</a>.</p>
+<h2 id="walidacja">Jak liczy to walidator</h2>
+<p>Kolejność sprawdzania w naszym narzędziu odpowiada budowie numeru. Najpierw liczona jest długość, bo błąd długości zwykle oznacza ucięcie lub dopisanie znaków przy kopiowaniu. Potem sprawdzany jest NIP w pierwszym bloku (wagi 6, 5, 7, 2, 3, 4, 5, 6, 7, suma modulo 11 musi być równa dziesiątej cyfrze), następnie data z drugiego bloku oraz dopuszczalne znaki w trzecim. Na końcu liczona jest suma kontrolna CRC-8 z wielomianem 0x07 i wartością początkową 0 z pierwszych 32 znaków i porównywana z dwoma ostatnimi znakami numeru.</p>
+<p>Taki porządek ma sens, bo każdy kolejny krok jest bardziej kosztowny i mniej oczywisty dla człowieka. Długość policzysz wzrokiem, NIP kalkulatorem, a CRC-8 w praktyce tylko programem. Jeśli wynik pokazuje błąd już na długości, nie ma sensu szukać dalej, najpierw skopiuj numer jeszcze raz.</p>
+<h2 id="przyklad-bledu">Przykład: ten sam numer z błędami długości</h2>
+<p>Weźmy oficjalny przykład i zobaczmy, jak zmienia się wynik po typowych pomyłkach:</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Wariant</th><th scope="col">Zapis</th><th scope="col">Znaki</th></tr></thead>
+<tbody>
+<tr><td>poprawny</td><td class="mono">5265877635-20250826-0100001AF629-AF</td><td>35</td></tr>
+<tr><td>bez myślników</td><td class="mono">5265877635202508260100001AF629AF</td><td>32</td></tr>
+<tr><td>bez ostatniego znaku</td><td class="mono">5265877635-20250826-0100001AF629-A</td><td>34</td></tr>
+<tr><td>ze spacją na końcu</td><td class="mono">5265877635-20250826-0100001AF629-AF&nbsp;</td><td>36</td></tr>
+</tbody></table></div>
+<p>Każdy z trzech błędnych wariantów ma długość inną niż 35, więc walidator odrzuci go na pierwszym kroku. Ostatni jest podstępny: spacja na końcu jest niewidoczna, a zwiększa długość do 36, czyli do liczby znanej ze starego formatu. Jeśli więc dostajesz numer 36-znakowy i nie jesteś pewien jego pochodzenia, usuń końcowe białe znaki i policz jeszcze raz.</p>
+<h2 id="po-co">Po co w ogóle ta stała długość</h2>
+<p>Stała długość ułatwia programom księgowym i bankom rozpoznanie numeru w tekście. Dzięki niej można automatycznie wyszukać numer KSeF w tytule przelewu i dopasować płatność do faktury. Pole <code>/INV/</code> w komunikacie MPP ma w specyfikacji mBanku długość do 35 znaków, co dokładnie mieści jeden numer KSeF. Tytuł zwykłego przelewu może mieć 140 znaków, więc zmieści jeden numer z dodatkowym opisem albo kilka numerów, o czym piszemy w tekście <a href="/blog/czy-numer-ksef-musi-byc-w-tytule-przelewu/">czy numer KSeF musi być w tytule przelewu</a>.</p>
+<p>Warto zwrócić uwagę, że kody QR do płatności w standardzie ZBP ograniczają tytuł do 32 znaków, więc numer 35-znakowy się w nim nie zmieści. To jeden z powodów, dla których numer KSeF występuje w kodach weryfikacyjnych w innej formie, o czym piszemy na stronie o <a href="/kod-qr-ksef/">kodzie QR KSeF</a>.</p>
+<h2 id="ksiegowosc">Długość numeru w arkuszu i programie księgowym</h2>
+<p>Jeśli prowadzisz ewidencję faktur w arkuszu kalkulacyjnym, ustaw dla kolumny z numerem KSeF format tekstowy i dodaj prostą kontrolę długości. W większości arkuszy wystarczy formuła zliczająca znaki w komórce i podświetlająca wynik różny od 35. Dzięki temu błędnie wklejony numer od razu rzuci się w oczy, jeszcze przed przygotowaniem przelewu. Ten sam warunek warto ustawić w eksportach z programu księgowego, bo część systemów przy eksporcie do CSV obcina lub zmienia zapis długich ciągów znaków. Jeśli masz wiele numerów naraz, użyj <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarki wielu numerów KSeF</a>, która wskaże wszystkie błędne wiersze.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Numer KSeF ma 35 znaków: 32 znaki danych i 3 myślniki. Wszystko inne to błąd, brak myślników albo stary format 36-znakowy. Zawsze kopiuj numer i sprawdzaj go w <a href="/">walidatorze numeru KSeF</a>.</p>
+""",
+    faq=[
+        ("Ile znaków liczy numer KSeF?", "35 znaków razem z trzema myślnikami: 10 cyfr NIP, 8 cyfr daty, 12 znaków części technicznej i 2 znaki sumy kontrolnej."),
+        ("Ile znaków ma numer KSeF bez myślników?", "32 znaki. W tytule przelewu i w XML używa się jednak pełnej postaci 35-znakowej."),
+        ("Dlaczego widzę numer KSeF z 36 znakami?", "To format znany z KSeF 1.0, z dodatkowym myślnikiem w części technicznej. Schemat FA(3) nadal go dopuszcza, ale nowe numery mają 35 znaków."),
+        ("Czy 35 znaków oznacza, że numer jest prawidłowy?", "Nie. To tylko poprawna długość. Trzeba jeszcze sprawdzić NIP, datę i sumę kontrolną CRC-8, co robi walidator."),
+    ],
+    sources=[DOC_NUM, MF_NUM, XSD, MF_FA3],
+)
+
+CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09]
