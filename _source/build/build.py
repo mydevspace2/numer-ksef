@@ -93,6 +93,15 @@ common.ARTICLE_MAP.update({
     _Za: [_K, _Ty, _M], _Ty: [_M, _Zn, _Za], _Zn: [_Z, _S, _Ty],
 })
 
+# 2026-11-17: posty #10-12
+_K10, _K11, _K12 = _B["przelew-za-kilka-faktur-ksef"], _B["jak-wygenerowac-identyfikator-zbiorczy-ksef"], _B["komunikat-przelewu-mpp-wzor"]
+common.ARTICLE_MAP.update({
+    "/przelew-mpp-numer-ksef/": [_K12, _Ty, _K10], "/identyfikator-zbiorczy-ksef/": [_K11, _K10, _Ty],
+    "/sprawdz-wiele-numerow-ksef/": [_K10, _Zn, _S],
+    _M: [_K12, _Ty, _Za], _Ty: [_K10, _M, _Zn], _Za: [_K12, _K, _M],
+    _K10: [_K11, _K12, _Ty], _K11: [_K10, _K12, _Zn], _K12: [_M, _K10, _K11],
+})
+
 PAGES = [
     ("/", HOME), ("/przelew-mpp-numer-ksef/", MPP), ("/identyfikator-zbiorczy-ksef/", IZ),
     ("/sprawdz-wiele-numerow-ksef/", BULK), ("/przelew-z-faktury-xml-ksef/", XMLP), ("/kod-qr-ksef/", QRP),

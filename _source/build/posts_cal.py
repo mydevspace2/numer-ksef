@@ -2,7 +2,7 @@
 # Posty z kalendarza (work/seo/blog-calendar.md). Każdy: slug, title (<=60), desc (70–159), h1, intro, lead_tool,
 # date (ISO, PL), content (HTML), faq [(q, a)], sources. Dopisuj nowe na końcu listy CAL_POSTS.
 from sources import MF_NUM, MF_TERM, DOC_NUM, XSD, MF_QR, APP, MF_FA3
-from sources import MF_NUM, MF_TERM, DOC_NUM, XSD, MF_QR, APP, MF_FA3, MBANK_SPEC, MBANK_IMPORT, MBANK_NEWS, DB
+from sources import MF_NUM, MF_TERM, DOC_NUM, XSD, MF_QR, APP, MF_FA3, MBANK_SPEC, MBANK_IMPORT, MBANK_NEWS, DB, IZ_PDF, IZ_PDF2
 # ---------------------------------------------------------------- #1 (2026-11-14)
 C01 = dict(
     slug="jak-wyglada-numer-ksef-przyklad",
@@ -767,4 +767,260 @@ C09 = dict(
     sources=[DOC_NUM, MF_NUM, XSD, MF_FA3],
 )
 
-CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09]
+C10 = dict(
+    slug="przelew-za-kilka-faktur-ksef",
+    title="Przelew za kilka faktur KSeF jednym przelewem",
+    desc="Jak zapłacić za kilka faktur jednym przelewem z numerem KSeF w tytule: kilka numerów w polu 140 znaków albo jeden identyfikator zbiorczy. Przykłady.",
+    h1="Przelew za kilka faktur KSeF jednym przelewem – jak opisać tytuł",
+    intro="Płacisz kontrahentowi za kilka faktur naraz i nie wiesz, czy trzeba robić osobne przelewy? Pokazujemy dwie drogi: kilka numerów KSeF w tytule albo jeden identyfikator zbiorczy.",
+    lead_tool=("/identyfikator-zbiorczy-ksef/", "walidator identyfikatora zbiorczego"),
+    date=("2026-11-17", "17 listopada 2026"),
+    content="""
+<h2 id="zasada">Co mówi Ministerstwo Finansów</h2>
+<p>Na stronie o numerze KSeF i zbiorczym identyfikatorze Ministerstwo Finansów opisuje, że przy płatności za więcej niż jedną fakturę można podać zbiorczy identyfikator albo kilka numerów KSeF albo kilka zbiorczych identyfikatorów, przy uwzględnieniu ograniczeń technicznych pola z tytułem płatności. Jeśli chcesz od razu sprawdzić zapis, użyj <a href="/identyfikator-zbiorczy-ksef/">walidatora identyfikatora zbiorczego</a> albo <a href="/">walidatora numeru KSeF</a>.</p>
+<p>Zgodnie z informacją MF obowiązek podawania numeru KSeF w płatnościach między podatnikami czynnymi został odroczony do końca 2026 roku, więc zasady zaczynają działać od 1 stycznia 2027. Szczegóły terminów sprawdzaj zawsze na stronie ksef.podatki.gov.pl.</p>
+
+<h2 id="dwie-drogi">Dwie drogi do jednego przelewu</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Sposób</th><th scope="col">Co wpisujesz</th><th scope="col">Zaleta</th><th scope="col">Ograniczenie</th></tr></thead>
+<tbody>
+<tr><td>Kilka numerów KSeF</td><td>numery oddzielone separatorem</td><td>nic nie trzeba generować</td><td>pole tytułu ma zwykle 140 znaków</td></tr>
+<tr><td>Identyfikator zbiorczy</td><td>jeden ciąg 35 znaków</td><td>mieści wiele faktur</td><td>trzeba go wygenerować w KSeF</td></tr>
+</tbody></table></div>
+
+<h2 id="kilka-numerow">Kilka numerów w tytule – ile się zmieści</h2>
+<p>Numer KSeF ma 35 znaków. Zwykłe pole tytułu przelewu w wielu bankach ma 140 znaków, na przykład w specyfikacji mBanku pole Ustrd ma 140 znaków. Policzmy: trzy numery to 105 znaków, dwa separatory (przecinek i spacja zajmują po 2 znaki, razem 4, jeśli używasz „, ”) dają 109. Czwarty numer nie zmieści się już razem z separatorami, bo dodałby kolejne 37 znaków i przekroczyłby 140. W praktyce więc jednym zwykłym przelewem opiszesz do trzech faktur. Ile dokładnie mieści Twój bank, sprawdź w formularzu, bo część banków skraca lub dzieli tytuł inaczej.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Liczba numerów</th><th scope="col">Znaki numerów</th><th scope="col">Separatory „, ”</th><th scope="col">Razem</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>35</td><td>0</td><td>35</td></tr>
+<tr><td>2</td><td>70</td><td>2</td><td>72</td></tr>
+<tr><td>3</td><td>105</td><td>4</td><td>109</td></tr>
+<tr><td>4</td><td>140</td><td>6</td><td>146</td></tr>
+</tbody></table></div>
+<p>Cztery numery dają 146 znaków, czyli więcej niż 140. Bez żadnego dodatkowego tekstu limit przekracza więc już czwarta faktura, nawet gdy zrezygnujesz ze spacji i użyjesz samych przecinków, bo 140 + 3 = 143.</p>
+
+<h2 id="zbiorczy">Identyfikator zbiorczy – rozwiązanie dla większej liczby faktur</h2>
+<p>Identyfikator zbiorczy ma budowę podobną do numeru KSeF: <code>9999999999-IZRRRRMM-FFFFFFFFFFFF-FF</code>, czyli NIP, oznaczenie IZ z rokiem i miesiącem, 12 znaków części technicznej i dwie cyfry sumy kontrolnej. Oficjalny przykład z dokumentacji to <code>1111111111-IZ202607-65ED02180000-E7</code>. Według informacji MF jeden identyfikator może obejmować do 500 numerów KSeF (w Aplikacji Podatnika do 50), a wszystkie faktury w nim muszą mieć tego samego sprzedawcę. Jedna faktura może znaleźć się w co najwyżej 132 identyfikatorach zbiorczych w danym kontekście.</p>
+<p>Ważne: identyfikator generuje się w systemie KSeF. Strona nie ma więc możliwości sama go „wymyślić” – nasz walidator sprawdza tylko format i sumę kontrolną, a nie to, jakie faktury identyfikator obejmuje. Szerzej opisujemy to w tekście <a href="/blog/jak-wygenerowac-identyfikator-zbiorczy-ksef/">jak wygenerować identyfikator zbiorczy KSeF</a>.</p>
+
+<h2 id="przyklad">Przykład: trzy faktury od jednego dostawcy</h2>
+<ol class="steps">
+<li>Masz trzy faktury od tego samego sprzedawcy i chcesz zapłacić jednym przelewem.</li>
+<li>Skopiuj z każdej numer KSeF (nie przepisuj ręcznie).</li>
+<li>Sprawdź każdy numer w walidatorze lub wklej wszystkie naraz w <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarce wielu numerów</a>.</li>
+<li>Jeśli numery mieszczą się w 140 znakach, wpisz je w tytule, oddzielone przecinkami.</li>
+<li>Jeśli faktur jest więcej, poproś o identyfikator zbiorczy albo wygeneruj go samodzielnie w KSeF i wpisz jego jeden ciąg.</li>
+</ol>
+
+<h2 id="kiedy">Kiedy osobne przelewy są prostsze</h2>
+<p>Jeśli faktury mają różnych sprzedawców, jeden identyfikator zbiorczy ich nie obejmie, bo wymaga wspólnego sprzedawcy. Wtedy robisz osobne przelewy albo, gdy płacisz jednemu odbiorcy, kilka numerów w tytule. Przy płatności w mechanizmie podzielonej płatności obowiązuje osobny format komunikatu, który opisujemy w tekście o <a href="/blog/numer-ksef-w-przelewie-mpp/">numerze KSeF w przelewie MPP</a>.</p>
+<h2 id="uwagi">Praktyczne uwagi</h2>
+<p>Przed wysłaniem przelewu porównaj kwotę z sumą faktur i upewnij się, że rachunek odbiorcy jest na białej liście. Numer KSeF w tytule nie zastępuje tych kontroli. Dobrym nawykiem jest zapisanie w arkuszu, które numery trafiły do którego przelewu, bo ułatwi to późniejsze uzgadnianie wyciągu. Pamiętaj, że przy zapłacie kilku faktur jednym przelewem część programów księgowych dopasowuje płatności po numerze, więc kolejność i separator warto utrzymać zawsze taki sam.</p>
+<h2 id="przyklad-liczb">Przykład z kwotami</h2>
+<p>Załóżmy, że od jednego dostawcy masz trzy faktury: na 1 230,00 zł, 2 460,00 zł i 615,00 zł brutto. Suma to 4 305,00 zł. Robisz jeden przelew na 4 305,00 zł, a w tytule wpisujesz trzy numery KSeF oddzielone przecinkami. Dostawca widzi jedną wpłatę i trzy numery, więc bez trudu przypisze ją do właściwych dokumentów. Gdyby faktur było dziesięć, w polu 140 znaków zmieściłyby się tylko trzy numery, więc lepszy będzie identyfikator zbiorczy obejmujący wszystkie dziesięć.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Faktura</th><th scope="col">Kwota brutto</th><th scope="col">W tytule</th></tr></thead>
+<tbody>
+<tr><td>Pierwsza</td><td>1 230,00 zł</td><td>numer KSeF 1</td></tr>
+<tr><td>Druga</td><td>2 460,00 zł</td><td>numer KSeF 2</td></tr>
+<tr><td>Trzecia</td><td>615,00 zł</td><td>numer KSeF 3</td></tr>
+<tr><td><strong>Razem</strong></td><td><strong>4 305,00 zł</strong></td><td>109 znaków tytułu</td></tr>
+</tbody></table></div>
+<h2 id="niezaplacone">Częściowa zapłata i korekty</h2>
+<p>Jeśli płacisz tylko część należności, przelew z kilkoma numerami nie pokaże, którą fakturę opłacasz w całości. W takiej sytuacji zwykle prościej jest zapłacić oddzielnie za każdą fakturę albo uzgodnić z kontrahentem sposób opisu. Gdy do faktury wystawiono korektę, sprawdź, który numer KSeF należy podać, o czym piszemy w tekście o <a href="/blog/numer-ksef-faktury-korygujacej/">numerze KSeF faktury korygującej</a>. Pamiętaj też o fakturach zaliczkowych, które mają własne numery, jak w tekście o <a href="/blog/numer-ksef-faktury-zaliczkowej/">numerze KSeF faktury zaliczkowej</a>.</p>
+<h2 id="program">Przelewy zbiorcze z programu księgowego</h2>
+<p>Wiele programów księgowych potrafi przygotować paczkę przelewów do importu do banku. Zanim zaczniesz z niej korzystać po 1 stycznia 2027, sprawdź, czy program wstawia numer KSeF do tytułu każdego przelewu i czy nie ucina tytułu po 140 znakach. Dobrym testem jest wygenerowanie jednego przelewu na małą kwotę i obejrzenie tytułu w banku przed wysłaniem całej paczki.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Do trzech faktur zwykle zmieszczą się w tytule jako osobne numery KSeF, a przy większej liczbie zostaje identyfikator zbiorczy. Każdy ciąg sprawdzisz w <a href="/identyfikator-zbiorczy-ksef/">walidatorze identyfikatora zbiorczego</a>.</p>
+""",
+    faq=[
+        ("Czy za kilka faktur KSeF można zrobić jeden przelew?", "Tak. Według Ministerstwa Finansów w tytule można podać zbiorczy identyfikator albo kilka numerów KSeF, z uwzględnieniem limitu pola tytułu."),
+        ("Ile faktur opłacisz jednym przelewem w polu 140 znaków?", "Przy polu 140 znaków zwykle trzy: 3 × 35 znaków plus separatory dają około 109 znaków. Czwarty przekroczyłby limit."),
+        ("Czy identyfikator zbiorczy obejmie faktury od różnych sprzedawców?", "Nie. Według informacji MF wszystkie faktury w jednym identyfikatorze zbiorczym muszą mieć tego samego sprzedawcę."),
+        ("Ile faktur obejmie identyfikator zbiorczy?", "Do 500 numerów KSeF, a w Aplikacji Podatnika do 50, według informacji Ministerstwa Finansów."),
+    ],
+    sources=[MF_NUM, MF_TERM, IZ_PDF, MBANK_SPEC],
+)
+
+C11 = dict(
+    slug="jak-wygenerowac-identyfikator-zbiorczy-ksef",
+    title="Jak wygenerować identyfikator zbiorczy KSeF?",
+    desc="Identyfikator zbiorczy KSeF – czym jest, jak wygląda, limity (500 numerów, 132 identyfikatory) i dlaczego generuje się go w systemie KSeF. Przykład i FAQ.",
+    h1="Jak wygenerować identyfikator zbiorczy KSeF – krok po kroku",
+    intro="Identyfikator zbiorczy pozwala opisać jednym ciągiem znaków płatność za wiele faktur. Wyjaśniamy, kto go tworzy, jak jest zbudowany i co możesz sprawdzić samodzielnie.",
+    lead_tool=("/identyfikator-zbiorczy-ksef/", "walidator identyfikatora zbiorczego"),
+    date=("2026-11-17", "17 listopada 2026"),
+    content="""
+<h2 id="co-to">Czym jest identyfikator zbiorczy</h2>
+<p>To ciąg znaków generowany przez KSeF, który reprezentuje zestaw numerów KSeF faktur. Zamiast wpisywać w tytule przelewu każdy numer osobno, wpisujesz jeden identyfikator. Po stronie sprzedawcy system wie, które faktury za nim stoją. Jeżeli masz już identyfikator, sprawdzisz jego zapis w <a href="/identyfikator-zbiorczy-ksef/">walidatorze identyfikatora zbiorczego</a>.</p>
+
+<h2 id="budowa">Budowa identyfikatora</h2>
+<p>Według grafiki Ministerstwa Finansów wzór to <code>9999999999-IZRRRRMM-FFFFFFFFFFFF-FF</code>. Oficjalny przykład z dokumentacji API to <code>1111111111-IZ202607-65ED02180000-E7</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Część</th><th scope="col">Przykład</th><th scope="col">Znaczenie</th></tr></thead>
+<tbody>
+<tr><td>NIP</td><td class="mono">1111111111</td><td>10 cyfr</td></tr>
+<tr><td>IZ + rok i miesiąc</td><td class="mono">IZ202607</td><td>oznaczenie IZ, rok 2026, miesiąc 07</td></tr>
+<tr><td>Część techniczna</td><td class="mono">65ED02180000</td><td>12 znaków</td></tr>
+<tr><td>Suma kontrolna</td><td class="mono">E7</td><td>2 znaki, liczone automatycznie</td></tr>
+</tbody></table></div>
+<p>Zwróć uwagę, że zamiast daty (8 cyfr) jest oznaczenie IZ i rok z miesiącem (razem też 8 znaków), więc długość całości to znów 35 znaków. Suma kontrolna jest liczona tym samym algorytmem CRC-8 co w numerze KSeF, o którym piszemy w tekście <a href="/blog/z-czego-sklada-sie-numer-ksef/">z czego składa się numer KSeF</a>.</p>
+
+<h2 id="generowanie">Kto i jak go generuje</h2>
+<p>Identyfikatora nie da się obliczyć samodzielnie, bo część techniczna jest nadawana przez system. Generuje się go przez KSeF: w Aplikacji Podatnika albo przez interfejs API w programie księgowym czy bankowym. Dokładne kroki w Twoim programie zależą od jego producenta, dlatego w instrukcji programu szukaj funkcji dotyczącej płatności lub identyfikatora zbiorczego. Ministerstwo Finansów podaje przy tym limity:</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Limit</th><th scope="col">Wartość</th></tr></thead>
+<tbody>
+<tr><td>Numerów KSeF w jednym identyfikatorze</td><td>do 500</td></tr>
+<tr><td>Numerów w Aplikacji Podatnika</td><td>do 50</td></tr>
+<tr><td>Identyfikatorów, w których może być jedna faktura</td><td>do 132 w danym kontekście</td></tr>
+<tr><td>Sprzedawcy faktur w jednym identyfikatorze</td><td>ten sam</td></tr>
+</tbody></table></div>
+
+<h2 id="co-sprawdzisz">Co możesz sprawdzić sam</h2>
+<ol class="steps">
+<li>Skopiuj identyfikator otrzymany od sprzedawcy lub wygenerowany w systemie.</li>
+<li>Wklej go do <a href="/identyfikator-zbiorczy-ksef/">walidatora</a>: sprawdzi długość, NIP, oznaczenie IZ, rok i miesiąc oraz sumę kontrolną.</li>
+<li>Porównaj NIP w identyfikatorze z NIP sprzedawcy z faktur.</li>
+<li>Wpisz identyfikator w tytule przelewu w całości, bez spacji w środku.</li>
+</ol>
+<p>Walidator nie sprawdzi, jakie faktury obejmuje identyfikator, bo ta informacja jest dostępna tylko w KSeF. Dobry wynik oznacza więc poprawny format, a nie potwierdzenie, że identyfikator istnieje.</p>
+
+<h2 id="pomylka">Nie pomyl z IPKSeF</h2>
+<p>W schemacie faktury FA(3) występuje także element IPKSeF, czyli identyfikator płatności z linku do płatności. To zupełnie inny, 13-znakowy ciąg: trzy cyfry i dziesięć znaków alfanumerycznych. Nie jest identyfikatorem zbiorczym i nie wpisuje się go w tytule przelewu zamiast numeru KSeF.</p>
+
+<h2 id="kiedy-uzyc">Kiedy identyfikator ma sens</h2>
+<p>Gdy płacisz jednemu sprzedawcy za więcej niż trzy faktury, osobne numery nie zmieszczą się w 140 znakach. Wtedy identyfikator zbiorczy jest wygodniejszy. Porównanie obu dróg znajdziesz w tekście o <a href="/blog/przelew-za-kilka-faktur-ksef/">przelewie za kilka faktur KSeF</a>. W przelewie w mechanizmie podzielonej płatności identyfikator można wpisać w pole INV, co pokazujemy w <a href="/przelew-mpp-numer-ksef/">generatorze komunikatu MPP</a>.</p>
+<h2 id="przyklad-tytulu">Przykład tytułu z identyfikatorem</h2>
+<p>W zwykłym przelewie wystarczy wpisać sam identyfikator, na przykład <code>1111111111-IZ202607-65ED02180000-E7</code>. Zajmuje on 35 znaków, więc w polu 140 znaków zostaje jeszcze miejsce na krótki opis, np. „zapłata za faktury z października”. W przelewie MPP identyfikator trafia do pola INV: <code>/VAT/kwota/IDC/NIP/INV/identyfikator/TXT/opis</code>. Pamiętaj, żeby kwota przelewu odpowiadała sumie faktur objętych identyfikatorem, bo to ona jest podstawą rozliczenia.</p>
+<h2 id="blad">Co zrobić, gdy walidator pokazuje błąd</h2>
+<p>Najczęstsze przyczyny to ucięty ciąg przy kopiowaniu, spacja na końcu lub pomyłka litery O i cyfry 0 w części technicznej. Skopiuj identyfikator jeszcze raz z systemu. Jeśli błąd się powtarza, poproś sprzedawcę o ponowne przesłanie identyfikatora. Zbiorczą weryfikację wielu pozycji naraz wykonasz w <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarce wielu numerów</a>.</p>
+<h2 id="przyklad-planu">Przykład: dziesięć faktur, jeden identyfikator</h2>
+<p>Wyobraź sobie, że w październiku dostałeś od jednego dostawcy dziesięć faktur. Osobne numery KSeF zajęłyby 350 znaków, a pole tytułu przelewu ma zwykle 140 znaków. Dlatego prosisz o identyfikator zbiorczy albo generujesz go w KSeF dla tych dziesięciu numerów. Zamiast dziesięciu ciągów wpisujesz jeden: 35 znaków. Zostaje miejsce na krótki opis, a dostawca po otrzymaniu płatności widzi, że dotyczy ona całego zestawu.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Wariant</th><th scope="col">Znaki w tytule</th><th scope="col">Mieści się w 140?</th></tr></thead>
+<tbody>
+<tr><td>10 numerów KSeF</td><td>350 i więcej</td><td>nie</td></tr>
+<tr><td>3 numery KSeF</td><td>około 109</td><td>tak</td></tr>
+<tr><td>1 identyfikator zbiorczy</td><td>35</td><td>tak</td></tr>
+</tbody></table></div>
+<h2 id="kto-generuje">Kto powinien wygenerować identyfikator</h2>
+<p>Identyfikator może powstać po stronie sprzedawcy albo kupującego, o ile ma dostęp do faktur w KSeF. Według grafiki Ministerstwa Finansów z 9 listopada 2026 pierwsza część identyfikatora to NIP sprzedawcy. W praktyce najlepiej ustalić z kontrahentem, kto go przygotowuje, żeby nie powstały dwa różne identyfikatory dla tych samych faktur. Ponieważ jedna faktura może należeć do wielu identyfikatorów (do 132 w danym kontekście), nie jest to błąd, ale komplikuje późniejsze uzgadnianie płatności.</p>
+<h2 id="bezpieczenstwo">Prywatność i bezpieczeństwo</h2>
+<p>Nasz walidator działa w przeglądarce i nie wysyła wpisanego identyfikatora na serwer. Sam identyfikator nie zawiera kwot ani danych nabywcy, a jedynie NIP sprzedawcy, rok i miesiąc oraz część techniczną. Mimo to nie wklejaj go w publicznych miejscach, jeśli nie ma takiej potrzeby, bo wskazuje na zestaw Twoich faktur w systemie.</p>
+<h2 id="terminy">Od kiedy to ma znaczenie</h2>
+<p>Ministerstwo Finansów informuje, że obowiązek podawania numeru KSeF lub identyfikatora zbiorczego w płatnościach między podatnikami czynnymi został odroczony do końca 2026 roku. Oznacza to, że od 1 stycznia 2027 roku płatności za faktury z KSeF powinny zawierać te dane. Aktualne terminy i szczegóły zawsze sprawdzaj na stronie ksef.podatki.gov.pl, bo przepisy i komunikaty mogą się zmieniać. Do tego czasu warto przećwiczyć proces na kilku przelewach, żeby pierwszego stycznia nie robić tego pod presją terminu.</p>
+<h2 id="checklista">Krótka lista kontrolna</h2>
+<ul>
+<li>ustal, kto przygotowuje identyfikator: Ty czy sprzedawca,</li>
+<li>sprawdź, czy wszystkie faktury pochodzą od tego samego sprzedawcy,</li>
+<li>zweryfikuj format w walidatorze przed wysłaniem przelewu,</li>
+<li>zapisz identyfikator wraz z listą faktur, których dotyczy.</li>
+</ul>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Identyfikator zbiorczy tworzy KSeF, a Ty możesz sprawdzić jego format w <a href="/identyfikator-zbiorczy-ksef/">walidatorze</a>. Pamiętaj o limitach i o tym, że obejmuje faktury jednego sprzedawcy.</p>
+""",
+    faq=[
+        ("Czy mogę sam wyliczyć identyfikator zbiorczy?", "Nie. Część techniczną nadaje system, więc identyfikator generuje się w KSeF, w Aplikacji Podatnika lub przez API w programie."),
+        ("Jaki format ma identyfikator zbiorczy KSeF?", "Ma format NIP-IZRRRRMM-12 znaków-2 znaki sumy kontrolnej, np. 1111111111-IZ202607-65ED02180000-E7, razem 35 znaków."),
+        ("Czy identyfikator zbiorczy to to samo co IPKSeF?", "Nie. IPKSeF to 13-znakowy identyfikator płatności z linku w fakturze FA(3), a identyfikator zbiorczy ma 35 znaków."),
+        ("Czy walidator potwierdzi, że identyfikator istnieje?", "Nie. Sprawdza format i sumę kontrolną. To, jakie faktury obejmuje identyfikator, wie tylko KSeF."),
+    ],
+    sources=[MF_NUM, IZ_PDF, IZ_PDF2, DOC_NUM, XSD],
+)
+
+C12 = dict(
+    slug="komunikat-przelewu-mpp-wzor",
+    title="Komunikat przelewu MPP – wzór /VAT/ /IDC/ /INV/",
+    desc="Wzór komunikatu przelewu MPP z numerem KSeF: pola /VAT/, /IDC/, /INV/ i /TXT/, format kwoty, limit 140 znaków oraz przykład krok po kroku.",
+    h1="Komunikat przelewu MPP – wzór z polami /VAT/, /IDC/, /INV/ i /TXT/",
+    intro="Przelew w mechanizmie podzielonej płatności ma własny format komunikatu. Pokazujemy wzór, znaczenie każdego pola i przykład z numerem KSeF.",
+    lead_tool=("/przelew-mpp-numer-ksef/", "generator komunikatu MPP"),
+    date=("2026-11-17", "17 listopada 2026"),
+    content="""
+<h2 id="wzor">Wzór komunikatu</h2>
+<p>Według specyfikacji mBanku dla przelewów w formacie pain.001 komunikat MPP składa się z pól w stałej kolejności: <code>/VAT/10n,2n/IDC/14x/INV/35x/TXT/33x</code>. Całość mieści się w polu o długości do 140 znaków. Gotowy komunikat zbudujesz w <a href="/przelew-mpp-numer-ksef/">generatorze komunikatu MPP</a>, a poniżej wyjaśniamy, co znaczy każda część.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Pole</th><th scope="col">Co wpisać</th><th scope="col">Format</th><th scope="col">Wymagane</th></tr></thead>
+<tbody>
+<tr><td>/VAT/</td><td>kwota podatku VAT z przecinkiem, np. 23,00</td><td>do 10 cyfr, przecinek, 2 cyfry</td><td>tak</td></tr>
+<tr><td>/IDC/</td><td>identyfikator dostawcy, czyli NIP sprzedawcy</td><td>do 14 znaków</td><td>tak</td></tr>
+<tr><td>/INV/</td><td>numer KSeF faktury lub identyfikator zbiorczy</td><td>do 35 znaków</td><td>tak</td></tr>
+<tr><td>/TXT/</td><td>dowolny dodatkowy opis</td><td>do 33 znaków</td><td>nie</td></tr>
+</tbody></table></div>
+
+<h2 id="zasady">Zasady z dokumentów banków</h2>
+<ul>
+<li>Kwota VAT musi być większa niż 0,00 i nie większa niż kwota zapłaty, a separatorem jest przecinek.</li>
+<li>Pole /TXT/ jest opcjonalne, a jeśli jest użyte, ma być ostatnie.</li>
+<li>Przy ręcznym wpisywaniu niektóre banki, np. Deutsche Bank, dzielą komunikat na cztery linie: /VAT/, /IDC/, /INV/ i /TXT/.</li>
+<li>W imporcie Elixir lub CSV w mBanku tytuł jest dzielony na sekcje po maksymalnie 35 znaków.</li>
+</ul>
+<p>Co do numeru KSeF Ministerstwo Finansów wskazuje, że w komunikacie przelewu MPP podaje się między innymi numer KSeF faktury, a zamiast niego można podać identyfikator zbiorczy. Obowiązek ten według MF został odroczony do końca 2026 roku, więc dotyczy płatności od 1 stycznia 2027.</p>
+
+<h2 id="przyklad">Przykład krok po kroku</h2>
+<p>Faktura ma VAT 230,00 zł, sprzedawca ma NIP 3786417439, a numer KSeF to <code>3786417439-20260928-AB12CD34EF56-78</code> (przykładowy zapis w formacie ze specyfikacji, nie prawdziwa faktura). Komunikat wygląda tak:</p>
+<p><code>/VAT/230,00/IDC/3786417439/INV/3786417439-20260928-AB12CD34EF56-78/TXT/zaplata</code></p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Część</th><th scope="col">Znaki</th></tr></thead>
+<tbody>
+<tr><td>/VAT/230,00</td><td>11</td></tr>
+<tr><td>/IDC/3786417439</td><td>15</td></tr>
+<tr><td>/INV/ + numer KSeF</td><td>40</td></tr>
+<tr><td>/TXT/zaplata</td><td>12</td></tr>
+<tr><td><strong>Razem</strong></td><td><strong>78</strong></td></tr>
+</tbody></table></div>
+<p>Całość ma 78 znaków, więc mieści się w limicie 140. Przed użyciem sprawdź numer KSeF w <a href="/">walidatorze</a>, bo błąd w polu INV to najczęstsza pomyłka.</p>
+
+<h2 id="kroki">Jak wypełnić przelew</h2>
+<ol class="steps">
+<li>Wybierz w banku przelew podzielony (MPP).</li>
+<li>Wpisz kwotę VAT z faktury w polu /VAT/ z przecinkiem.</li>
+<li>W /IDC/ wpisz NIP sprzedawcy, w /INV/ numer KSeF lub identyfikator zbiorczy.</li>
+<li>Opcjonalnie dodaj krótki opis w /TXT/ na końcu.</li>
+<li>Przed wysłaniem sprawdź, czy kwota VAT nie jest większa niż kwota przelewu.</li>
+</ol>
+<h2 id="bank">Różnice między bankami</h2>
+<p>Każdy bank ma własny formularz: jedne mają osobne pola na kwotę VAT, NIP i numer faktury, inne wymagają wpisania całego komunikatu w jednym polu tytułu. Banki zmieniają formularze w związku z KSeF (mBank opublikował komunikat o zmianach w przelewach podzielonych 19.10.2026), dlatego zanim zrobisz pierwszy przelew po nowym roku, przetestuj go na małej kwocie albo przeczytaj aktualną instrukcję swojego banku. Dokładne wymagania zawsze są po stronie banku, a nie naszego generatora.</p>
+<h2 id="blad">Typowe błędy</h2>
+<p>Najczęściej mylone jest wpisanie kwoty brutto w polu /VAT/ zamiast kwoty podatku, użycie kropki zamiast przecinka w kwocie oraz wpisanie numeru faktury zamiast numeru KSeF. Zdarza się też przekroczenie 33 znaków w polu /TXT/. Generator wykrywa takie sytuacje i wskazuje pole, w którym jest problem, ale ostateczną walidację wykonuje bank.</p>
+<h2 id="zbiorczy">Kilka faktur w jednym przelewie MPP</h2>
+<p>Gdy płacisz za kilka faktur jednego sprzedawcy, w polu INV możesz użyć identyfikatora zbiorczego, jak opisujemy w tekście o <a href="/blog/przelew-za-kilka-faktur-ksef/">przelewie za kilka faktur KSeF</a>. Kwota VAT w komunikacie powinna wtedy odpowiadać sumie podatku z wszystkich faktur objętych identyfikatorem.</p>
+<h2 id="przyklad-iz">Przykład z identyfikatorem zbiorczym</h2>
+<p>Przy płatności za kilka faktur jednego sprzedawcy komunikat może wyglądać tak (zapis w formacie ze specyfikacji, nie prawdziwe dane): <code>/VAT/758,09/IDC/3786417439/INV/3786417439-IZ202708-AB12CD34EF56-78/TXT/zaplata</code>. Pole INV zawiera wtedy identyfikator zbiorczy zamiast numeru KSeF pojedynczej faktury. Długość pola INV pozostaje taka sama, czyli do 35 znaków, bo identyfikator ma budowę zbliżoną do numeru KSeF.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Sytuacja</th><th scope="col">Co w polu INV</th></tr></thead>
+<tbody>
+<tr><td>Jedna faktura</td><td>numer KSeF faktury</td></tr>
+<tr><td>Kilka faktur jednego sprzedawcy</td><td>identyfikator zbiorczy</td></tr>
+<tr><td>Faktura bez numeru KSeF (poza systemem)</td><td>zgodnie z zasadami banku i przepisów, sprawdź instrukcję</td></tr>
+</tbody></table></div>
+<h2 id="przekazanie">Przelew własny w MPP</h2>
+<p>W dokumentach banków występuje także wariant przekazania własnego, czyli przeniesienia środków między własnymi rachunkami w ramach mechanizmu podzielonej płatności. Wtedy kwota VAT w komunikacie może być równa kwocie przelewu. Szczegóły i dopuszczalne wartości pola IDC zależą od banku, więc zawsze sprawdź jego opis.</p>
+<h2 id="kontrola">Lista kontrolna przed wysłaniem</h2>
+<ul>
+<li>kwota VAT zapisana z przecinkiem i większa od zera,</li>
+<li>NIP w polu IDC bez myślników i spacji,</li>
+<li>numer KSeF skopiowany z faktury i sprawdzony w walidatorze,</li>
+<li>tekst w polu TXT nie dłuższy niż 33 znaki,</li>
+<li>całość nie dłuższa niż 140 znaków.</li>
+</ul>
+<h2 id="przechowywanie">Jak zapisać wzór na przyszłość</h2>
+<p>Jeśli regularnie płacisz tym samym dostawcom w mechanizmie podzielonej płatności, warto przygotować szablony: stały NIP w polu IDC i krótki opis w polu TXT. Zmieniać będziesz tylko kwotę VAT i numer KSeF. Dzięki temu rzadziej pomylisz kolejność pól, a każdy przelew zajmie mniej czasu. Szablon możesz skopiować z generatora i wkleić do notatnika lub do arkusza, w którym prowadzisz płatności.</p>
+<p>Zwróć uwagę na to, że bank może odrzucić przelew, w którym kolejność pól jest inna niż we wzorze. W dokumentach mBanku kolejność VAT, IDC, INV, TXT jest ściśle określona, a pole TXT może wystąpić tylko na końcu. Jeśli więc dostajesz komunikat błędu, sprawdź najpierw kolejność, potem format kwoty, a na końcu długość poszczególnych pól.</p>
+<h2 id="dlaczego">Po co ten format</h2>
+<p>Stała struktura komunikatu pozwala bankowi i systemowi rozliczeń automatycznie odczytać kwotę podatku, NIP dostawcy i numer dokumentu. Dzięki temu kwota VAT trafia na rachunek VAT sprzedawcy, a reszta na jego rachunek podstawowy. Jeśli któreś pole jest błędne, bank może odrzucić przelew albo zapytać o poprawkę, dlatego warto poświęcić minutę na kontrolę przed wysłaniem. Pomocna bywa też zasada: najpierw sprawdź numer KSeF, potem kwotę VAT, a dopiero na końcu opis.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Komunikat MPP ma stałą kolejność pól: VAT, IDC, INV i opcjonalnie TXT. Zbuduj go w <a href="/przelew-mpp-numer-ksef/">generatorze komunikatu MPP</a> i zawsze sprawdź zasady swojego banku.</p>
+""",
+    faq=[
+        ("Jak wygląda komunikat przelewu MPP?", "Ma postać /VAT/kwota VAT/IDC/NIP sprzedawcy/INV/numer KSeF/TXT/opis, przy czym pole TXT jest opcjonalne."),
+        ("Jaki separator kwoty w polu /VAT/?", "Przecinek, np. 230,00. Kwota ma być większa od zera i nie większa niż kwota przelewu."),
+        ("Czy w polu /INV/ można podać identyfikator zbiorczy?", "Tak. Ministerstwo Finansów wskazuje, że zamiast numeru KSeF można podać identyfikator zbiorczy."),
+        ("Ile znaków może mieć komunikat MPP?", "Według specyfikacji mBanku całość mieści się w polu do 140 znaków, a pole /TXT/ ma do 33 znaków."),
+    ],
+    sources=[MBANK_SPEC, MBANK_IMPORT, MBANK_NEWS, DB, MF_NUM],
+)
+
+CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12]

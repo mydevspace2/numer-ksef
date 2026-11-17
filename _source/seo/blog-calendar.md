@@ -16,9 +16,9 @@ Legenda statusu: „✅ RRRR-MM-DD” przy numerze = opublikowano tego dnia (tre
 | 7 ✅ 2026-11-16 | numer-ksef-faktury-zaliczkowej | Numer KSeF faktury zaliczkowej i przelew zaliczki | numer ksef faktury zaliczkowej | / |
 | 8 ✅ 2026-11-16 | czy-numer-ksef-musi-byc-w-tytule-przelewu | Czy numer KSeF musi być w tytule przelewu? | czy numer ksef musi być w tytule przelewu | / |
 | 9 ✅ 2026-11-16 | numer-ksef-ile-znakow | Numer KSeF – ile ma znaków i czemu 35? | numer ksef ile znaków | / |
-| 10 | przelew-za-kilka-faktur-ksef | Przelew za kilka faktur KSeF jednym przelewem | przelew zbiorczy ksef | /identyfikator-zbiorczy-ksef/ |
-| 11 | jak-wygenerowac-identyfikator-zbiorczy-ksef | Jak wygenerować identyfikator zbiorczy KSeF? | identyfikator zbiorczy ksef jak wygenerować | /identyfikator-zbiorczy-ksef/ |
-| 12 | komunikat-przelewu-mpp-wzor | Komunikat przelewu MPP – wzór /VAT/ /IDC/ /INV/ | komunikat przelewu mpp | /przelew-mpp-numer-ksef/ |
+| 10 ✅ 2026-11-17 | przelew-za-kilka-faktur-ksef | Przelew za kilka faktur KSeF jednym przelewem | przelew zbiorczy ksef | /identyfikator-zbiorczy-ksef/ |
+| 11 ✅ 2026-11-17 | jak-wygenerowac-identyfikator-zbiorczy-ksef | Jak wygenerować identyfikator zbiorczy KSeF? | identyfikator zbiorczy ksef jak wygenerować | /identyfikator-zbiorczy-ksef/ |
+| 12 ✅ 2026-11-17 | komunikat-przelewu-mpp-wzor | Komunikat przelewu MPP – wzór /VAT/ /IDC/ /INV/ | komunikat przelewu mpp | /przelew-mpp-numer-ksef/ |
 | 13 | kod-qr-ksef-jak-sprawdzic-fakture | Kod QR KSeF – jak sprawdzić fakturę telefonem? | kod qr ksef jak sprawdzić | /kod-qr-ksef/ |
 | 14 | kod-qr-ksef-co-zawiera | Co zawiera kod QR KSeF? KOD I i KOD II | kod qr ksef co zawiera | /kod-qr-ksef/ |
 | 15 | czy-kod-qr-na-fakturze-ksef-jest-obowiazkowy | Czy kod QR na fakturze KSeF jest obowiązkowy? | czy kod qr na fakturze ksef jest obowiązkowy | /kod-qr-ksef/ |
