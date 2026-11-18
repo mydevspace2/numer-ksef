@@ -19,9 +19,9 @@ Legenda statusu: „✅ RRRR-MM-DD” przy numerze = opublikowano tego dnia (tre
 | 10 ✅ 2026-11-17 | przelew-za-kilka-faktur-ksef | Przelew za kilka faktur KSeF jednym przelewem | przelew zbiorczy ksef | /identyfikator-zbiorczy-ksef/ |
 | 11 ✅ 2026-11-17 | jak-wygenerowac-identyfikator-zbiorczy-ksef | Jak wygenerować identyfikator zbiorczy KSeF? | identyfikator zbiorczy ksef jak wygenerować | /identyfikator-zbiorczy-ksef/ |
 | 12 ✅ 2026-11-17 | komunikat-przelewu-mpp-wzor | Komunikat przelewu MPP – wzór /VAT/ /IDC/ /INV/ | komunikat przelewu mpp | /przelew-mpp-numer-ksef/ |
-| 13 | kod-qr-ksef-jak-sprawdzic-fakture | Kod QR KSeF – jak sprawdzić fakturę telefonem? | kod qr ksef jak sprawdzić | /kod-qr-ksef/ |
-| 14 | kod-qr-ksef-co-zawiera | Co zawiera kod QR KSeF? KOD I i KOD II | kod qr ksef co zawiera | /kod-qr-ksef/ |
-| 15 | czy-kod-qr-na-fakturze-ksef-jest-obowiazkowy | Czy kod QR na fakturze KSeF jest obowiązkowy? | czy kod qr na fakturze ksef jest obowiązkowy | /kod-qr-ksef/ |
+| 13 ✅ 2026-11-18 | kod-qr-ksef-jak-sprawdzic-fakture | Kod QR KSeF – jak sprawdzić fakturę telefonem? | kod qr ksef jak sprawdzić | /kod-qr-ksef/ |
+| 14 ✅ 2026-11-18 | kod-qr-ksef-co-zawiera | Co zawiera kod QR KSeF? KOD I i KOD II | kod qr ksef co zawiera | /kod-qr-ksef/ |
+| 15 ✅ 2026-11-18 | czy-kod-qr-na-fakturze-ksef-jest-obowiazkowy | Czy kod QR na fakturze KSeF jest obowiązkowy? | czy kod qr na fakturze ksef jest obowiązkowy | /kod-qr-ksef/ |
 | 16 | jak-otworzyc-plik-xml-ksef | Jak otworzyć plik XML z KSeF bez programu? | jak otworzyć plik xml ksef | /przelew-z-faktury-xml-ksef/ |
 | 17 | dlaczego-numeru-ksef-nie-ma-w-xml | Dlaczego numeru KSeF nie ma w pliku XML? | numer ksef w pliku xml | /przelew-z-faktury-xml-ksef/ |
 | 18 | czy-numer-ksef-musi-byc-w-jpk | Czy numer KSeF musi być w JPK_VAT? | czy numer ksef musi być w jpk vat | /sprawdz-wiele-numerow-ksef/ |

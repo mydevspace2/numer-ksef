@@ -1023,4 +1023,232 @@ C12 = dict(
     sources=[MBANK_SPEC, MBANK_IMPORT, MBANK_NEWS, DB, MF_NUM],
 )
 
-CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12]
+
+# ---------------------------------------------------------------- #13-15 (2026-11-18)
+from sources import QR_DOC, MF_QR
+C13 = dict(
+    slug="kod-qr-ksef-jak-sprawdzic-fakture",
+    title="Kod QR KSeF – jak sprawdzić fakturę telefonem?",
+    desc="Jak sprawdzić fakturę z kodem QR KSeF telefonem: co zobaczysz po zeskanowaniu, jak rozpoznać adres MF, czym jest etykieta pod kodem i na co uważać.",
+    h1="Kod QR KSeF – jak sprawdzić fakturę telefonem krok po kroku",
+    intro="Dostałeś fakturę jako PDF lub wydruk z kodem QR? Możesz w kilka sekund sprawdzić, czy faktura rzeczywiście jest w KSeF. Pokazujemy, jak to zrobić bezpiecznie.",
+    lead_tool=("/kod-qr-ksef/", "generator i dekoder kodu KOD I"),
+    date=("2026-11-18", "18 listopada 2026"),
+    content="""
+<h2 id="po-co">Po co kod QR na fakturze</h2>
+<p>Według dokumentacji Ministerstwa Finansów kody QR wprowadzono z myślą o sytuacjach, gdy faktura trafia do odbiorcy innym kanałem niż pobranie z API KSeF, na przykład jako PDF, wydruk albo załącznik e-mail. Każdy może wtedy sprawdzić, czy faktura znajduje się w systemie i czy nie została zmodyfikowana. Link z kodu możesz też rozłożyć na części w naszym <a href="/kod-qr-ksef/">dekoderze kodu KOD I</a>.</p>
+<h2 id="kroki">Jak sprawdzić fakturę krok po kroku</h2>
+<ol class="steps">
+<li>Otwórz aparat w telefonie i skieruj go na kod QR na fakturze.</li>
+<li>Nie klikaj od razu w link. Przeczytaj adres, który podpowiada telefon.</li>
+<li>Sprawdź, czy adres zaczyna się od <code>https://qr.ksef.mf.gov.pl/</code> (środowisko produkcyjne). Adresy z <code>qr-test</code> i <code>qr-demo</code> należą do środowisk testowych i demo.</li>
+<li>Otwórz link. Zobaczysz uproszczoną prezentację podstawowych danych faktury i informację, że jest w KSeF.</li>
+<li>Porównaj dane z dokumentem: NIP sprzedawcy i datę wystawienia.</li>
+</ol>
+<p>Pełny dostęp do treści faktury, na przykład pobranie pliku XML, wymaga według dokumentacji wprowadzenia dodatkowych danych. Sama obecność faktury w systemie jest widoczna od razu.</p>
+<h2 id="adresy">Adresy środowisk</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Środowisko</th><th scope="col">Adres kodu QR</th><th scope="col">Zastosowanie</th></tr></thead>
+<tbody>
+<tr><td>Testowe (TE)</td><td>qr-test.ksef.mf.gov.pl</td><td>testy integracji</td></tr>
+<tr><td>Przedprodukcyjne (DEMO)</td><td>qr-demo.ksef.mf.gov.pl</td><td>próby przed produkcją</td></tr>
+<tr><td>Produkcyjne (PROD)</td><td>qr.ksef.mf.gov.pl</td><td>prawdziwe faktury</td></tr>
+</tbody></table></div>
+<p>Na prawdziwej fakturze spodziewaj się adresu produkcyjnego. Jeśli kod prowadzi na zupełnie inną domenę, potraktuj go jak podejrzany i nie podawaj tam żadnych danych.</p>
+<h2 id="etykieta">Co oznacza napis pod kodem</h2>
+<p>Pod kodem QR znajduje się etykieta. Gdy numer KSeF jest znany, widać pod kodem właśnie ten numer. Gdy numeru jeszcze nie nadano, pojawia się napis <strong>OFFLINE</strong>. Dotyczy to faktur offline przed przesłaniem do systemu oraz faktur online oczekujących na numer. Numer z etykiety możesz przepisać do <a href="/">walidatora numeru KSeF</a> i sprawdzić jego poprawność.</p>
+<h2 id="przyklad">Przykład linku z kodu</h2>
+<p>Dokumentacja MF pokazuje przykładowy link dla środowiska testowego (dane przykładowe, nie prawdziwa faktura):</p>
+<p><code>https://qr-test.ksef.mf.gov.pl/invoice/1111111111/01-02-2026/UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE</code></p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Część linku</th><th scope="col">Znaczenie</th></tr></thead>
+<tbody>
+<tr><td>/invoice</td><td>kod weryfikacji faktury (KOD I)</td></tr>
+<tr><td>1111111111</td><td>NIP sprzedawcy</td></tr>
+<tr><td>01-02-2026</td><td>data wystawienia faktury (pole P_1), format DD-MM-RRRR</td></tr>
+<tr><td>UtQp9G…WzIE</td><td>skrót SHA-256 pliku faktury w formacie Base64URL</td></tr>
+</tbody></table></div>
+<h2 id="uwaga">Na co uważać</h2>
+<ul>
+<li>Kod QR sam w sobie jest tylko linkiem. Oszust może wydrukować kod prowadzący na własną stronę, dlatego zawsze czytaj adres przed otwarciem.</li>
+<li>Nie podawaj na stronie po zeskanowaniu haseł, tokenów ani danych logowania do KSeF. Weryfikacja faktury ich nie wymaga.</li>
+<li>Dane z kodu porównaj z dokumentem. Zgodny NIP i data to dobry znak, ale nie zastępują sprawdzenia rachunku bankowego w innych źródłach.</li>
+</ul>
+<h2 id="kod2">A co z drugim kodem</h2>
+<p>Na fakturach wystawionych w trybie offline mogą być dwa kody. Pierwszy (KOD I) służy do weryfikacji faktury po jej przesłaniu do KSeF, drugi (KOD II) do potwierdzenia autentyczności wystawcy. Szczegóły opisujemy w tekście <a href="/blog/kod-qr-ksef-co-zawiera/">co zawiera kod QR KSeF</a>.</p>
+<h2 id="skan">Co zrobić, gdy kod się nie skanuje</h2>
+<p>Zdarza się, że wydruk jest zbyt mały albo rozmazany. Spróbuj przybliżyć telefon, poprawić oświetlenie lub poprosić wystawcę o plik PDF. Dokumentacja przewiduje też, że jeśli kodu nie da się umieścić na fakturze, wystawca dostarcza go jako osobny plik graficzny lub link. Wystawca może więc przesłać sam link, który wkleisz do przeglądarki albo do naszego dekodera.</p>
+<h2 id="skrot">Do czego służy skrót w linku</h2>
+<p>Ostatni segment linku KOD I to skrót SHA-256 pliku faktury zapisany w formacie Base64URL. Skrót działa jak odcisk palca: ten sam plik zawsze daje ten sam wynik, a zmiana nawet jednego znaku w XML daje zupełnie inny ciąg. Dzięki temu system KSeF może powiązać link z konkretnym plikiem faktury i wykryć, że dokument został zmieniony po wystawieniu. Odbiorca nie musi liczyć skrótu ręcznie, bo robi to system po otwarciu linku, ale warto wiedzieć, skąd bierze się ten długi ciąg znaków.</p>
+<h2 id="telefon-komputer">Telefon czy komputer</h2>
+<p>Kod można sprawdzić także bez telefonu. Gdy dostajesz fakturę jako PDF na komputerze, najprościej skopiować link z wizualizacji, jeśli wystawca go dołączył, albo zeskanować kod ekranu telefonem. Można też użyć czytnika kodów QR w przeglądarce albo wgrać obraz do dowolnego programu, który odczytuje kody. Ważne, by przed otwarciem linku zawsze zobaczyć jego pełny adres, a nie tylko podgląd.</p>
+<h2 id="co-dalej">Co zrobić, gdy dane się nie zgadzają</h2>
+<ol class="steps">
+<li>Nie płać faktury, dopóki nie wyjaśnisz rozbieżności.</li>
+<li>Skontaktuj się z wystawcą znanym Ci kanałem, a nie numerem z samej faktury.</li>
+<li>Poproś o numer KSeF i sprawdź go w <a href="/">walidatorze</a>.</li>
+<li>Jeśli zależy Ci na pewności, poproś o plik XML pobrany z KSeF i porównaj dane.</li>
+</ol>
+<p>Pamiętaj, że niezgodność może być zwykłą pomyłką, na przykład literówką w nazwie albo inną datą wystawienia niż sprzedaży. Data w kodzie to data wystawienia z pola P_1, więc nie myl jej z datą sprzedaży ani terminem płatności.</p>
+<h2 id="bezpieczenstwo-skanu">Bezpieczne skanowanie w praktyce</h2>
+<p>Oszuści chętnie wykorzystują kody QR, bo użytkownik nie widzi, dokąd prowadzą. Dlatego przyjmij kilka prostych nawyków. Używaj aparatu systemowego, który pokazuje pełny adres przed otwarciem. Sprawdzaj, czy po nazwie domeny nie ma dziwnych dodatków, na przykład <code>qr.ksef.mf.gov.pl.inna-domena.pl</code>, bo liczy się końcówka przed pierwszym ukośnikiem. Nie instaluj żadnych aplikacji, o które prosi strona po zeskanowaniu kodu. Weryfikacja faktury w KSeF działa w przeglądarce i nie wymaga instalacji.</p>
+<p>Jeśli faktura dotyczy dużej kwoty albo nowego kontrahenta, warto dodatkowo zadzwonić pod numer znany z innego źródła i potwierdzić numer rachunku. Kod QR potwierdza obecność faktury w systemie, ale nie odpowiada na pytanie, czy rachunek bankowy na niej jest właściwy. Z tego powodu dobrym zwyczajem jest porównywanie rachunku z poprzednimi fakturami od tego samego dostawcy.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Zeskanuj kod, sprawdź adres, porównaj NIP i datę z dokumentem. Link rozłożysz na części w <a href="/kod-qr-ksef/">dekoderze KOD I</a>, a numer KSeF z etykiety sprawdzisz w <a href="/">walidatorze</a>.</p>
+""",
+    faq=[
+        ("Jak sprawdzić fakturę po kodzie QR KSeF?", "Zeskanuj kod aparatem, sprawdź, czy adres to qr.ksef.mf.gov.pl, i otwórz link. Zobaczysz podstawowe dane faktury oraz informację o jej obecności w KSeF."),
+        ("Czy po zeskanowaniu kodu trzeba się logować?", "Nie. Podstawowa weryfikacja nie wymaga logowania, a pełny dostęp do treści wymaga według dokumentacji dodatkowych danych."),
+        ("Co oznacza napis OFFLINE pod kodem?", "Że numer KSeF nie został jeszcze nadany. Dotyczy faktur offline przed przesłaniem do systemu i faktur online oczekujących na numer."),
+        ("Skąd mam wiedzieć, że kod nie jest fałszywy?", "Sprawdź domenę linku i porównaj NIP oraz datę z dokumentem. Kod to tylko link, więc adres zawsze trzeba przeczytać."),
+    ],
+    sources=[QR_DOC, MF_QR, MF_NUM],
+)
+
+C14 = dict(
+    slug="kod-qr-ksef-co-zawiera",
+    title="Co zawiera kod QR KSeF? KOD I i KOD II",
+    desc="Co zawiera kod QR KSeF: budowa linku KOD I (NIP, data, skrót SHA-256) i KOD II (certyfikat, podpis), kiedy pojawia się który kod i jak je odróżnić.",
+    h1="Co zawiera kod QR KSeF – budowa KOD I i KOD II",
+    intro="Kody QR na fakturach KSeF to zwykłe linki, ale z konkretną budową. Rozkładamy na części KOD I i KOD II na podstawie dokumentacji Ministerstwa Finansów.",
+    lead_tool=("/kod-qr-ksef/", "dekoder i generator KOD I"),
+    date=("2026-11-18", "18 listopada 2026"),
+    content="""
+<h2 id="dwa-kody">Dwa rodzaje kodów</h2>
+<p>Zgodnie z dokumentacją MF w trybie online na wizualizacji faktury jest jeden kod QR (KOD I). W trybie offline są dwa: KOD I do weryfikacji faktury po jej przesłaniu do KSeF oraz KOD II do potwierdzenia autentyczności wystawcy na podstawie certyfikatu KSeF. Każdy link rozłożysz w <a href="/kod-qr-ksef/">dekoderze kodu KOD I</a>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Cecha</th><th scope="col">KOD I</th><th scope="col">KOD II</th></tr></thead>
+<tbody>
+<tr><td>Cel</td><td>weryfikacja i pobranie faktury</td><td>potwierdzenie autentyczności wystawcy</td></tr>
+<tr><td>Kiedy</td><td>faktury online i offline</td><td>tylko faktury offline</td></tr>
+<tr><td>Ścieżka</td><td>/invoice</td><td>/certificate</td></tr>
+<tr><td>Podpis kluczem prywatnym</td><td>nie</td><td>tak, certyfikat KSeF typu Offline</td></tr>
+<tr><td>Etykieta pod kodem</td><td>numer KSeF albo OFFLINE</td><td>CERTYFIKAT</td></tr>
+</tbody></table></div>
+<h2 id="kod1">Co zawiera KOD I</h2>
+<p>Link KOD I składa się z adresu środowiska ze ścieżką <code>/invoice</code>, NIP-u sprzedawcy, daty wystawienia faktury z pola P_1 w formacie DD-MM-RRRR oraz skrótu pliku faktury obliczonego algorytmem SHA-256 w formacie Base64URL. Przykład z dokumentacji (dane testowe):</p>
+<p><code>https://qr-test.ksef.mf.gov.pl/invoice/1111111111/01-02-2026/UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE</code></p>
+<p>Skrót działa jak odcisk palca pliku. Zmiana jednego znaku w XML daje zupełnie inny skrót, dlatego system może sprawdzić, czy faktura nie została zmodyfikowana.</p>
+<h2 id="kod2">Co zawiera KOD II</h2>
+<p>KOD II jest generowany wyłącznie dla faktur wystawianych w trybie offline (offline24, niedostępność systemu, tryb awaryjny). Link zawiera:</p>
+<ul>
+<li>adres środowiska ze ścieżką <code>/certificate</code>,</li>
+<li>typ identyfikatora kontekstu: Nip, InternalId, NipVatUe lub PeppolId,</li>
+<li>wartość identyfikatora kontekstu,</li>
+<li>NIP sprzedawcy,</li>
+<li>numer seryjny certyfikatu KSeF wystawcy,</li>
+<li>skrót SHA-256 pliku faktury w Base64URL,</li>
+<li>podpis linku kluczem prywatnym certyfikatu KSeF typu Offline, również w Base64URL.</li>
+</ul>
+<p>Dokumentacja podaje, że podpis może być wykonany algorytmem RSA (RSASSA-PSS, SHA-256) albo ECDSA na krzywej P-256. Podpis zapobiega sfałszowaniu linku przez kogoś, kto nie ma dostępu do certyfikatu. Certyfikat typu Authentication nie może być używany do generowania KODU II.</p>
+<h2 id="przyklad">Przykład układu KOD II</h2>
+<p>Układ linku w dokumentacji (dane przykładowe): <code>https://qr-test.ksef.mf.gov.pl/certificate/Nip/1111111111/1111111111/01F20A5D352AE590/UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE/podpis</code>, gdzie w ostatnim segmencie stoi długi podpis w Base64URL. Segmenty to kolejno: typ kontekstu, wartość kontekstu, NIP sprzedawcy, numer seryjny certyfikatu, skrót faktury i podpis.</p>
+<h2 id="weryfikacja">Co sprawdza system po zeskanowaniu KOD II</h2>
+<ol class="steps">
+<li>Czy certyfikat wystawcy istnieje w rejestrze, jest ważny i nie został odwołany ani zablokowany.</li>
+<li>Czy podpis w adresie jest poprawny.</li>
+<li>Czy podmiot z certyfikatu ma aktywne uprawnienia do wystawienia faktury w danym kontekście.</li>
+<li>Czy kontekst ma prawo wystawiać faktury dla NIP-u sprzedawcy.</li>
+</ol>
+<p>Przykładowo księgowa wystawiająca fakturę w imieniu firmy musi mieć nadane prawo InvoiceWrite w kontekście tej firmy.</p>
+<h2 id="etykiety">Etykiety pod kodami</h2>
+<p>Pod KOD I widnieje numer KSeF, jeśli jest znany, a w przeciwnym razie napis OFFLINE. Pod KOD II znajduje się napis CERTYFIKAT. Kody muszą być zgodne z normą ISO/IEC 18004:2024. Numer z etykiety zweryfikujesz w <a href="/">walidatorze numeru KSeF</a>.</p>
+<h2 id="bezpieczenstwo">Prywatny klucz tylko u wystawcy</h2>
+<p>Do wygenerowania KODU II potrzebny jest klucz prywatny certyfikatu, który powinien zostać wyłącznie u wystawcy. Dlatego nasz dekoder tylko wyjaśnia budowę linku i nigdy nie prosi o klucz. Jeśli ktoś prosi Cię o klucz prywatny w zamian za sprawdzenie faktury, to nie jest oficjalna procedura.</p>
+<h2 id="base64url">Czym jest Base64URL</h2>
+<p>Skrót SHA-256 to 32 bajty danych. Aby dało się je bezpiecznie wstawić do adresu, kodowane są w formacie Base64URL, czyli odmianie Base64, w której zamiast znaków plus i ukośnik stosuje się myślnik i podkreślenie. Dzięki temu skrót nie psuje struktury adresu URL. Przykładowy skrót z dokumentacji, <code>UtQp9Gpc51y-u3xApZjIjgkpZ01js-J8KflSPW8WzIE</code>, ma 43 znaki i zawiera myślniki, co jest typowe dla tego formatu.</p>
+<h2 id="srodowiska">Trzy środowiska, ten sam układ</h2>
+<p>Układ linku jest taki sam we wszystkich środowiskach, zmienia się tylko początek adresu: qr-test.ksef.mf.gov.pl dla testów, qr-demo.ksef.mf.gov.pl dla środowiska przedprodukcyjnego i qr.ksef.mf.gov.pl dla produkcji. Dlatego przykłady z dokumentacji, które używają adresu testowego, pokazują dokładnie tę samą budowę, jaką ma link na prawdziwej fakturze.</p>
+<h2 id="jak-odroznic">Jak odróżnić kody na wydruku</h2>
+<p>Najłatwiej po etykiecie pod kodem. Jeśli widzisz numer KSeF albo słowo OFFLINE, to jest KOD I. Jeśli widzisz słowo CERTYFIKAT, to KOD II. Po zeskanowaniu rozpoznasz je także po ścieżce w adresie: <code>/invoice</code> dla KODU I i <code>/certificate</code> dla KODU II. Gdy na jednej fakturze są dwa kody, każdy z nich ma inną funkcję i oba warto sprawdzić.</p>
+<h2 id="po-co-dwa">Po co dwa kody przy fakturach offline</h2>
+<p>Faktura offline powstaje, zanim trafi do KSeF, więc w chwili wystawienia nie ma jeszcze numeru KSeF. KOD I pozwoli odbiorcy zweryfikować ją po przesłaniu do systemu, a KOD II potwierdza, że wystawił ją podmiot z ważnym certyfikatem i uprawnieniami. Bez drugiego kodu odbiorca nie miałby jak sprawdzić wystawcy, zanim faktura pojawi się w KSeF.</p>
+<h2 id="przyklad-liczenie">Przykład: skąd bierze się skrót</h2>
+<p>Załóżmy, że program wystawia fakturę jako plik XML. Oblicza dla niego skrót SHA-256, koduje wynik w Base64URL i wstawia do linku razem z NIP-em sprzedawcy oraz datą z pola P_1. Z tych samych trzech elementów powstaje link w KODZIE I, a w KODZIE II dochodzą jeszcze dane certyfikatu i podpis. Jeśli ktoś zmieni treść pliku, skrót przestanie pasować, więc link nie będzie wskazywał na zmienioną wersję. W naszym <a href="/kod-qr-ksef/">narzędziu KOD I</a> możesz wgrać plik XML i zobaczyć, jaki skrót i link z niego wynikają, a obliczenia odbywają się w Twojej przeglądarce.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Element</th><th scope="col">Skąd pochodzi</th></tr></thead>
+<tbody>
+<tr><td>NIP sprzedawcy</td><td>dane faktury (Podmiot1)</td></tr>
+<tr><td>Data wystawienia</td><td>pole P_1 faktury</td></tr>
+<tr><td>Skrót SHA-256</td><td>obliczany z całego pliku XML</td></tr>
+<tr><td>Numer seryjny certyfikatu</td><td>certyfikat KSeF typu Offline (tylko KOD II)</td></tr>
+</tbody></table></div>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>KOD I to link do faktury z NIP-em, datą i skrótem SHA-256, a KOD II to dodatkowy, podpisany link potwierdzający wystawcę faktury offline. Wypróbuj <a href="/kod-qr-ksef/">dekoder KOD I</a> na swoim linku.</p>
+""",
+    faq=[
+        ("Co zawiera KOD I w KSeF?", "Adres środowiska ze ścieżką /invoice, NIP sprzedawcy, datę wystawienia z pola P_1 (DD-MM-RRRR) i skrót SHA-256 pliku faktury w formacie Base64URL."),
+        ("Kiedy na fakturze jest KOD II?", "Tylko dla faktur wystawionych w trybie offline. Potwierdza autentyczność wystawcy na podstawie certyfikatu KSeF typu Offline."),
+        ("Po co w KOD II jest podpis?", "Podpis kluczem prywatnym certyfikatu zapobiega sfałszowaniu linku przez podmioty bez dostępu do certyfikatu."),
+        ("Jaka norma obowiązuje dla kodów QR?", "Według dokumentacji MF kod QR musi być zgodny z normą ISO/IEC 18004:2024."),
+    ],
+    sources=[QR_DOC, MF_QR, MF_NUM],
+)
+
+C15 = dict(
+    slug="czy-kod-qr-na-fakturze-ksef-jest-obowiazkowy",
+    title="Czy kod QR na fakturze KSeF jest obowiązkowy?",
+    desc="Czy kod QR na fakturze KSeF jest obowiązkowy? Wyjaśniamy, kiedy kod pojawia się na wizualizacji faktury, ile kodów jest w trybie online i offline i co z PDF.",
+    h1="Czy kod QR na fakturze KSeF jest obowiązkowy – kiedy się pojawia",
+    intro="W KSeF faktura jest plikiem XML, więc kod QR dotyczy jej wizualizacji. Wyjaśniamy, kiedy kod się pojawia i co mówi o tym dokumentacja MF, bez zgadywania przepisów.",
+    lead_tool=("/kod-qr-ksef/", "generator kodu KOD I"),
+    date=("2026-11-18", "18 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Faktura ustrukturyzowana to plik XML przesłany do KSeF i to on jest dokumentem w systemie. Kod QR dotyczy wizualizacji faktury, czyli PDF-a lub wydruku przekazywanego odbiorcy. Dokumentacja Ministerstwa Finansów mówi, że w zależności od trybu wystawienia na wizualizacji umieszcza się odpowiednie kody. Dokładne wymogi prawne sprawdź w przepisach i objaśnieniach MF, a kod KOD I wygenerujesz w <a href="/kod-qr-ksef/">generatorze kodu KOD I</a>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Tryb wystawienia</th><th scope="col">Kody na wizualizacji</th><th scope="col">Etykieta</th></tr></thead>
+<tbody>
+<tr><td>Online</td><td>jeden kod: KOD I</td><td>numer KSeF</td></tr>
+<tr><td>Offline, przed wysłaniem do KSeF</td><td>dwa kody: KOD I i KOD II</td><td>OFFLINE / CERTYFIKAT</td></tr>
+<tr><td>Offline, już przesłana</td><td>KOD I (z numerem KSeF) i KOD II</td><td>numer KSeF / CERTYFIKAT</td></tr>
+</tbody></table></div>
+<h2 id="wizualizacja">Dlaczego mowa o wizualizacji</h2>
+<p>Odbiorca faktury ustrukturyzowanej pobiera ją z KSeF jako XML. Kod QR przydaje się, gdy faktura trafia do niego innym kanałem: jako PDF, wydruk lub załącznik. Wtedy może sprawdzić, czy dokument jest w systemie i czy nie został zmieniony. To właśnie ten cel opisuje dokumentacja MF.</p>
+<h2 id="brak-miejsca">Gdy kodu nie da się umieścić</h2>
+<p>Dokumentacja przewiduje wprost, że jeśli nie ma możliwości umieszczenia kodu bezpośrednio na fakturze, na przykład format danych tego nie pozwala, należy dostarczyć go odbiorcy jako oddzielny plik graficzny lub link. Wystawca może więc przesłać sam link, który odbiorca wklei do <a href="/kod-qr-ksef/">dekodera</a> lub przeglądarki.</p>
+<h2 id="kto-generuje">Kto generuje kod</h2>
+<p>Generowanie kodów, zarówno dla faktur online, jak i offline, odbywa się lokalnie w aplikacji klienta na podstawie danych z wystawionej faktury. Oznacza to, że kod tworzy program, w którym wystawiasz fakturę lub generujesz jej wizualizację, a nie sam KSeF. Jeśli korzystasz z gotowego programu do fakturowania, zwykle robi to za Ciebie.</p>
+<h2 id="co-sprawdzic">Co sprawdzić w swoim programie</h2>
+<ol class="steps">
+<li>Czy wizualizacja PDF zawiera kod QR pod numerem KSeF.</li>
+<li>Czy adres w kodzie zaczyna się od qr.ksef.mf.gov.pl (produkcja).</li>
+<li>Czy przy fakturach offline program tworzy dwa kody z etykietami OFFLINE i CERTYFIKAT.</li>
+<li>Czy numer pod kodem pasuje do numeru KSeF faktury w <a href="/">walidatorze</a>.</li>
+</ol>
+<h2 id="odbiorca">Co z odbiorcą, który kodu nie sprawdza</h2>
+<p>Odbiorca nie musi skanować kodu, by faktura była w systemie, bo źródłem jest plik w KSeF. Kod jest ułatwieniem weryfikacji, szczególnie dla osób, które dostały PDF. Jeśli masz wątpliwości co do dokumentu, możesz go porównać z fragmentem XML pobranym z KSeF, a skrót SHA-256 pliku powinien zgadzać się z tym z linku.</p>
+<h2 id="wizualizacja-brak">Faktura bez kodu</h2>
+<p>Jeśli otrzymałeś PDF bez kodu, nie oznacza to automatycznie, że faktury nie ma w KSeF. Poproś wystawcę o numer KSeF i sprawdź jego poprawność w walidatorze. Nie zakładaj z góry niczego, o czym nie mówią oficjalne źródła: kwestie obowiązków i ewentualnych konsekwencji sprawdzaj w przepisach i komunikatach MF na ksef.podatki.gov.pl.</p>
+<h2 id="gdzie-szukac">Gdzie szukać wiążących informacji</h2>
+<p>Wiążące zasady wystawiania faktur ustrukturyzowanych znajdziesz w przepisach ustawy o VAT i rozporządzeniach dostępnych w Internetowym Systemie Aktów Prawnych (isap.sejm.gov.pl) oraz w objaśnieniach na stronie ksef.podatki.gov.pl. Dokumentacja techniczna z repozytorium CIRFMF opisuje natomiast, jak kody są zbudowane i kiedy je generować. W razie wątpliwości co do konkretnego przypadku najlepiej sprawdzić te źródła albo zapytać księgowego, zamiast polegać na artykułach w internecie, także tym.</p>
+<h2 id="wystawca-odbiorca">Wystawca a odbiorca</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Rola</th><th scope="col">Co zwykle robi z kodem</th></tr></thead>
+<tbody>
+<tr><td>Wystawca</td><td>generuje kod w programie i umieszcza go na wizualizacji</td></tr>
+<tr><td>Odbiorca z dostępem do KSeF</td><td>pobiera XML z systemu, kod nie jest konieczny</td></tr>
+<tr><td>Odbiorca z samym PDF</td><td>skanuje kod, by sprawdzić fakturę w KSeF</td></tr>
+</tbody></table></div>
+<h2 id="przyklad-pdf">Przykład z życia</h2>
+<p>Wyobraź sobie, że kontrahent wysyła Ci e-mailem PDF z fakturą na kilka tysięcy złotych. Chcesz mieć pewność, że faktura jest w KSeF, zanim zapłacisz. Skanujesz kod KOD I, widzisz adres qr.ksef.mf.gov.pl, a po otwarciu informację o obecności faktury. Numer KSeF spod kodu wpisujesz do <a href="/">walidatora</a>, który sprawdza jego długość i sumę kontrolną CRC-8. To prosty sposób na wychwycenie literówek i podróbek.</p>
+<h2 id="offline">Faktury offline i kody</h2>
+<p>Przy fakturach offline kody mają szczególne znaczenie, bo faktura jest wystawiona, zanim trafi do KSeF, a odbiorca często dostaje ją w formie PDF lub wydruku. KOD I pozwala mu później sprawdzić fakturę w systemie, a KOD II potwierdza wystawcę. Dokumentacja wymienia tryby offline24, niedostępność systemu i tryb awaryjny jako sytuacje, w których generuje się KOD II. Szczegółowe zasady trybów offline opisuje ksef.podatki.gov.pl, dlatego jeśli wystawiasz takie faktury, sprawdź tam aktualne wytyczne.</p>
+<p>Jeśli prowadzisz niewielką firmę i fakturujesz przez gotowy program, zapytaj jego dostawcę, jak program obsługuje kody w trybie online i offline. Zwykle wystarczy potwierdzenie, że wizualizacja zawiera kod i etykietę.</p>
+<h2 id="wersje">Aktualność informacji</h2>
+<p>Zasady KSeF były w ostatnich miesiącach doprecyzowywane, a terminy obowiązków zależą od wielkości firmy i miesięcznej sprzedaży. Dlatego przed podjęciem decyzji warto sprawdzić aktualny komunikat na stronie ksef.podatki.gov.pl w zakładce o podstawach prawnych i kluczowych terminach. Dokumentacja techniczna kodów QR nosi datę 21 sierpnia 2025 w repozytorium CIRFMF i może być aktualizowana, więc jeśli budujesz własne rozwiązanie, śledź zmiany w repozytorium. Ten tekst opisuje stan dokumentacji, a nie zastępuje przepisów ani porady księgowego.</p>
+<h2 id="narzedzie">Jak wykorzystać nasze narzędzie</h2>
+<p>W <a href="/kod-qr-ksef/">narzędziu KOD I</a> wkleisz link z kodu, aby rozbić go na NIP, datę i skrót, albo wgrasz plik XML i wygenerujesz link oraz kod QR. Dane nie opuszczają przeglądarki. Narzędzie nie prosi o klucz prywatny ani o token, a KOD II tylko tłumaczy.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Kod QR to element wizualizacji faktury: jeden w trybie online, dwa w trybie offline. Zasady prawne weryfikuj w źródłach MF, a link KOD I zbuduj w <a href="/kod-qr-ksef/">generatorze</a>.</p>
+""",
+    faq=[
+        ("Czy faktura w KSeF musi mieć kod QR?", "Dokumentacja MF opisuje, że na wizualizacji faktury umieszcza się kody zależnie od trybu wystawienia. Wymogi prawne sprawdź w przepisach i objaśnieniach MF."),
+        ("Ile kodów QR jest na fakturze?", "W trybie online jeden (KOD I), w trybie offline dwa: KOD I i KOD II."),
+        ("Kto generuje kod QR?", "Aplikacja klienta, lokalnie, na podstawie danych z wystawionej faktury. Sam KSeF kodu na PDF nie nakłada."),
+        ("Co jeśli kodu nie da się umieścić na fakturze?", "Według dokumentacji należy dostarczyć go odbiorcy jako osobny plik graficzny lub link."),
+    ],
+    sources=[QR_DOC, MF_QR, MF_TERM],
+)
+
+CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15]

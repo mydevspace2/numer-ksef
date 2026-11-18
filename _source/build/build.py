@@ -95,7 +95,9 @@ common.ARTICLE_MAP.update({
 
 # 2026-11-17: posty #10-12
 _K10, _K11, _K12 = _B["przelew-za-kilka-faktur-ksef"], _B["jak-wygenerowac-identyfikator-zbiorczy-ksef"], _B["komunikat-przelewu-mpp-wzor"]
+_K13, _K14, _K15 = _B["kod-qr-ksef-jak-sprawdzic-fakture"], _B["kod-qr-ksef-co-zawiera"], _B["czy-kod-qr-na-fakturze-ksef-jest-obowiazkowy"]
 common.ARTICLE_MAP.update({
+    "/kod-qr-ksef/": [_K13, _K14, _K15], _K13: [_K14, _K15, _S], _K14: [_K13, _K15, _Zn], _K15: [_K13, _K14, _Ty],
     "/przelew-mpp-numer-ksef/": [_K12, _Ty, _K10], "/identyfikator-zbiorczy-ksef/": [_K11, _K10, _Ty],
     "/sprawdz-wiele-numerow-ksef/": [_K10, _Zn, _S],
     _M: [_K12, _Ty, _Za], _Ty: [_K10, _M, _Zn], _Za: [_K12, _K, _M],
