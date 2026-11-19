@@ -22,9 +22,9 @@ Legenda statusu: „✅ RRRR-MM-DD” przy numerze = opublikowano tego dnia (tre
 | 13 ✅ 2026-11-18 | kod-qr-ksef-jak-sprawdzic-fakture | Kod QR KSeF – jak sprawdzić fakturę telefonem? | kod qr ksef jak sprawdzić | /kod-qr-ksef/ |
 | 14 ✅ 2026-11-18 | kod-qr-ksef-co-zawiera | Co zawiera kod QR KSeF? KOD I i KOD II | kod qr ksef co zawiera | /kod-qr-ksef/ |
 | 15 ✅ 2026-11-18 | czy-kod-qr-na-fakturze-ksef-jest-obowiazkowy | Czy kod QR na fakturze KSeF jest obowiązkowy? | czy kod qr na fakturze ksef jest obowiązkowy | /kod-qr-ksef/ |
-| 16 | jak-otworzyc-plik-xml-ksef | Jak otworzyć plik XML z KSeF bez programu? | jak otworzyć plik xml ksef | /przelew-z-faktury-xml-ksef/ |
-| 17 | dlaczego-numeru-ksef-nie-ma-w-xml | Dlaczego numeru KSeF nie ma w pliku XML? | numer ksef w pliku xml | /przelew-z-faktury-xml-ksef/ |
-| 18 | czy-numer-ksef-musi-byc-w-jpk | Czy numer KSeF musi być w JPK_VAT? | czy numer ksef musi być w jpk vat | /sprawdz-wiele-numerow-ksef/ |
+| 16 ✅ 2026-11-19 | jak-otworzyc-plik-xml-ksef | Jak otworzyć plik XML z KSeF bez programu? | jak otworzyć plik xml ksef | /przelew-z-faktury-xml-ksef/ |
+| 17 ✅ 2026-11-19 | dlaczego-numeru-ksef-nie-ma-w-xml | Dlaczego numeru KSeF nie ma w pliku XML? | numer ksef w pliku xml | /przelew-z-faktury-xml-ksef/ |
+| 18 ✅ 2026-11-19 | czy-numer-ksef-musi-byc-w-jpk | Czy numer KSeF musi być w JPK_VAT? | czy numer ksef musi być w jpk vat | /sprawdz-wiele-numerow-ksef/ |
 | 19 | numer-ksef-w-kpir | Czy numer KSeF trzeba wpisać do KPiR? | czy numer ksef musi być w kpir | /sprawdz-wiele-numerow-ksef/ |
 | 20 | czy-numer-ksef-to-nip | Czy numer KSeF to NIP? Co oznacza pierwsze 10 cyfr | czy numer ksef to nip | / |
 | 21 | numer-ksef-blad-w-przelewie | Błędny numer KSeF w przelewie – co zrobić? | błędny numer ksef w przelewie | / |

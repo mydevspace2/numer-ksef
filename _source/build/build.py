@@ -104,6 +104,14 @@ common.ARTICLE_MAP.update({
     _K10: [_K11, _K12, _Ty], _K11: [_K10, _K12, _Zn], _K12: [_M, _K10, _K11],
 })
 
+# 2026-11-19: posty #16-18
+_K16, _K17, _K18 = _B["jak-otworzyc-plik-xml-ksef"], _B["dlaczego-numeru-ksef-nie-ma-w-xml"], _B["czy-numer-ksef-musi-byc-w-jpk"]
+common.ARTICLE_MAP.update({
+    "/przelew-z-faktury-xml-ksef/": [_K16, _K17, _S], "/sprawdz-wiele-numerow-ksef/": [_K18, _K10, _S],
+    "/": [_K17, _K18, _Ty], _K16: [_K17, _K15, _K13], _K17: [_K16, _N, _K], _K18: [_K10, _Ty, _K16],
+    _N: [_K17, _Zn, _K], _K15: [_K16, _K13, _K14], _K10: [_K18, _K11, _K12],
+})
+
 PAGES = [
     ("/", HOME), ("/przelew-mpp-numer-ksef/", MPP), ("/identyfikator-zbiorczy-ksef/", IZ),
     ("/sprawdz-wiele-numerow-ksef/", BULK), ("/przelew-z-faktury-xml-ksef/", XMLP), ("/kod-qr-ksef/", QRP),

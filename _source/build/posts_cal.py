@@ -427,6 +427,7 @@ C05 = dict(
 <p>We wszystkich trzech przypadkach zasada jest ta sama: numer KSeF identyfikuje dokument w systemie, a numer wystawcy pomaga ludziom. Żaden nie zastępuje drugiego.</p>
 <p>Jeśli nie jesteś pewien, który numer ma na myśli sprzedawca, zapytaj go wprost. Krótka wiadomość z pytaniem, jakiego numeru oczekuje w tytule, oszczędza czasu obu stronom i zmniejsza ryzyko, że płatność trafi na niewłaściwą fakturę.</p>
 <p>Dobrym nawykiem jest też opisanie w ewidencji, który numer jest którym, na przykład w osobnych kolumnach arkusza. Dzięki temu po miesiącu nie zgadujesz, co oznacza dany ciąg znaków.</p>
+<p>Numeru KSeF nie znajdziesz w pliku faktury, bo nadaje go system. Wyjaśnia to artykuł <a href="/blog/dlaczego-numeru-ksef-nie-ma-w-xml/">dlaczego numeru KSeF nie ma w pliku XML</a>.</p>
 <h2 id="podsumowanie">Podsumowanie</h2>
 <p>Numer faktury to numer od wystawcy, numer KSeF to numer z systemu. W przelewie podaj numer KSeF, a własny numer dopisz, jeśli starczy miejsca. Skopiowany numer sprawdź w <a href="/">walidatorze numeru KSeF</a>.</p>
 """,
@@ -831,6 +832,7 @@ C10 = dict(
 <p>Jeśli płacisz tylko część należności, przelew z kilkoma numerami nie pokaże, którą fakturę opłacasz w całości. W takiej sytuacji zwykle prościej jest zapłacić oddzielnie za każdą fakturę albo uzgodnić z kontrahentem sposób opisu. Gdy do faktury wystawiono korektę, sprawdź, który numer KSeF należy podać, o czym piszemy w tekście o <a href="/blog/numer-ksef-faktury-korygujacej/">numerze KSeF faktury korygującej</a>. Pamiętaj też o fakturach zaliczkowych, które mają własne numery, jak w tekście o <a href="/blog/numer-ksef-faktury-zaliczkowej/">numerze KSeF faktury zaliczkowej</a>.</p>
 <h2 id="program">Przelewy zbiorcze z programu księgowego</h2>
 <p>Wiele programów księgowych potrafi przygotować paczkę przelewów do importu do banku. Zanim zaczniesz z niej korzystać po 1 stycznia 2027, sprawdź, czy program wstawia numer KSeF do tytułu każdego przelewu i czy nie ucina tytułu po 140 znakach. Dobrym testem jest wygenerowanie jednego przelewu na małą kwotę i obejrzenie tytułu w banku przed wysłaniem całej paczki.</p>
+<p>Numery KSeF trafiają też do ewidencji VAT. Zobacz <a href="/blog/czy-numer-ksef-musi-byc-w-jpk/">czy numer KSeF musi być w JPK_VAT</a>.</p>
 <h2 id="podsumowanie">Podsumowanie</h2>
 <p>Do trzech faktur zwykle zmieszczą się w tytule jako osobne numery KSeF, a przy większej liczbie zostaje identyfikator zbiorczy. Każdy ciąg sprawdzisz w <a href="/identyfikator-zbiorczy-ksef/">walidatorze identyfikatora zbiorczego</a>.</p>
 """,
@@ -1239,6 +1241,7 @@ C15 = dict(
 <p>Zasady KSeF były w ostatnich miesiącach doprecyzowywane, a terminy obowiązków zależą od wielkości firmy i miesięcznej sprzedaży. Dlatego przed podjęciem decyzji warto sprawdzić aktualny komunikat na stronie ksef.podatki.gov.pl w zakładce o podstawach prawnych i kluczowych terminach. Dokumentacja techniczna kodów QR nosi datę 21 sierpnia 2025 w repozytorium CIRFMF i może być aktualizowana, więc jeśli budujesz własne rozwiązanie, śledź zmiany w repozytorium. Ten tekst opisuje stan dokumentacji, a nie zastępuje przepisów ani porady księgowego.</p>
 <h2 id="narzedzie">Jak wykorzystać nasze narzędzie</h2>
 <p>W <a href="/kod-qr-ksef/">narzędziu KOD I</a> wkleisz link z kodu, aby rozbić go na NIP, datę i skrót, albo wgrasz plik XML i wygenerujesz link oraz kod QR. Dane nie opuszczają przeglądarki. Narzędzie nie prosi o klucz prywatny ani o token, a KOD II tylko tłumaczy.</p>
+<p>Jeśli dostałeś sam plik XML, zobacz <a href="/blog/jak-otworzyc-plik-xml-ksef/">jak otworzyć plik XML z KSeF bez programu</a>.</p>
 <h2 id="podsumowanie">Podsumowanie</h2>
 <p>Kod QR to element wizualizacji faktury: jeden w trybie online, dwa w trybie offline. Zasady prawne weryfikuj w źródłach MF, a link KOD I zbuduj w <a href="/kod-qr-ksef/">generatorze</a>.</p>
 """,
@@ -1251,4 +1254,237 @@ C15 = dict(
     sources=[QR_DOC, MF_QR, MF_TERM],
 )
 
-CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15]
+from sources import MF_PYT, MF_AP, MF_PODR2, MF_APPDF, JPK_ZN, JPK_NEWS
+
+# ---------------------------------------------------------------- #16 (2026-11-19)
+C16 = dict(
+    slug="jak-otworzyc-plik-xml-ksef",
+    title="Jak otworzyć plik XML z KSeF bez programu?",
+    desc="Jak otworzyć plik XML z KSeF bez programu do fakturowania? Przeglądarka, Aplikacja Podatnika MF i nasz czytnik: gdzie szukać kwoty, rachunku i terminu.",
+    h1="Jak otworzyć plik XML z KSeF bez programu – krok po kroku",
+    intro="Faktura z KSeF to plik XML, który wygląda jak ściana znaczników. Pokazujemy trzy sposoby otwarcia go bez programu księgowego i wskazujemy pola, w których siedzą kwota, rachunek i termin.",
+    lead_tool=("/przelew-z-faktury-xml-ksef/", "czytnik faktury XML z danymi do przelewu"),
+    date=("2026-11-19", "19 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Plik XML to zwykły tekst, więc otworzysz go w przeglądarce albo w Notatniku. Wygodniej jest jednak pobrać fakturę w formie PDF z Aplikacji Podatnika KSeF albo wczytać plik do <a href="/przelew-z-faktury-xml-ksef/">czytnika faktury XML z danymi do przelewu</a>, który wyciągnie kwotę, rachunek i termin. Poniżej opisujemy każdą z tych dróg.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Sposób</th><th scope="col">Co zobaczysz</th><th scope="col">Dla kogo</th></tr></thead>
+<tbody>
+<tr><td>Przeglądarka lub Notatnik</td><td>surowe znaczniki XML</td><td>ktoś, kto szuka jednej wartości</td></tr>
+<tr><td>Aplikacja Podatnika KSeF</td><td>podgląd faktury i PDF</td><td>kto ma dostęp do KSeF</td></tr>
+<tr><td>Czytnik z danymi do przelewu</td><td>odbiorca, rachunek, kwota, termin</td><td>kto chce zapłacić fakturę</td></tr>
+</tbody></table></div>
+<h2 id="przegladarka">Sposób 1: przeglądarka lub edytor tekstu</h2>
+<p>Plik z rozszerzeniem .xml możesz przeciągnąć do okna przeglądarki albo kliknąć go prawym przyciskiem i wybrać „Otwórz za pomocą” Notatnika. Zobaczysz drzewo elementów w nawiasach ostrokątnych. Nic nie trzeba instalować, a plik nie jest nigdzie wysyłany. Wadą jest to, że nazwy pól są techniczne, a faktura nie wygląda jak dokument.</p>
+<h2 id="aplikacja">Sposób 2: Aplikacja Podatnika KSeF</h2>
+<p>Ministerstwo Finansów udostępnia bezpłatną Aplikację Podatnika KSeF 2.0, w której można wystawiać, odbierać i przeglądać faktury. Według podręcznika użytkownika na liście faktur zaznaczasz fakturę i wybierasz format z przycisku „Pobierz”. Nazwa pobranego pliku jest zgodna z numerem KSeF faktury. W jednej operacji można pobrać od 1 do 10 faktur, a przy kilku system zapisuje je jako archiwum ZIP. Kliknięcie numeru KSeF na liście otwiera ekran ze szczegółami: sprzedawca, nabywca, pozycje i pozostałe dane.</p>
+<p>Wizualizacja nie ma jednego obowiązującego wzoru. Podręcznik MF zaznacza, że dostawcy programów mogą tworzyć własne wzory, a e-fakturę można zwizualizować także w bezpłatnych narzędziach ministerstwa.</p>
+<h2 id="czytnik">Sposób 3: czytnik z danymi do przelewu</h2>
+<p>Jeśli chcesz tylko zapłacić, wczytaj plik do <a href="/przelew-z-faktury-xml-ksef/">naszego czytnika</a>. Odczyt odbywa się lokalnie w przeglądarce. Narzędzie pokaże sprzedawcę, numer rachunku, kwotę, termin oraz przygotuje tytuł przelewu z numerem KSeF. Gdy numeru nie ma w nazwie pliku, wpisujesz go ręcznie, a my sprawdzamy jego sumę kontrolną.</p>
+<h2 id="pola">Gdzie w XML są najważniejsze dane</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Element XML</th><th scope="col">Co oznacza</th></tr></thead>
+<tbody>
+<tr><td>Podmiot1</td><td>sprzedawca (dane identyfikacyjne i adres)</td></tr>
+<tr><td>Podmiot2</td><td>nabywca</td></tr>
+<tr><td>P_1</td><td>data wystawienia faktury</td></tr>
+<tr><td>P_2</td><td>kolejny numer faktury nadany przez wystawcę</td></tr>
+<tr><td>P_15</td><td>kwota należności ogółem</td></tr>
+<tr><td>NrRB</td><td>pełny numer rachunku bankowego</td></tr>
+<tr><td>Termin</td><td>termin płatności</td></tr>
+</tbody></table></div>
+<p>Opisy pochodzą ze schematu FA(3) opublikowanego przez Ministerstwo Finansów. Warto zapamiętać, że P_2 to numer nadany przez wystawcę, a numer KSeF to zupełnie inna wartość.</p>
+<h2 id="przyklad">Przykład: szukamy kwoty i rachunku</h2>
+<p>Dostałeś plik faktura.xml od dostawcy. Otwierasz go w przeglądarce i używasz wyszukiwania na stronie (Ctrl+F). Wpisujesz „P_15” i znajdujesz kwotę należności ogółem. Wpisujesz „NrRB” i widzisz numer rachunku. Wpisujesz „Termin” i trafiasz na datę płatności. W ten sposób w minutę masz dane do przelewu, choć trzeba uważać, bo na fakturze może być kilka rachunków lub kilka terminów, a przy fakturach w walucie obcej kwoty podatku są w osobnych polach.</p>
+<h2 id="uwagi">Na co uważać</h2>
+<ol class="steps">
+<li>Sprawdź, czy plik to faktura FA(3). W nagłówku znajdziesz kod systemowy „FA (3)” i wersję schematu 1-0E.</li>
+<li>Nie edytuj pliku w edytorze tekstu i nie zapisuj go ponownie. Zmiana choćby jednego znaku zmienia jego skrót, a ten jest podstawą kodu QR.</li>
+<li>Nie wysyłaj faktur do przypadkowych stron internetowych. Wybieraj narzędzia, które, jak nasze, czytają plik lokalnie.</li>
+<li>Numer KSeF nie jest elementem pliku. Wyjaśniamy to w tekście <a href="/blog/dlaczego-numeru-ksef-nie-ma-w-xml/">Dlaczego numeru KSeF nie ma w pliku XML</a>.</li>
+</ol>
+<h2 id="problemy">Najczęstsze problemy z otwarciem pliku</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Objaw</th><th scope="col">Co zrobić</th></tr></thead>
+<tbody>
+<tr><td>Plik ma rozszerzenie .zip</td><td>rozpakuj archiwum, bo kilka faktur z Aplikacji Podatnika jest zapisywanych jako ZIP</td></tr>
+<tr><td>Polskie litery wyglądają dziwnie</td><td>ustaw w edytorze kodowanie UTF-8, które jest standardem dla XML</td></tr>
+<tr><td>Cały plik jest w jednej linii</td><td>otwórz go w przeglądarce, która pokaże elementy w drzewie, i użyj Ctrl+F</td></tr>
+<tr><td>Brakuje numeru KSeF</td><td>numer jest w nazwie pliku lub w UPO, a nie w treści XML</td></tr>
+</tbody></table></div>
+<p>Jeśli plik mimo to się nie otwiera, pobierz go jeszcze raz z Aplikacji Podatnika albo poproś wystawcę o ponowne wysłanie. Pamiętaj, że oryginałem faktury jest dokument w KSeF, a plik z e-maila to tylko jego kopia, którą można zawsze zweryfikować przez numer KSeF.</p>
+<h2 id="pdf">Co z PDF-em</h2>
+<p>Gdy fakturę trzeba przekazać komuś, kto nie ma dostępu do KSeF, korzysta się z wizualizacji, na przykład pliku PDF. Pytania i odpowiedzi MF wskazują, że wizualizacja powinna mieć kod QR, jeśli faktura jest przekazywana poza KSeF. Kod sprawdzisz w <a href="/kod-qr-ksef/">dekoderze kodu QR</a>.</p>
+<h2 id="rodzaje">Nie każdy XML to faktura FA(3)</h2>
+<p>W KSeF funkcjonują też inne struktury, na przykład faktury VAT RR w strukturze FA_RR. Aplikacja Podatnika obsługuje obie, ale nasz czytnik jest przygotowany do faktur FA(3), czyli zwykłych faktur sprzedaży. Jeśli w nagłówku widzisz inny kod formularza, dane do przelewu trzeba odczytać ręcznie albo w programie, który tę strukturę obsługuje. To samo dotyczy plików, które nie są fakturami, na przykład XML z potwierdzeniem odbioru.</p>
+<h2 id="narzedzie">Jak wykorzystać nasze narzędzie</h2>
+<p>W <a href="/przelew-z-faktury-xml-ksef/">czytniku faktury XML</a> upuszczasz plik, a w kilka sekund dostajesz gotową kartę płatności z przyciskami „Kopiuj”. Jeśli faktura ma adnotację podzielonej płatności, narzędzie przygotuje także komunikat MPP. Pliki czyta tylko Twoja przeglądarka.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>XML otworzysz w przeglądarce, ale do codziennej pracy lepsza jest Aplikacja Podatnika albo <a href="/przelew-z-faktury-xml-ksef/">czytnik danych do przelewu</a>. Kluczowe pola to P_15, NrRB i Termin.</p>
+""",
+    faq=[
+        ("Czym otworzyć plik XML z KSeF?", "Wystarczy przeglądarka internetowa albo Notatnik, bo XML to zwykły tekst. Do wygodnego podglądu użyj Aplikacji Podatnika KSeF albo czytnika, który wyciąga dane do przelewu."),
+        ("Czy mogę pobrać fakturę z KSeF jako PDF?", "Tak. Według podręcznika MF w Aplikacji Podatnika wybierasz fakturę na liście i format z przycisku „Pobierz”, a wizualizacja jest dostępna jako PDF."),
+        ("Czy plik XML z KSeF można edytować?", "Nie powinno się tego robić. Faktura w KSeF jest dokumentem w systemie, a każda zmiana pliku zmienia jego skrót, więc kopia przestaje być zgodna z oryginałem."),
+        ("Czy wczytanie XML do czytnika jest bezpieczne?", "W naszym czytniku plik jest odczytywany lokalnie w przeglądarce i nie jest wysyłany na serwer."),
+    ],
+    sources=[MF_APPDF, MF_PODR2, MF_PYT, MF_FA3, XSD],
+)
+
+# ---------------------------------------------------------------- #17 (2026-11-19)
+C17 = dict(
+    slug="dlaczego-numeru-ksef-nie-ma-w-xml",
+    title="Dlaczego numeru KSeF nie ma w pliku XML faktury?",
+    desc="Dlaczego numeru KSeF nie ma w pliku XML faktury? Wyjaśniamy, kiedy system go nadaje, czym różni się od P_2 i gdzie go znaleźć: UPO, lista faktur, nazwa pliku.",
+    h1="Dlaczego numeru KSeF nie ma w pliku XML faktury – i gdzie go znaleźć",
+    intro="Otwierasz fakturę XML, szukasz numeru KSeF i go nie widzisz. To nie błąd: według Ministerstwa Finansów numer nie jest elementem pliku. Wyjaśniamy dlaczego i gdzie go wziąć.",
+    lead_tool=("/", "walidator numeru KSeF"),
+    date=("2026-11-19", "19 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Numer KSeF nadaje system dopiero po wysłaniu faktury i jej przyjęciu. Ministerstwo Finansów pisze wprost, że numer jest zwracany w UPO i sam w sobie nie stanowi elementu pliku XML. Gdy już go masz, sprawdź go w <a href="/">walidatorze numeru KSeF</a>. Pole P_2 w pliku to inny numer, nadany przez wystawcę.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Cecha</th><th scope="col">Numer KSeF</th><th scope="col">Pole P_2</th></tr></thead>
+<tbody>
+<tr><td>Kto nadaje</td><td>system KSeF</td><td>wystawca faktury</td></tr>
+<tr><td>Kiedy</td><td>po przyjęciu faktury</td><td>przy wystawianiu</td></tr>
+<tr><td>Czy jest w XML</td><td>nie</td><td>tak</td></tr>
+<tr><td>Długość</td><td>zawsze 35 znaków</td><td>dowolna, wg serii wystawcy</td></tr>
+</tbody></table></div>
+<h2 id="dlaczego">Dlaczego numeru nie da się wpisać do pliku</h2>
+<p>Plik XML powstaje po stronie wystawcy, jeszcze przed wysłaniem do systemu. Numer KSeF składa się z NIP-u sprzedawcy, daty przyjęcia faktury, części technicznej i sumy kontrolnej CRC-8. Dokumentacja MF opisuje datę jako dzień przyjęcia faktury do dalszego przetwarzania, więc w chwili tworzenia pliku jeszcze nie istnieje. Dlatego system nadaje numer sam i odsyła go w potwierdzeniu.</p>
+<p>MF zaznacza też, że numer KSeF oraz numer faktury wskazywany w polu P_2 to dwa różne numery, a numer KSeF wystawianej faktury nie stanowi elementu faktury. Różnice między nimi opisujemy w artykule <a href="/blog/czy-numer-ksef-to-numer-faktury/">Czy numer KSeF to numer faktury</a>.</p>
+<h2 id="wyjatki">Kiedy numer KSeF jednak pojawia się w XML</h2>
+<p>Nie mówimy tu o numerze własnej faktury, ale o numerach faktur powiązanych. Schemat FA(3) zawiera pola, w których wpisuje się numer innej faktury z KSeF:</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Element XML</th><th scope="col">Opis ze schematu</th></tr></thead>
+<tbody>
+<tr><td>NrKSeFFaKorygowanej</td><td>numer identyfikujący fakturę korygowaną w KSeF</td></tr>
+<tr><td>NrKSeFN</td><td>znacznik faktury korygowanej wystawionej poza KSeF</td></tr>
+<tr><td>NrKSeFFaZaliczkowej</td><td>numer faktury zaliczkowej w KSeF, obowiązkowy, gdy zaliczkowa była wystawiona w KSeF</td></tr>
+</tbody></table></div>
+<p>MF przypomina, że w fakturze rozliczającej lub ostatniej zaliczkowej trzeba podać numer KSeF faktury zaliczkowej, a w korekcie numer KSeF faktury pierwotnej. Szczegóły dla korekt znajdziesz w tekście o <a href="/blog/numer-ksef-faktury-korygujacej/">numerze KSeF faktury korygującej</a>.</p>
+<h2 id="droga">Droga faktury od wystawienia do numeru</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Krok</th><th scope="col">Co się dzieje</th><th scope="col">Czy numer KSeF już istnieje</th></tr></thead>
+<tbody>
+<tr><td>1. Wystawienie</td><td>program tworzy plik XML w strukturze FA(3)</td><td>nie</td></tr>
+<tr><td>2. Wysłanie</td><td>wystawca przesyła plik do KSeF</td><td>nie</td></tr>
+<tr><td>3. Przyjęcie</td><td>system przyjmuje fakturę i nadaje numer</td><td>tak</td></tr>
+<tr><td>4. UPO</td><td>wystawca dostaje potwierdzenie z numerem</td><td>tak</td></tr>
+<tr><td>5. Odbiór</td><td>nabywca widzi fakturę w swoim koncie KSeF</td><td>tak</td></tr>
+</tbody></table></div>
+<p>W pytaniach i odpowiedziach MF czytamy, że fakturę uznaje się za otrzymaną przez nabywcę w chwili nadania jej numeru KSeF, a sam KSeF jest podstawowym i wystarczającym kanałem jej udostępniania. Dla krajowego nabywcy z numerem NIP e-mail z plikiem ma więc charakter pomocniczy. Dlatego brak numeru w pliku, który dostałeś od dostawcy, nie oznacza, że faktura nie istnieje. Znaczy tylko, że numer trzeba pobrać z systemu lub od wystawcy.</p>
+<h2 id="gdzie">Gdzie znaleźć numer KSeF faktury</h2>
+<ol class="steps">
+<li>W UPO, czyli Urzędowym Poświadczeniu Odbioru, które zwraca system.</li>
+<li>Na liście faktur w Aplikacji Podatnika KSeF, gdzie numer jest widoczny przy każdej fakturze i otwiera szczegóły.</li>
+<li>W nazwie pobranego pliku. Podręcznik MF mówi, że nazwa pliku jest zgodna z numerem KSeF faktury.</li>
+<li>Na wizualizacji faktury, jeśli program umieszcza numer pod kodem QR.</li>
+</ol>
+<h2 id="przyklad">Przykład: płacisz fakturę z pliku XML</h2>
+<p>Dostawca przysłał plik faktura.xml. W polu P_2 widzisz „FV/11/2026/044”, ale w tytule przelewu ma się znaleźć numer KSeF. Szukasz go więc w e-mailu z fakturą, w Aplikacji Podatnika albo w nazwie pliku pobranego z systemu, na przykład 5265877635-20250826-0100001AF629-AF.xml. Kopiujesz ten fragment bez rozszerzenia i wklejasz do <a href="/">walidatora</a>. Jeśli pasuje długość i suma kontrolna, możesz go użyć w tytule przelewu.</p>
+<h2 id="po-co">Po co w ogóle numer, skoro jest P_2</h2>
+<p>Numer z pola P_2 jest unikalny tylko w obrębie serii wystawcy, więc dwóch sprzedawców może mieć fakturę o tym samym numerze. Numer KSeF ma zawsze 35 znaków, zawiera NIP sprzedawcy i jest globalnie unikalny, dlatego jednoznacznie wskazuje fakturę w systemie. Właśnie dlatego od 2027 roku ma trafiać do tytułu przelewu, a nie numer z faktury.</p>
+<h2 id="czytnik">Czytnik XML a numer KSeF</h2>
+<p>Nasz <a href="/przelew-z-faktury-xml-ksef/">czytnik faktury XML</a> bierze numer z nazwy pliku. Gdy go tam nie ma, pole można wypełnić ręcznie. To zgodne z logiką systemu: numer jest informacją o fakturze, a nie jej treścią.</p>
+<h2 id="upo">Czym jest UPO i po co je zachować</h2>
+<p>UPO to Urzędowe Poświadczenie Odbioru, czyli dokument, który system zwraca po przyjęciu faktury. Według MF właśnie w nim znajdziesz numer KSeF. Wystawca, który prowadzi sprzedaż przez program, powinien mieć UPO w swoich dokumentach, a Aplikacja Podatnika pozwala pobierać je dla jednej lub wielu faktur. Jeśli kontrahent pyta o numer do przelewu, wystarczy skopiować go z UPO lub z listy faktur, zamiast wysyłać mu cały plik XML.</p>
+<h2 id="bledy">Typowe błędy</h2>
+<ul>
+<li>Wpisanie do tytułu przelewu pola P_2 zamiast numeru KSeF.</li>
+<li>Szukanie numeru w pliku, który otwarto w edytorze, i uznanie, że faktura jest niekompletna.</li>
+<li>Użycie numeru faktury korygowanej zamiast numeru samej korekty w płatności.</li>
+<li>Pomijanie sprawdzenia sumy kontrolnej przed wpisaniem numeru ręcznie.</li>
+</ul>
+<h2 id="gdzie-czytac">Źródła, które warto znać</h2>
+<p>Najpewniejsze są strony ksef.podatki.gov.pl, a konkretnie opis numeru KSeF i zbiorczego identyfikatora oraz dokumentacja techniczna numeru w repozytorium CIRFMF. Opisują one budowę numeru, algorytm CRC-8 i moment nadania. Ten tekst streszcza je w wersji dla osoby, która płaci fakturę, i nie zastępuje przepisów ani porady księgowego.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Numeru KSeF nie ma w XML, bo nadaje go system po przyjęciu faktury. Weź go z UPO, listy faktur lub nazwy pliku i sprawdź w <a href="/">walidatorze</a>, zanim wpiszesz go do przelewu.</p>
+""",
+    faq=[
+        ("Dlaczego w pliku XML faktury nie ma numeru KSeF?", "Według MF numer nadaje system po wysłaniu i przyjęciu faktury, jest zwracany w UPO i nie stanowi elementu pliku XML."),
+        ("Czy pole P_2 to numer KSeF?", "Nie. P_2 to kolejny numer faktury nadany przez wystawcę, a numer KSeF to osobny, 35-znakowy identyfikator z systemu."),
+        ("Skąd wziąć numer KSeF, gdy mam sam plik XML?", "Z UPO, z listy faktur w Aplikacji Podatnika KSeF albo z nazwy pliku pobranego z systemu, która zgodnie z podręcznikiem MF odpowiada numerowi KSeF."),
+        ("Czy numer KSeF wpisuje się w fakturze korygującej?", "Tak, ale jest to numer faktury korygowanej, wpisywany w polu NrKSeFFaKorygowanej, a nie numer samej korekty."),
+    ],
+    sources=[MF_NUM, DOC_NUM, MF_APPDF, XSD],
+)
+
+# ---------------------------------------------------------------- #18 (2026-11-19)
+C18 = dict(
+    slug="czy-numer-ksef-musi-byc-w-jpk",
+    title="Czy numer KSeF musi być w JPK_VAT? Oznaczenia",
+    desc="Czy numer KSeF musi być w JPK_VAT? Według MF nowe JPK_V7(3) ma pole NrKSeF oraz oznaczenia OFF, BFK i DI. Sprawdź, kiedy które stosować w sprzedaży i zakupach.",
+    h1="Czy numer KSeF musi być w JPK_VAT – NrKSeF, OFF, BFK i DI",
+    intro="Nowa struktura JPK_V7(3) ma pole na numer KSeF i trzy oznaczenia na faktury bez numeru. Wyjaśniamy, co mówi o nich Ministerstwo Finansów i jak sprawdzić listę numerów przed wysyłką pliku.",
+    lead_tool=("/sprawdz-wiele-numerow-ksef/", "sprawdzanie wielu numerów KSeF naraz"),
+    date=("2026-11-19", "19 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Tak, w nowej wersji JPK_VAT z deklaracją przy fakturach wykazuje się numer KSeF albo oznaczenie wskazujące, dlaczego go nie ma. Ministerstwo Finansów pisze, że struktury JPK_V7M(3) i JPK_V7K(3) obowiązują od 1 lutego 2026 r., a numer KSeF wykazuje się w części ewidencyjnej, zarówno w sprzedaży, jak i w zakupach. Listę numerów sprawdzisz wcześniej w <a href="/sprawdz-wiele-numerow-ksef/">narzędziu do sprawdzania wielu numerów KSeF</a>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Oznaczenie</th><th scope="col">Znaczenie według MF</th></tr></thead>
+<tbody>
+<tr><td>NrKSeF</td><td>numer identyfikujący fakturę w KSeF</td></tr>
+<tr><td>OFF</td><td>faktura z art. 106nf ust. 1 ustawy (awaria), która w dniu złożenia ewidencji nie ma numeru KSeF</td></tr>
+<tr><td>BFK</td><td>faktura elektroniczna lub papierowa wystawiona poza KSeF</td></tr>
+<tr><td>DI</td><td>dowód inny niż faktura</td></tr>
+</tbody></table></div>
+<h2 id="nrksef">Kiedy wpisać NrKSeF</h2>
+<p>Według zestawienia MF numer wpisuje się, gdy faktura została wystawiona za pośrednictwem KSeF i na dzień złożenia JPK_VAT ma nadany numer. W sprzedaży dotyczy to wszystkich trybów wystawiania, czyli także offline24, awarii i niedostępności systemu, jeśli do chwili składania pliku faktury zostały przesłane do KSeF i mają numer. Liczy się więc stan na dzień złożenia ewidencji, a nie tryb wystawienia.</p>
+<h2 id="off">Kiedy OFF</h2>
+<p>OFF dotyczy faktury wystawionej w trybie awarii, która w dniu złożenia ewidencji nie ma jeszcze numeru KSeF. MF zaznacza, że po uzyskaniu numeru podatnik nie ma obowiązku korygować ewidencji.</p>
+<h2 id="bfk">Kiedy BFK</h2>
+<p>BFK oznacza fakturę wystawioną bez użycia KSeF. Zestawienie MF podaje wśród przypadków sprzedaży między innymi faktury wystawione w trakcie awarii całkowitej, faktury wystawione w 2026 r. poza KSeF przez podatników, którzy nie mają obowiązku wystawiania faktur w KSeF, oraz faktury przy wewnątrzwspólnotowym nabyciu towarów i imporcie usług. W zakupach wymieniono między innymi faktury wystawione przy użyciu kas rejestrujących, jeśli mogą być wystawiane do 31 grudnia 2026 r.</p>
+<h2 id="di">Kiedy DI</h2>
+<p>DI to dowód inny niż faktura, na przykład dowód wewnętrzny albo zbiorczy dowód sprzedaży z kas. MF wymienia też faktury offline24 i wystawione w czasie niedostępności systemu, które w dniu przesłania ewidencji nie mają numeru KSeF. Jeśli faktura była udostępniona nabywcy poza KSeF i oznaczono ją DI, po uzyskaniu numeru podatnik powinien skorygować oznaczenie numerem KSeF.</p>
+<h2 id="v7m-v7k">JPK_V7M czy JPK_V7K</h2>
+<p>Ministerstwo Finansów opublikowało dwie nowe struktury: JPK_V7M(3) dla podatników rozliczających się miesięcznie oraz JPK_V7K(3) dla rozliczających się kwartalnie. Oznaczenia dotyczące KSeF występują w obu. Nowe wzory uwzględniają zmiany wynikające z rozporządzenia Ministra Finansów i Gospodarki z 12 grudnia 2025 r., a pole ma postać węzła KSeF w wierszach sprzedaży i zakupu.</p>
+<h2 id="sprzedaz-zakupy">Sprzedaż a zakupy: czym różnią się zasady</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Oznaczenie</th><th scope="col">Sprzedaż</th><th scope="col">Zakupy</th></tr></thead>
+<tbody>
+<tr><td>NrKSeF</td><td>faktura z KSeF ma numer w dniu składania pliku</td><td>faktura z KSeF ma numer w dniu składania pliku</td></tr>
+<tr><td>OFF</td><td>faktura z awarii bez numeru</td><td>faktura wystawiona w czasie awarii, bez numeru</td></tr>
+<tr><td>BFK</td><td>faktury poza KSeF, np. WNT, import usług</td><td>faktury z kas, WNT, import usług i inne przypadki z zestawienia</td></tr>
+<tr><td>DI</td><td>dowody inne, np. wewnętrzne, zbiorcze z kas</td><td>wszystkie pozostałe dokumenty bez numeru KSeF</td></tr>
+</tbody></table></div>
+<p>Zestawienie MF osobno opisuje sprzedaż i zakupy, więc przy rozliczaniu kosztów nie przenoś automatycznie reguł ze sprzedaży. Jeśli nie masz pewności, który znacznik pasuje do dokumentu, sprawdź go w aktualnym zestawieniu na podatki.gov.pl.</p>
+<h2 id="przyklad">Przykład: trzy faktury kosztowe</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Dokument</th><th scope="col">Co wpisać w ewidencji zakupu</th></tr></thead>
+<tbody>
+<tr><td>Faktura z KSeF z numerem 5265877635-20250826-0100001AF629-AF</td><td>NrKSeF z tym numerem</td></tr>
+<tr><td>Faktura od dostawcy zagranicznego dla importu usług</td><td>BFK</td></tr>
+<tr><td>Dowód wewnętrzny</td><td>DI</td></tr>
+</tbody></table></div>
+<p>Przed wysyłką pliku zrób prostą kontrolę: skopiuj numery z programu księgowego i wklej je do <a href="/sprawdz-wiele-numerow-ksef/">narzędzia sprawdzającego wiele numerów</a>. Wychwycisz literówki, numery o złej długości i błędne sumy kontrolne, zanim trafią do ewidencji. Narzędzie sprawdza format i CRC-8, ale nie potwierdza istnienia faktury w systemie.</p>
+<h2 id="kontrola">Lista kontrolna przed wysyłką JPK</h2>
+<ol class="steps">
+<li>Zbierz numery KSeF faktur sprzedaży i zakupu za okres.</li>
+<li>Sprawdź format i sumę kontrolną każdego numeru.</li>
+<li>Dla dokumentów bez numeru dobierz oznaczenie: OFF, BFK lub DI.</li>
+<li>Po uzyskaniu numeru dla faktur oznaczonych DI sprawdź, czy ewidencję trzeba skorygować.</li>
+<li>Przeczytaj aktualne objaśnienia MF, bo oznaczenia dla konkretnych sytuacji bywają doprecyzowywane.</li>
+</ol>
+<h2 id="nrksef-brak">Co robić, gdy numeru jeszcze nie ma</h2>
+<p>Zdarza się, że faktura została wystawiona, ale w dniu składania pliku nie masz jej numeru, bo w systemie jest awaria albo dokument wysłano w trybie offline. Wtedy nie wpisujesz numeru z głowy ani ze wzoru, tylko dobierasz właściwe oznaczenie z zestawienia MF. Pamiętaj o notatce w księgach, żeby po uzyskaniu numeru sprawdzić, czy dla danego oznaczenia wymagana jest korekta. Przy OFF jej nie trzeba robić, a przy DI w opisanym wyżej przypadku powinna nastąpić.</p>
+<h2 id="aktualnosc">Aktualność informacji</h2>
+<p>Zestawienie MF ma numer wersji, a jedna z poprawek usunęła przypadek użycia BFK przy imporcie towarów. Pokazuje to, że zasady doprecyzowuje się w trakcie. Dlatego w razie wątpliwości otwórz aktualną wersję dokumentu na podatki.gov.pl albo zapytaj księgowego. Ten artykuł streszcza wersję 1.1 i nie zastępuje przepisów.</p>
+<h2 id="co-z-platnoscia">A płatność za fakturę</h2>
+<p>Numer w JPK_VAT to coś innego niż numer w tytule przelewu. Obowiązek podawania numeru w płatności między czynnymi podatnikami dotyczy płatności od 1 stycznia 2027 r. Szczegóły opisujemy w tekście <a href="/blog/czy-numer-ksef-musi-byc-w-tytule-przelewu/">Czy numer KSeF musi być w tytule przelewu</a>.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>W JPK_V7(3) przy fakturze wpisujesz numer KSeF albo oznaczenie OFF, BFK lub DI. Zanim wyślesz plik, wklej numery do <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarki wielu numerów</a> i porównaj z objaśnieniami MF.</p>
+""",
+    faq=[
+        ("Czy numer KSeF trzeba podawać w JPK_VAT?", "Według MF w JPK_V7M(3) i JPK_V7K(3), obowiązujących od 1 lutego 2026 r., w części ewidencyjnej wykazuje się numer KSeF faktury albo oznaczenie OFF, BFK lub DI."),
+        ("Co oznacza oznaczenie OFF w JPK_VAT?", "Dotyczy faktury wystawionej w trybie awarii, która w dniu złożenia ewidencji nie ma numeru KSeF. Po jego uzyskaniu nie trzeba korygować ewidencji."),
+        ("Kiedy stosuje się BFK, a kiedy DI?", "BFK to faktura wystawiona poza KSeF, a DI to dowód inny niż faktura, w tym faktura offline24 bez numeru w dniu wysyłki. Listę przypadków znajdziesz w zestawieniu MF."),
+        ("Czy narzędzie potwierdzi, że faktura jest w KSeF?", "Nie. Nasza sprawdzarka weryfikuje format numeru i sumę kontrolną CRC-8, a istnienie faktury potwierdza dopiero KSeF."),
+    ],
+    sources=[JPK_ZN, JPK_NEWS, MF_NUM, MF_TERM],
+)
+
+CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18]
