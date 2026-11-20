@@ -112,6 +112,14 @@ common.ARTICLE_MAP.update({
     _N: [_K17, _Zn, _K], _K15: [_K16, _K13, _K14], _K10: [_K18, _K11, _K12],
 })
 
+# 2026-11-20: posty #19-21
+_K19, _K20, _K21 = _B["numer-ksef-w-kpir"], _B["czy-numer-ksef-to-nip"], _B["numer-ksef-blad-w-przelewie"]
+common.ARTICLE_MAP.update({
+    "/ksef-od-2027-jdg/": [_K19, _K20, _K21], "/": [_K20, _K21, _K18], "/sprawdz-wiele-numerow-ksef/": [_K19, _K21, _K18],
+    _K19: [_K18, _K20, _K10], _K20: [_K19, _Zn, _W], _K21: [_Ty, _K12, _K20],
+    _K18: [_K19, _Ty, _K16], _Ty: [_K21, _K10, _M],
+})
+
 PAGES = [
     ("/", HOME), ("/przelew-mpp-numer-ksef/", MPP), ("/identyfikator-zbiorczy-ksef/", IZ),
     ("/sprawdz-wiele-numerow-ksef/", BULK), ("/przelew-z-faktury-xml-ksef/", XMLP), ("/kod-qr-ksef/", QRP),

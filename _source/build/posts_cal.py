@@ -1487,4 +1487,232 @@ C18 = dict(
     sources=[JPK_ZN, JPK_NEWS, MF_NUM, MF_TERM],
 )
 
-CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18]
+# ---------------------------------------------------------------- #19-21 (2026-11-20)
+KPIR_ROZ = ("Rozporządzenie MFiG z 6 września 2025 r. w sprawie prowadzenia podatkowej księgi przychodów i rozchodów (Dz.U. 2025 poz. 1299) – ISAP", "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001299", "")
+KPIR_BROSZ = ("podatki.gov.pl: broszura informacyjna JPK_PKPIR", "https://www.podatki.gov.pl/media/pbqdgqcp/broszura_informacyjna_dot_jpk_pkpir-3.pdf", "")
+MF_PYT2 = ("Ministerstwo Finansów: Pytania i odpowiedzi KSeF 2.0 (pyt. 43–44)", "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/", "")
+GOV_OSTATNI = ("gov.pl: Ostatni etap wdrożenia KSeF – zmiany od 1 stycznia 2027 r. (16.11.2026)", "https://www.gov.pl/web/finanse/ostatni-etap-wdrozenia-ksef-zmiany-od-1-stycznia-2027-r", "")
+
+C19 = dict(
+    slug="numer-ksef-w-kpir",
+    title="Czy numer KSeF trzeba wpisać do KPiR? Kolumna 3",
+    desc="Czy numer KSeF trzeba wpisać do KPiR? Według wzoru księgi od 2026 r. numer faktury z KSeF wpisuje się w kolumnie 3, a inny dowód w kolumnie 4. Zobacz przykład.",
+    h1="Czy numer KSeF trzeba wpisać do KPiR – kolumna 3 i kolumna 4",
+    intro="Od 2026 r. księga przychodów i rozchodów ma osobne miejsce na numer faktury z KSeF. Pokazujemy, co dokładnie mówi rozporządzenie i jak uniknąć pomyłek przy przepisywaniu 35 znaków.",
+    lead_tool=("/sprawdz-wiele-numerow-ksef/", "sprawdzanie wielu numerów KSeF naraz"),
+    date=("2026-11-20", "20 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Tak. Wzór podatkowej księgi przychodów i rozchodów z rozporządzenia Ministra Finansów i Gospodarki z 6 września 2025 r. (Dz.U. 2025 poz. 1299) zawiera 19 kolumn. Kolumna 3 jest przeznaczona na numer identyfikujący fakturę w KSeF, jeżeli faktura została wystawiona przy użyciu Krajowego Systemu e-Faktur. Kolumna 4 służy do wpisywania innego numeru dowodu księgowego. Zanim przepiszesz numery do księgi lub programu, możesz je sprawdzić w <a href="/sprawdz-wiele-numerow-ksef/">narzędziu do sprawdzania wielu numerów KSeF</a>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Kolumna KPiR</th><th scope="col">Co wpisujesz</th><th scope="col">Przykład</th></tr></thead>
+<tbody>
+<tr><td>3</td><td>numer KSeF faktury wystawionej w KSeF</td><td class="mono">5265877635-20250826-0100001AF629-AF</td></tr>
+<tr><td>4</td><td>inny numer dowodu księgowego</td><td>dowód wewnętrzny nr 12/2026</td></tr>
+</tbody></table></div>
+<h2 id="co-mowi-wzor">Co mówi wzór księgi</h2>
+<p>Objaśnienia do wzoru wskazują, że kolumna 3 jest przeznaczona do wpisywania numeru identyfikującego fakturę w Krajowym Systemie e-Faktur, a kolumna 4 – innego numeru dowodu księgowego. Ta sama zasada dotyczy faktur sprzedaży i faktur kosztowych, o ile faktura jest z KSeF. W broszurze informacyjnej o JPK_PKPIR na podatki.gov.pl pole z numerem KSeF jest w strukturze opcjonalne, a obok niego jest osobne pole na numer dowodu księgowego (do 256 znaków).</p>
+<p>Wniosek praktyczny: numer KSeF nie zastępuje numeru nadanego fakturze przez sprzedawcę. Według Ministerstwa Finansów to dwa różne numery – numer KSeF jest nadawany przez system, a numer z pola P_2 faktury nadaje wystawca. Dlatego przy fakturze z KSeF numer własny sprzedawcy możesz nadal zachować w opisie lub w polu o numerze dowodu, jeśli twój program tak to rozwiązuje. Sprawdź to w instrukcji swojego programu księgowego.</p>
+<h2 id="kiedy-kolumna-4">Kiedy kolumna 4, a nie 3</h2>
+<p>Do kolumny 4 trafiają dokumenty, które nie mają numeru KSeF. Typowe przykłady:</p>
+<ul>
+<li>faktura papierowa lub PDF wystawiona poza KSeF (np. od zagranicznego dostawcy),</li>
+<li>dowód wewnętrzny, np. na paliwo lub drobne zakupy bez faktury,</li>
+<li>faktura wystawiona w 2026 r. poza KSeF przez podatnika, który jeszcze nie miał obowiązku korzystania z systemu.</li>
+</ul>
+<p>Od 1 stycznia 2027 r., zgodnie z komunikatem Ministerstwa Finansów z 16 listopada 2026 r., obowiązek wystawiania faktur w KSeF obejmie także ostatnią grupę przedsiębiorców oraz faktury dotąd wystawiane z kas rejestrujących. Liczba dokumentów bez numeru KSeF będzie więc w księgach coraz mniejsza.</p>
+<h2 id="przyklad">Przykład: trzy wiersze księgi</h2>
+<p>Pan Marek prowadzi KPiR na jednoosobowej działalności. W listopadzie ma trzy dokumenty:</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Dokument</th><th scope="col">Kolumna 3</th><th scope="col">Kolumna 4</th></tr></thead>
+<tbody>
+<tr><td>faktura zakupu z KSeF, nr sprzedawcy FV/118/11/2026</td><td class="mono">5265877635-20250826-0100001AF629-AF</td><td>puste albo nr własny wg programu</td></tr>
+<tr><td>faktura od dostawcy z zagranicy (PDF)</td><td>puste</td><td>INV-2026-0914</td></tr>
+<tr><td>dowód wewnętrzny na parking</td><td>puste</td><td>DW/11/2026</td></tr>
+</tbody></table></div>
+<p>Numer w pierwszym wierszu to ten sam ciąg, który widać w UPO i w pobranym z KSeF pliku. Wystarczy go skopiować – nie przepisuj ręcznie, bo jedna zamieniona litera A–F zmienia sumę kontrolną. Format i CRC-8 sprawdzisz w <a href="/">walidatorze numeru KSeF</a>.</p>
+<h2 id="jak-skopiowac">Jak uniknąć błędów przy wpisywaniu numeru</h2>
+<ol class="steps">
+<li><strong>Kopiuj, nie przepisuj.</strong> Numer ma 35 znaków łącznie z trzema myślnikami; łatwo pomylić zero z literą O.</li>
+<li><strong>Nie dopisuj daty.</strong> Data przyjęcia jest już wewnątrz numeru, drugiego bloku.</li>
+<li><strong>Sprawdź długość.</strong> Krótszy lub dłuższy ciąg to nie jest numer KSeF 2.0.</li>
+<li><strong>Zrób kontrolę zbiorczą.</strong> Wklej listę numerów z miesiąca do <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarki zbiorczej</a> i pobierz wynik z oceną każdego wiersza.</li>
+<li><strong>Dokumenty bez numeru oznacz osobno,</strong> żeby w kolumnie 3 nie wylądował numer faktury sprzedawcy.</li>
+</ol>
+<h2 id="program">A jeśli księga jest w programie</h2>
+<p>Większość podatników prowadzi księgę w programie i numer KSeF zaciąga się automatycznie przy pobraniu faktury. Nasza sprawdzarka nie zastąpi programu, ale pomaga, gdy numery trzeba zweryfikować po imporcie z pliku CSV albo przepisaniu z wyciągu. Narzędzie sprawdza format, NIP, datę i sumę kontrolną CRC-8; nie potwierdza, że faktura istnieje w KSeF.</p>
+<h2 id="jpk-pkpir">KPiR a plik JPK_PKPIR</h2>
+<p>Księga w postaci elektronicznej jest przesyłana w strukturze JPK_PKPIR, a w opisie struktury na podatki.gov.pl numer KSeF ma własne pole obok numeru dowodu księgowego. Szczegóły techniczne, w tym to, kogo dotyczy wysyłka pliku i w jakich terminach, przeczytasz w broszurze MF i w rozporządzeniu – nie opisujemy ich tu, bo zależą od sytuacji podatnika.</p>
+<h2 id="ryczalt">A ryczałt?</h2>
+<p>Pamiętaj, że wzór KPiR i wzór ewidencji ryczałtowej to dwa różne dokumenty prawne.</p>
+<p>Ewidencja przychodów dla ryczałtu ma własny wzór i własne rozporządzenie. W tym artykule omawiamy wyłącznie KPiR. Jeśli rozliczasz się ryczałtem, zajrzyj do rozporządzenia dotyczącego ewidencji przychodów albo zapytaj księgowego, jak jest tam oznaczony numer KSeF. Sprawę rozbieramy też w osobnym poradniku <a href="/ksef-od-2027-jdg/">KSeF od 2027 dla JDG</a>.</p>
+<h2 id="platnosc">Numer w księdze a numer w przelewie</h2>
+<p>Numer w KPiR to ewidencja. Obowiązek podania numeru w tytule płatności to osobna sprawa i dotyczy płatności od 1 stycznia 2027 r. między czynnymi podatnikami VAT. Jak ułożyć taki tytuł, opisujemy w tekście <a href="/blog/czy-numer-ksef-musi-byc-w-tytule-przelewu/">czy numer KSeF musi być w tytule przelewu</a>.</p>
+<h2 id="audyt">Szybki audyt księgi na koniec miesiąca</h2>
+<p>Przed zamknięciem miesiąca przejrzyj wiersze z kolumną 3. Każdy wpis powinien mieć 35 znaków, a kolumna 3 nie powinna zawierać numeru nadanego przez sprzedawcę. Wyeksportuj numery do pliku CSV, wklej je do sprawdzarki zbiorczej i popraw wiersze oznaczone jako błędne. To zajmuje kilka minut, a oszczędza szukania literówek przy późniejszym uzgadnianiu płatności.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Numer faktury z KSeF wpisujesz w kolumnie 3 KPiR, a dokumenty bez numeru – w kolumnie 4. Kopiuj numery zamiast je przepisywać i sprawdź listę w <a href="/sprawdz-wiele-numerow-ksef/">narzędziu do sprawdzania wielu numerów</a>. W razie wątpliwości co do konkretnego dokumentu pytaj księgowego lub czytaj rozporządzenie.</p>
+""",
+    faq=[
+        ("W której kolumnie KPiR wpisuje się numer KSeF?", "Według objaśnień do wzoru księgi w kolumnie 3, o ile faktura została wystawiona przy użyciu KSeF. Inny numer dowodu księgowego wpisuje się w kolumnie 4."),
+        ("Czy numer KSeF zastępuje numer faktury sprzedawcy?", "Nie. MF opisuje je jako dwa różne numery: numer KSeF nadaje system, a numer z pola P_2 nadaje wystawca faktury."),
+        ("Co wpisać w KPiR przy fakturze spoza KSeF?", "Numer takiej faktury, czyli inny dowód księgowy, wpisuje się w kolumnie 4, a kolumna 3 pozostaje pusta."),
+        ("Czy mogę sprawdzić numery przed wpisaniem do księgi?", "Tak, nasza sprawdzarka weryfikuje długość, NIP, datę i sumę kontrolną CRC-8, ale nie potwierdza istnienia faktury w KSeF."),
+    ],
+    sources=[KPIR_ROZ, KPIR_BROSZ, MF_NUM, GOV_OSTATNI],
+)
+
+C20 = dict(
+    slug="czy-numer-ksef-to-nip",
+    title="Czy numer KSeF to NIP? Pierwsze 10 cyfr numeru",
+    desc="Czy numer KSeF to NIP? Nie – ale zaczyna się od 10 cyfr NIP sprzedawcy. Zobacz, jak odczytać NIP, datę i sumę kontrolną z numeru na przykładzie MF.",
+    h1="Czy numer KSeF to NIP – co oznaczają pierwsze 10 cyfr",
+    intro="Numer KSeF zaczyna się od dziesięciu cyfr, które wyglądają jak NIP. Wyjaśniamy, skąd się biorą, czym numer KSeF różni się od NIP-u i jak policzyć kontrolę NIP z numeru.",
+    lead_tool=("/", "walidator numeru KSeF"),
+    date=("2026-11-20", "20 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Nie, numer KSeF to nie NIP. To 35-znakowy identyfikator faktury, który zaczyna się od NIP-u sprzedawcy. Dokumentacja Ministerstwa Finansów opisuje go jako ciąg złożony z NIP-u, daty przyjęcia faktury, części technicznej i sumy kontrolnej. Wkleisz go do <a href="/">walidatora numeru KSeF</a>, który rozbije numer na części i sprawdzi każdą z nich.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Cecha</th><th scope="col">NIP</th><th scope="col">Numer KSeF</th></tr></thead>
+<tbody>
+<tr><td>Co identyfikuje</td><td>podatnika</td><td>jedną fakturę w KSeF</td></tr>
+<tr><td>Długość</td><td>10 cyfr</td><td>35 znaków z myślnikami</td></tr>
+<tr><td>Kto nadaje</td><td>urząd skarbowy</td><td>system KSeF po przyjęciu faktury</td></tr>
+<tr><td>Zmienia się?</td><td>nie</td><td>każda faktura ma inny</td></tr>
+</tbody></table></div>
+<h2 id="rozbior">Rozbiór numeru na przykładzie MF</h2>
+<p>Przykład z dokumentacji MF: <span class="mono">5265877635-20250826-0100001AF629-AF</span>. Pierwszy blok to <span class="mono">5265877635</span> – NIP sprzedawcy. Dwa kolejne bloki to data przyjęcia faktury 2025-08-26 i część techniczna, a ostatnie dwa znaki to suma kontrolna CRC-8.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Część</th><th scope="col">Wartość</th><th scope="col">Rola</th></tr></thead>
+<tbody>
+<tr><td>NIP</td><td class="mono">5265877635</td><td>wskazuje sprzedawcę</td></tr>
+<tr><td>Data</td><td class="mono">20250826</td><td>26 sierpnia 2025</td></tr>
+<tr><td>Część techniczna</td><td class="mono">0100001AF629</td><td>12 znaków szesnastkowych</td></tr>
+<tr><td>CRC-8</td><td class="mono">AF</td><td>kontrola błędów przepisania</td></tr>
+</tbody></table></div>
+<p>Pełny rozkład znak po znaku opisujemy w tekście <a href="/blog/z-czego-sklada-sie-numer-ksef/">z czego składa się numer KSeF</a>.</p>
+<h2 id="kontrola-nip">Jak działa kontrola NIP</h2>
+<p>NIP ma cyfrę kontrolną, czyli dziesiąty znak. Waga kolejnych cyfr to 6, 5, 7, 2, 3, 4, 5, 6, 7. Mnożysz cyfry przez wagi, sumujesz i dzielisz sumę przez 11; reszta musi być równa ostatniej cyfrze. Reszta 10 oznacza, że NIP jest nieprawidłowy.</p>
+<p>Dla 5265877635: 5·6 + 2·5 + 6·7 + 5·2 + 8·3 + 7·4 + 7·5 + 6·6 + 3·7 = 30+10+42+10+24+28+35+36+21 = 236. Reszta z dzielenia 236 przez 11 to 5, a dziesiąta cyfra NIP-u to 5, więc kontrola się zgadza. Nasz walidator wykonuje tę kontrolę automatycznie i pokazuje, czy błąd tkwi w NIP-ie, czy w dalszej części numeru.</p>
+<h2 id="dlaczego-nip">Dlaczego numer zaczyna się od NIP-u</h2>
+<p>Według dokumentacji pierwszy blok to NIP sprzedawcy, więc numer KSeF od razu wskazuje, kto wystawił fakturę. Przy identyfikatorze zbiorczym ten blok jest też NIP-em, ale w środku zamiast daty stoi oznaczenie IZ z rokiem i miesiącem. Różnicę opisujemy w artykule <a href="/blog/identyfikator-zbiorczy-ksef-co-to-jest/">identyfikator zbiorczy KSeF – co to jest</a>.</p>
+<h2 id="kiedy-nie-nip">Gdy pierwszy blok nie wygląda jak NIP</h2>
+<p>Schemat FA(3) pozwala w polu numeru KSeF także na inne prefiksy niż 10 cyfr NIP (np. dla faktur wystawianych w szczególnych sytuacjach), dlatego nasz walidator w takim przypadku pokazuje ostrzeżenie, a nie błąd. Jeśli to twój przypadek, sprawdź opis pola w dokumentacji MF.</p>
+<h2 id="przyklad">Przykład: skąd wiem, kto wystawił fakturę</h2>
+<p>Pani Aneta dostała numer <span class="mono">9510001233-20261102-01A3F0C2B7D4-B8</span>. Pierwsze 10 cyfr to 9510001233. Liczy: 9·6 + 5·5 + 1·7 + 0·2 + 0·3 + 0·4 + 1·5 + 2·6 + 3·7 = 54+25+7+0+0+0+5+12+21 = 124, a 124 mod 11 = 3, co zgadza się z ostatnią cyfrą. Drugi blok to 2 listopada 2026 r. Gdy ten sam NIP widnieje w danych sprzedawcy na fakturze, numer pasuje do faktury; jeśli nie, warto zapytać sprzedawcę o poprawny numer. Tytuł przelewu z tym numerem ułożysz w <a href="/przelew-mpp-numer-ksef/">generatorze komunikatu MPP</a>.</p>
+<h2 id="nip-vs-numer-faktury">NIP, numer KSeF i numer faktury – trzy różne rzeczy</h2>
+<p>Na jednej fakturze spotkasz trzy identyfikatory, które łatwo pomylić. NIP wskazuje podatnika i nie zmienia się między fakturami. Numer faktury nadaje sprzedawca według własnej serii, np. FV/204/12/2026, i według MF jest wskazywany w polu P_2. Numer KSeF nadaje system po przyjęciu faktury; Ministerstwo Finansów zaznacza, że nie jest on elementem pliku XML. Do tytułu przelewu między czynnymi podatnikami VAT od 1 stycznia 2027 r. trafia numer KSeF, nie NIP i nie numer własny sprzedawcy.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Identyfikator</th><th scope="col">Przykład</th><th scope="col">Gdzie go znajdziesz</th></tr></thead>
+<tbody>
+<tr><td>NIP sprzedawcy</td><td class="mono">5265877635</td><td>dane sprzedawcy na fakturze</td></tr>
+<tr><td>Numer faktury</td><td class="mono">FV/204/12/2026</td><td>nagłówek faktury, pole P_2</td></tr>
+<tr><td>Numer KSeF</td><td class="mono">5265877635-20250826-0100001AF629-AF</td><td>UPO, aplikacja, nazwa pliku</td></tr>
+</tbody></table></div>
+<p>Więcej o różnicy między numerem KSeF a numerem faktury piszemy w artykule <a href="/blog/czy-numer-ksef-to-numer-faktury/">czy numer KSeF to numer faktury</a>.</p>
+<h2 id="typowe-pomylki">Typowe pomyłki z NIP-em w numerze</h2>
+<ul>
+<li><strong>Wpisanie samego NIP-u w tytule przelewu.</strong> To tylko początek numeru KSeF, a nie cały identyfikator.</li>
+<li><strong>Spacje lub myślniki w NIP-ie.</strong> W numerze KSeF pierwszy blok to 10 cyfr bez separatorów, a myślniki stoją dopiero między blokami.</li>
+<li><strong>NIP kupującego zamiast sprzedawcy.</strong> W numerze KSeF faktury zakupu NIP jest zwykle NIP-em sprzedawcy, który wystawił fakturę.</li>
+</ul>
+<h2 id="czego-nie-wiem">Czego numer nie mówi</h2>
+<p>Zgodność NIP-u z numerem nie potwierdza, że faktura istnieje w KSeF ani że kwota jest prawidłowa. Walidator sprawdza tylko format i sumy kontrolne. Istnienie faktury widać w KSeF lub w aplikacji, z której ją pobrano.</p>
+<h2 id="przyklad-bledu">Przykład: NIP poprawny, numer błędny</h2>
+<p>Poprawny NIP w pierwszym bloku nie gwarantuje poprawności reszty numeru. Weźmy numer <span class="mono">5265877635-20250826-0100001AF629-AA</span>, w którym zmieniono ostatnie dwa znaki. NIP nadal przechodzi kontrolę, data też jest prawidłowa, ale suma CRC-8 się nie zgadza, więc walidator zgłosi błąd właśnie w końcówce. Dzięki rozbiciu numeru na bloki od razu widać, gdzie leży problem i czy trzeba poprosić sprzedawcę o ponowne przesłanie numeru.</p>
+<p>Tak samo działa to przy zamianie cyfr w NIP-ie: wynik kontroli wag od razu pokaże, że pierwszy blok jest nieprawidłowy. Dlatego przy każdym numerze patrz na wynik dla poszczególnych bloków, a nie tylko na ogólną ocenę.</p>
+<h2 id="wskazowka">Wskazówka na koniec</h2>
+<p>Jeśli sprzedawca poda ci sam NIP zamiast numeru KSeF, poproś o pełny numer z UPO albo z aplikacji. Sam NIP nie wystarczy do oznaczenia płatności, bo nie wskazuje konkretnej faktury. Gdy płacisz za kilka faktur jednego kontrahenta, zapytaj też, czy wygenerował identyfikator zbiorczy, który obejmuje je wszystkie.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Numer KSeF to nie NIP, tylko 35-znakowy identyfikator faktury, w którym pierwsze 10 cyfr to NIP sprzedawcy. Wklej numer do <a href="/">walidatora</a>, żeby w sekundę zobaczyć NIP, datę i wynik sumy kontrolnej.</p>
+""",
+    faq=[
+        ("Czy numer KSeF to to samo co NIP?", "Nie. NIP identyfikuje podatnika i ma 10 cyfr, a numer KSeF identyfikuje fakturę i ma 35 znaków. Pierwsze 10 cyfr numeru to NIP sprzedawcy."),
+        ("Czy NIP w numerze KSeF zawsze jest NIP-em sprzedawcy?", "Według dokumentacji MF pierwszy blok to NIP sprzedawcy, ale schemat FA(3) dopuszcza też inne prefiksy w polu numeru KSeF, o czym ostrzega walidator."),
+        ("Jak sprawdzić, czy NIP z numeru jest poprawny?", "Pomnóż cyfry przez wagi 6, 5, 7, 2, 3, 4, 5, 6, 7, zsumuj i podziel przez 11. Reszta musi być równa dziesiątej cyfrze."),
+        ("Czy poprawny NIP w numerze oznacza, że faktura istnieje?", "Nie. Walidator sprawdza tylko format, NIP, datę i CRC-8, a istnienie faktury potwierdza dopiero KSeF."),
+    ],
+    sources=[MF_NUM, DOC_NUM, XSD, MF_TERM],
+)
+
+C21 = dict(
+    slug="numer-ksef-blad-w-przelewie",
+    title="Błędny numer KSeF w przelewie – co zrobić?",
+    desc="Pomyłka w numerze KSeF w tytule przelewu? Sprawdź, jak ją wychwycić walidatorem, co zrobić przed i po wysłaniu płatności oraz kogo powiadomić.",
+    h1="Błędny numer KSeF w przelewie – co zrobić krok po kroku",
+    intro="Jedna zamieniona litera w 35 znakach i przelew ma zły numer. Pokazujemy, jak takie błędy wychwycić przed wysyłką i jak postąpić, gdy płatność już wyszła.",
+    lead_tool=("/", "walidator numeru KSeF"),
+    date=("2026-11-20", "20 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Przed wysłaniem przelewu sprawdź numer w <a href="/">walidatorze numeru KSeF</a>. Jeśli przelew już poszedł z błędnym numerem, poinformuj odbiorcę, której faktury dotyczy płatność, i przekaż mu prawidłowy numer. Poniżej opisujemy oba przypadki. Nie rozstrzygamy skutków prawnych – to pytanie do księgowego lub doradcy podatkowego.</p>
+<h2 id="obowiazek">Kogo dotyczy obowiązek</h2>
+<p>Według Ministerstwa Finansów przepis art. 108g ustawy o VAT stosuje się do płatności dokonanych od 1 stycznia 2027 r. Nabywca będący czynnym podatnikiem VAT, płacący za fakturę ustrukturyzowaną lub fakturę offline, ma podać numer KSeF faktury albo identyfikator zbiorczy. Komunikat MF z 16 listopada 2026 r. podkreśla, że obowiązek obejmie podatników czynnych VAT oraz transakcje w ramach MPP.</p>
+<h2 id="typowe-bledy">Najczęstsze pomyłki</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Błąd</th><th scope="col">Jak go zauważyć</th></tr></thead>
+<tbody>
+<tr><td>numer ma 34 lub 36 znaków</td><td>walidator pokazuje błędną długość</td></tr>
+<tr><td>litera spoza A–F w części technicznej</td><td>walidator wskazuje niedozwolony znak</td></tr>
+<tr><td>zero zamienione na literę O</td><td>błędny znak lub zła suma CRC-8</td></tr>
+<tr><td>numer faktury sprzedawcy zamiast numeru KSeF</td><td>ciąg z ukośnikami, bez 35 znaków</td></tr>
+<tr><td>numer obcięty przez limit pola tytułu</td><td>długość mniejsza niż 35</td></tr>
+<tr><td>identyfikator zbiorczy wpisany jako zwykły numer</td><td>w środku IZ zamiast daty</td></tr>
+</tbody></table></div>
+<h2 id="przed-wyslaniem">Przed wysłaniem przelewu</h2>
+<ol class="steps">
+<li>Skopiuj numer z UPO, z aplikacji lub z programu księgowego – nie przepisuj go z wydruku.</li>
+<li>Wklej go do <a href="/">walidatora</a>. Zobaczysz długość, NIP, datę i wynik sumy kontrolnej.</li>
+<li>Wstaw numer na początek tytułu, żeby bank go nie obciął. Przy kilku fakturach rozważ <a href="/identyfikator-zbiorczy-ksef/">identyfikator zbiorczy</a>.</li>
+<li>Dla płatności MPP ułóż komunikat w <a href="/przelew-mpp-numer-ksef/">generatorze komunikatu MPP</a>, który pilnuje pól.</li>
+<li>Po wklejeniu do banku porównaj ostatnie cztery znaki z oryginałem.</li>
+</ol>
+<h2 id="po-wyslaniu">Gdy przelew już wyszedł z błędem</h2>
+<p>W materiałach MF nie znajdziesz procedury cofania takiego przelewu. Praktycznie możesz zrobić trzy rzeczy:</p>
+<ul>
+<li><strong>Zapisz dowód.</strong> Zrób zrzut potwierdzenia przelewu z kwotą, datą i błędnym tytułem.</li>
+<li><strong>Napisz do odbiorcy.</strong> Podaj numer faktury sprzedawcy, kwotę, datę płatności i prawidłowy numer KSeF.</li>
+<li><strong>Zapytaj księgowego,</strong> czy trzeba coś dodatkowo udokumentować.</li>
+</ul>
+<p>Nie wysyłaj drugiego przelewu na tę samą kwotę „dla pewności", bo zapłacisz podwójnie.</p>
+<h2 id="przyklad">Przykład wiadomości do odbiorcy</h2>
+<p>Pan Tomasz zapłacił za fakturę FV/204/12/2026 na 1 230,00 zł, ale w tytule wkleił numer z literą G. Po sprawdzeniu w walidatorze zauważa błąd i wysyła wiadomość:</p>
+<p class="mono">Dzień dobry, w przelewie z 12.01.2027 na 1 230,00 zł za fakturę FV/204/12/2026 wpisałem błędny numer KSeF. Prawidłowy numer: 5265877635-20250826-0100001AF629-AF. Proszę o przypisanie płatności do tej faktury.</p>
+<p>Taki komunikat ułatwia odbiorcy ręczne dopasowanie wpłaty. Zachowaj jego odpowiedź razem z potwierdzeniem przelewu.</p>
+<h2 id="mpp">Błąd w przelewie MPP</h2>
+<p>W podzielonej płatności numer KSeF stoi w polu <code>/INV/</code> komunikatu i ma 35 znaków. Jeśli błąd jest w tym polu, sprawdź w banku, czy da się anulować zlecenie przed realizacją. Po zaksięgowaniu zastosuj kroki jak wyżej. Szczegóły pola opisujemy w tekście <a href="/blog/komunikat-przelewu-mpp-wzor/">komunikat przelewu MPP – wzór</a>.</p>
+<h2 id="co-sprawdzic">Czego narzędzie nie sprawdzi</h2>
+<p>Walidator nie połączy się z KSeF. Potwierdzi, że numer ma poprawny format, NIP, datę i sumę kontrolną, ale nie zagwarantuje, że faktura o tym numerze istnieje. Dlatego porównuj numer z dokumentem, z którego go skopiowałeś. Numer z poprawną sumą kontrolną może należeć do innej faktury.</p>
+<h2 id="lista-kontrolna">Lista kontrolna przy płatności za fakturę</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Krok</th><th scope="col">Co sprawdzasz</th><th scope="col">Narzędzie</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>czy numer ma 35 znaków i poprawną sumę</td><td><a href="/">walidator</a></td></tr>
+<tr><td>2</td><td>czy NIP w numerze zgadza się z NIP-em sprzedawcy</td><td>faktura lub UPO</td></tr>
+<tr><td>3</td><td>czy numer stoi na początku tytułu</td><td>formularz banku</td></tr>
+<tr><td>4</td><td>czy przy MPP numer jest w polu /INV/</td><td><a href="/przelew-mpp-numer-ksef/">generator MPP</a></td></tr>
+</tbody></table></div>
+<h2 id="kiedy-pytac">Kiedy zapytać księgowego</h2>
+<p>Jeśli nie wiesz, czy twoja płatność w ogóle podlega obowiązkowi (np. odbiorca nie jest czynnym podatnikiem VAT albo płacisz w sposób niepozwalający podać tytułu), nie zgaduj. MF opisuje zakres obowiązku w pytaniach i odpowiedziach KSeF 2.0, a szczegółowe przypadki warto omówić z księgowym. Ten artykuł dotyczy wyłącznie technicznej strony pomyłek w numerze.</p>
+<h2 id="jak-nie-popelnic">Jak ograniczyć liczbę pomyłek w firmie</h2>
+<p>Najlepiej, gdy numer przechodzi z KSeF do banku bez ręcznego przepisywania. Jeśli to niemożliwe, ustal w firmie jedną regułę: numer zawsze kopiujemy i zawsze sprawdzamy w walidatorze przed zatwierdzeniem przelewu. Przy większej liczbie faktur wprowadź kontrolę zbiorczą, a przy kilku fakturach jednego sprzedawcy rozważ identyfikator zbiorczy, który zastępuje wiele numerów jednym. Pomyłki zdarzają się zwykle w ostatnich czterech znakach, dlatego porównuj właśnie ich koniec.</p>
+<h2 id="partie">Wiele przelewów naraz</h2>
+<p>Gdy płacisz dziesiątki faktur, wklej listę numerów do <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarki zbiorczej</a> przed wygenerowaniem pliku przelewów. Zobaczysz, w których wierszach numer jest błędny, i poprawisz je, zanim wyślesz paczkę do banku.</p>
+<h2 id="dokumentacja">Dokumentacja pomyłek</h2>
+<p>Prowadź prostą listę przelewów, w których popełniono błąd w tytule: data, kwota, numer faktury, błędny i prawidłowy numer KSeF oraz data wiadomości do odbiorcy. Taka notatka pomaga księgowemu rozliczyć sprawę i pokazuje, że błąd został zauważony i wyjaśniony. Wystarczy arkusz z sześcioma kolumnami; nie musi to być osobny program.</p>
+<h2 id="wskazowka">Wskazówka na koniec</h2>
+<p>Zanim zatwierdzisz przelew w banku, przeczytaj tytuł jeszcze raz od końca: ostatnie cztery znaki numeru najłatwiej zepsuć przy kopiowaniu i to one zawierają sumę kontrolną. Jeśli bank ogranicza długość tytułu, upewnij się, że 35 znaków numeru mieści się w całości, a ewentualny dodatkowy opis stoi dopiero po nim.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Najtańszy sposób na błąd w numerze KSeF to sprawdzenie go przed wysyłką. Jeśli przelew już wyszedł, zapisz dowód, napisz do odbiorcy z prawidłowym numerem i skonsultuj się z księgowym. Zacznij od <a href="/">walidatora numeru KSeF</a>.</p>
+""",
+    faq=[
+        ("Co zrobić, gdy w tytule przelewu jest błędny numer KSeF?", "Zapisz potwierdzenie, napisz do odbiorcy z prawidłowym numerem i numerem faktury sprzedawcy oraz zapytaj księgowego, czy trzeba coś jeszcze udokumentować."),
+        ("Czy trzeba wysłać drugi przelew?", "Nie ma takiej potrzeby, jeśli kwota była prawidłowa. Drugi przelew oznaczałby podwójną zapłatę, więc najpierw skontaktuj się z odbiorcą."),
+        ("Od kiedy obowiązuje numer KSeF w przelewie?", "Według MF przepis art. 108g ustawy o VAT stosuje się do płatności dokonanych od 1 stycznia 2027 r."),
+        ("Jak sprawdzić numer przed wysłaniem przelewu?", "Wklej go do walidatora. Sprawdzi długość, dozwolone znaki, NIP, datę i sumę kontrolną CRC-8."),
+    ],
+    sources=[MF_PYT2, GOV_OSTATNI, MF_NUM, MF_PODR2],
+)
+
+CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21]

@@ -25,9 +25,9 @@ Legenda statusu: „✅ RRRR-MM-DD” przy numerze = opublikowano tego dnia (tre
 | 16 ✅ 2026-11-19 | jak-otworzyc-plik-xml-ksef | Jak otworzyć plik XML z KSeF bez programu? | jak otworzyć plik xml ksef | /przelew-z-faktury-xml-ksef/ |
 | 17 ✅ 2026-11-19 | dlaczego-numeru-ksef-nie-ma-w-xml | Dlaczego numeru KSeF nie ma w pliku XML? | numer ksef w pliku xml | /przelew-z-faktury-xml-ksef/ |
 | 18 ✅ 2026-11-19 | czy-numer-ksef-musi-byc-w-jpk | Czy numer KSeF musi być w JPK_VAT? | czy numer ksef musi być w jpk vat | /sprawdz-wiele-numerow-ksef/ |
-| 19 | numer-ksef-w-kpir | Czy numer KSeF trzeba wpisać do KPiR? | czy numer ksef musi być w kpir | /sprawdz-wiele-numerow-ksef/ |
-| 20 | czy-numer-ksef-to-nip | Czy numer KSeF to NIP? Co oznacza pierwsze 10 cyfr | czy numer ksef to nip | / |
-| 21 | numer-ksef-blad-w-przelewie | Błędny numer KSeF w przelewie – co zrobić? | błędny numer ksef w przelewie | / |
+| 19 ✅ 2026-11-20 | numer-ksef-w-kpir | Czy numer KSeF trzeba wpisać do KPiR? | czy numer ksef musi być w kpir | /sprawdz-wiele-numerow-ksef/ |
+| 20 ✅ 2026-11-20 | czy-numer-ksef-to-nip | Czy numer KSeF to NIP? Co oznacza pierwsze 10 cyfr | czy numer ksef to nip | / |
+| 21 ✅ 2026-11-20 | numer-ksef-blad-w-przelewie | Błędny numer KSeF w przelewie – co zrobić? | błędny numer ksef w przelewie | / |
 | 22 | przelew-faktury-ksef-2026-zaplata-2027 | Faktura z 2026, zapłata w 2027 – jaki tytuł? | numer ksef w przelewie od kiedy | / |
 | 23 | czy-jdg-bez-vat-podaje-numer-ksef | JDG zwolniona z VAT a numer KSeF w przelewie | ksef jdg bez vat | /ksef-od-2027-jdg/ |
 | 24 | ksef-jdg-od-czego-zaczac | KSeF w JDG – od czego zacząć? Lista kroków | ksef jdg od czego zacząć | /ksef-od-2027-jdg/ |
