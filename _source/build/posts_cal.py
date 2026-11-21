@@ -1715,4 +1715,219 @@ C21 = dict(
     sources=[MF_PYT2, GOV_OSTATNI, MF_NUM, MF_PODR2],
 )
 
-CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21]
+C22 = dict(
+    slug="przelew-faktury-ksef-2026-zaplata-2027",
+    title="Faktura z 2026, zapłata w 2027 – jaki tytuł?",
+    desc="Faktura wystawiona w 2026 r., a płatność w 2027 r.? Sprawdź, o czym decyduje data płatności, i ułóż tytuł przelewu z numerem KSeF w walidatorze.",
+    h1="Faktura z 2026 r., zapłata w 2027 r. – jaki tytuł przelewu",
+    intro="Wiele firm zapłaci w styczniu za faktury z grudnia. Wyjaśniamy, czym rozstrzyga się obowiązek numeru KSeF w tytule przelewu i jak go przygotować.",
+    lead_tool=("/", "walidator numeru KSeF i generator tytułu przelewu"),
+    date=("2026-11-21", "21 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Według Ministerstwa Finansów przepis art. 108g ustawy o VAT stosuje się do płatności dokonanych od 1 stycznia 2027 r. Liczy się więc data zapłaty, a nie data wystawienia faktury. Jeśli płacisz w 2027 r. za fakturę z KSeF, przygotuj numer w <a href="/">walidatorze numeru KSeF</a>. Szczegóły w twoim przypadku potwierdź z księgowym.</p>
+<h2 id="data-platnosci">Co decyduje: data wystawienia czy data płatności</h2>
+<p>MF w komunikacie o ostatnim etapie wdrożenia KSeF pisze o płatnościach dokonanych od 1 stycznia 2027 r. Z tego wynika praktyczny wniosek: ten sam dokument może wymagać różnego opisu przelewu, zależnie od dnia, w którym środki wychodzą z rachunku. Dzień zlecenia i dzień realizacji mogą się różnić, zwłaszcza w okresie świątecznym, dlatego przy płatnościach na przełomie roku zapytaj bank, jak liczy datę.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Sytuacja</th><th scope="col">Co wpisać w tytule</th></tr></thead>
+<tbody>
+<tr><td>faktura z KSeF, płatność do 31.12.2026</td><td>dotychczasowy opis, np. numer faktury sprzedawcy</td></tr>
+<tr><td>faktura z KSeF, płatność od 1.01.2027, obie strony czynnymi podatnikami VAT</td><td>numer KSeF faktury lub identyfikator zbiorczy</td></tr>
+<tr><td>faktura wystawiona poza KSeF (tryb offline), płatność od 1.01.2027</td><td>zgodnie z materiałami MF – sprawdź w pytaniach i odpowiedziach KSeF 2.0</td></tr>
+<tr><td>płatność MPP od 1.01.2027</td><td>numer KSeF w polu /INV/ komunikatu</td></tr>
+</tbody></table></div>
+<h2 id="przyklad">Przykład: faktura z 15 grudnia, zapłata 8 stycznia</h2>
+<p>Firma Alfa wystawia 15 grudnia 2026 r. fakturę na 2 460,00 zł brutto. Termin płatności to 8 stycznia 2027 r., a nabywca jest czynnym podatnikiem VAT. Faktura trafia do KSeF i dostaje numer, np. 5265877635-20261215-0100001AF629-AF (przykład ilustracyjny). Nabywca w dniu płatności:</p>
+<ol class="steps">
+<li>kopiuje numer z aplikacji lub programu księgowego,</li>
+<li>wkleja go do <a href="/">walidatora</a> i sprawdza długość, NIP, datę oraz sumę kontrolną,</li>
+<li>wstawia numer na początek tytułu przelewu,</li>
+<li>przy płatności MPP układa komunikat w <a href="/przelew-mpp-numer-ksef/">generatorze komunikatu MPP</a>.</li>
+</ol>
+<p>Gdyby ten sam przelew wyszedł 30 grudnia, obowiązek podania numeru jeszcze by nie działał, choć nic nie stoi na przeszkodzie, by podać go dobrowolnie.</p>
+<h2 id="przelew-przyszly">Przelew z datą przyszłą i zlecenia stałe</h2>
+<p>Jeśli w grudniu ustawisz przelew z datą realizacji w styczniu, sprawdź w banku, jak działa edycja tytułu przed wykonaniem. Zlecenia stałe i polecenia zapłaty często mają stały opis, który nie zmieni się sam. Przejrzyj je pod koniec roku: te, które dotyczą faktur z KSeF, mogą wymagać nowego tytułu. W materiałach MF nie znajdziesz instrukcji dla konkretnych banków, więc sprawdź ich komunikaty.</p>
+<h2 id="wiele-faktur">Kilka faktur w jednym przelewie</h2>
+<p>Gdy łączysz płatność za kilka faktur jednego sprzedawcy, MF przewiduje identyfikator zbiorczy. Opisujemy go w tekście o <a href="/blog/jak-wygenerowac-identyfikator-zbiorczy-ksef/">generowaniu identyfikatora zbiorczego</a>, a sam identyfikator sprawdzisz w <a href="/identyfikator-zbiorczy-ksef/">dedykowanym narzędziu</a>. Przy płatności za faktury z różnych lat zapytaj księgowego, jak je pogrupować.</p>
+<h2 id="lista">Lista kontrolna na przełom roku</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Krok</th><th scope="col">Kiedy</th></tr></thead>
+<tbody>
+<tr><td>zrób listę niezapłaconych faktur z numerami KSeF</td><td>połowa grudnia</td></tr>
+<tr><td>sprawdź numery w <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarce zbiorczej</a></td><td>przed przygotowaniem paczki przelewów</td></tr>
+<tr><td>zdecyduj, które płatności wychodzą w 2026 r., a które w 2027 r.</td><td>do końca grudnia</td></tr>
+<tr><td>zaktualizuj opisy zleceń stałych</td><td>przed pierwszą płatnością w 2027 r.</td></tr>
+</tbody></table></div>
+<h2 id="dobrowolnie">Czy można podać numer wcześniej</h2>
+<p>Przepisy nie zabraniają wpisania numeru KSeF w tytule przed 2027 r. Jeśli sprzedawca wystawił fakturę w KSeF, taki opis ułatwia mu dopasowanie wpłaty. Nie jest to jednak obowiązek wynikający z art. 108g, więc nie traktuj tego jako wymogu. W razie wątpliwości zapytaj kontrahenta, jak woli otrzymywać płatności.</p>
+<h2 id="ograniczenia">Czego ten tekst nie rozstrzyga</h2>
+<p>Nie opisujemy skutków podatkowych pomyłek ani wyjątków dla poszczególnych rodzajów płatności. Walidator sprawdza format numeru, a nie istnienie faktury w KSeF. Zakres obowiązku i jego szczegóły znajdziesz w pytaniach i odpowiedziach KSeF 2.0 na stronie MF oraz w komunikatach gov.pl; trudniejsze przypadki omów z księgowym. Pamiętaj też, że do końca 2026 r. mogą pojawić się nowe komunikaty, więc przed przelewem zajrzyj do źródeł wskazanych poniżej.</p>
+<h2 id="przyklad-bank">Przykład: paczka przelewów na koniec roku</h2>
+<p>Biuro rachunkowe obsługuje firmę, która ma w grudniu dwanaście niezapłaconych faktur z terminem w styczniu. Księgowa dzieli je na dwie grupy: te, które firma zapłaci jeszcze w 2026 r., i te, które wyjdą w 2027 r. Dla drugiej grupy wkleja numery KSeF do sprawdzarki zbiorczej, poprawia dwa błędne wiersze, a potem układa tytuły. Dzięki temu pierwsza paczka przelewów w styczniu jest gotowa w kilka minut, a nie w ostatniej chwili przed terminem płatności.</p>
+<h2 id="pytania-do-banku">Pytania, które warto zadać bankowi</h2>
+<ul>
+<li>Jak bank liczy datę płatności przy przelewach z datą przyszłą?</li>
+<li>Ile znaków mieści pole tytułu i czy numer KSeF zmieści się w nim w całości?</li>
+<li>Czy da się edytować tytuł zlecenia stałego bez zakładania go od nowa?</li>
+<li>Czy import pliku przelewów obsługuje komunikat MPP z polem /INV/?</li>
+</ul>
+<p>Odpowiedzi znajdziesz w regulaminie banku lub u opiekuna konta. Materiały MF nie opisują zasad poszczególnych banków, więc nie przyjmuj ich z góry.</p>
+<h2 id="dokumenty">Co zachować na wypadek pytań</h2>
+<p>Przy płatnościach na przełomie roku warto zachować potwierdzenie przelewu, numer KSeF faktury oraz datę, w której zlecono i zrealizowano płatność. Jeśli kontrahent zapyta, której faktury dotyczyła wpłata, odpowiesz jednym spojrzeniem na zestawienie. Taka lista nie jest wymogiem z ustawy, tylko praktycznym zabezpieczeniem.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>O opisie przelewu decyduje data płatności. Faktura z grudnia, zapłacona w styczniu 2027 r., podlega regule numeru KSeF, jeśli spełnione są warunki z art. 108g. Przygotuj numery wcześniej: sprawdź je w <a href="/">walidatorze</a>, a przy wielu fakturach w <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarce zbiorczej</a>. Dzięki temu pierwszy przelew w nowym roku nie będzie wymagał pośpiechu.</p>
+""",
+    faq=[
+        ("Czy liczy się data faktury czy data płatności?", "Według MF przepis art. 108g stosuje się do płatności dokonanych od 1 stycznia 2027 r., więc decyduje data zapłaty."),
+        ("Czy za fakturę z grudnia 2026 trzeba podać numer KSeF w styczniu?", "Jeśli płatność następuje od 1 stycznia 2027 r. i spełnione są warunki z art. 108g, tak. Szczegóły omów z księgowym."),
+        ("Czy mogę wpisać numer KSeF już w grudniu 2026?", "Przepisy tego nie zabraniają. To dobrowolne ułatwienie dla odbiorcy, a nie obowiązek z art. 108g."),
+        ("Co ze zleceniami stałymi z ustalonym opisem?", "Opis zlecenia stałego nie zmieni się sam. Przejrzyj je przed pierwszą płatnością w 2027 r. i zaktualizuj tam, gdzie dotyczą faktur z KSeF."),
+    ],
+    sources=[MF_PYT2, GOV_OSTATNI, MF_NUM, MF_TERM],
+)
+
+C23 = dict(
+    slug="czy-jdg-bez-vat-podaje-numer-ksef",
+    title="JDG zwolniona z VAT a numer KSeF w przelewie",
+    desc="JDG zwolniona z VAT: czy musisz podać numer KSeF w tytule przelewu? Wyjaśniamy zasadę z art. 108g i pokazujemy, jak sprawdzić numer w walidatorze.",
+    h1="JDG zwolniona z VAT a numer KSeF w tytule przelewu",
+    intro="Prowadzisz jednoosobową firmę zwolnioną z VAT i zastanawiasz się, czy od 2027 r. musisz wpisywać numer KSeF w przelewach. Oto zasada i kilka przykładów.",
+    lead_tool=("/ksef-od-2027-jdg/", "kwestionariusz KSeF dla JDG"),
+    date=("2026-11-21", "21 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Komunikat MF z 16 listopada 2026 r. mówi, że obowiązek z art. 108g obejmie podatników czynnych VAT oraz transakcje w ramach MPP. JDG zwolniona z VAT nie jest czynnym podatnikiem, więc ten obowiązek zwykle jej nie dotyczy. Sprawdź swoją sytuację w <a href="/ksef-od-2027-jdg/">kwestionariuszu KSeF dla JDG</a> i potwierdź z księgowym.</p>
+<h2 id="dwie-sprawy">Dwie różne sprawy: wystawianie i płacenie</h2>
+<p>KSeF dotyczy dwóch rzeczy. Pierwsza to wystawianie i odbieranie faktur w systemie. Druga to opis płatności za faktury z KSeF. Zwolnienie z VAT nie oznacza automatycznie, że firma jest poza KSeF – MF opisuje zasady wystawiania faktur osobno od zasad płatności. Ten tekst dotyczy wyłącznie tytułu przelewu.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Rola</th><th scope="col">Status VAT</th><th scope="col">Numer KSeF w przelewie</th></tr></thead>
+<tbody>
+<tr><td>płacisz za fakturę</td><td>nabywca zwolniony z VAT</td><td>obowiązek z art. 108g zwykle nie dotyczy</td></tr>
+<tr><td>płacisz za fakturę</td><td>nabywca czynny, sprzedawca czynny</td><td>numer KSeF lub identyfikator zbiorczy</td></tr>
+<tr><td>otrzymujesz płatność</td><td>sprzedawca zwolniony z VAT</td><td>zwykle bez obowiązku po stronie płacącego</td></tr>
+<tr><td>płatność w MPP</td><td>strony objęte MPP</td><td>numer KSeF w polu /INV/</td></tr>
+</tbody></table></div>
+<h2 id="przyklady">Przykłady</h2>
+<p>Pani Ewa prowadzi JDG zwolnioną z VAT i kupuje towar od hurtowni, która jest czynnym podatnikiem. Hurtownia wystawia fakturę w KSeF. Pani Ewa nie jest czynnym podatnikiem VAT, więc – zgodnie z komunikatem MF – obowiązek z art. 108g jej nie obejmuje. Może jednak dopisać numer KSeF dobrowolnie, bo hurtowni ułatwi to dopasowanie wpłaty.</p>
+<p>Pan Marek ma JDG zwolnioną z VAT i wystawia faktury klientom. To klienci płacą, więc to oni decydują, jak opisać przelew. Jeśli klient jest czynnym podatnikiem, a Marek zwolnionym, zasady z art. 108g zwykle go nie wiążą. Marek może mimo to poprosić klientów o numer KSeF, żeby łatwiej księgować wpłaty.</p>
+<h2 id="dobrowolnie">Dobrowolne podanie numeru</h2>
+<p>Jeśli chcesz podać numer mimo braku obowiązku, skopiuj go z aplikacji i sprawdź w <a href="/">walidatorze numeru KSeF</a>. Numer ma 35 znaków, a ostatnie dwa to suma kontrolna CRC-8. Zły numer w tytule nie pomaga nikomu, więc lepiej go zweryfikować. Szczegóły budowy opisujemy w tekście <a href="/blog/z-czego-sklada-sie-numer-ksef/">z czego składa się numer KSeF</a>.</p>
+<h2 id="zmiana-statusu">Zmiana statusu VAT w trakcie roku</h2>
+<p>Zwolniona JDG może utracić zwolnienie lub zarejestrować się jako czynny podatnik VAT. Od tej chwili jest czynnym podatnikiem i obowiązek z art. 108g może jej dotyczyć. Z perspektywy płatności warto więc przygotować proces z wyprzedzeniem: ustal, skąd kopiujesz numery KSeF, i przetestuj walidator na kilku prawdziwych fakturach. Przy wielu płatnościach pomoże <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarka zbiorcza</a>.</p>
+<h2 id="mpp">A co z MPP</h2>
+<p>Komunikat MF wymienia osobno transakcje w ramach MPP. Jeśli płacisz podzieloną płatnością, zapytaj księgowego, jak obowiązek działa w twoim przypadku, bo to zależy od rodzaju transakcji. Wzór pól komunikatu pokazuje <a href="/przelew-mpp-numer-ksef/">generator komunikatu MPP</a>, a opis pól znajdziesz w tekście <a href="/blog/komunikat-przelewu-mpp-wzor/">komunikat przelewu MPP – wzór</a>.</p>
+<h2 id="ostroznie">Dlaczego warto zachować ostrożność</h2>
+<p>Przepisy dotyczące KSeF są nowe, a MF publikuje kolejne wyjaśnienia. Zasada „zwolniony z VAT, więc bez numeru" jest uproszczeniem komunikatu MF, nie indywidualną interpretacją. Jeśli twoja sprawa jest nietypowa, np. łączysz sprzedaż zwolnioną i opodatkowaną, zapytaj księgowego lub zajrzyj do pytań i odpowiedzi KSeF 2.0. Nie opieraj się na samych forach.</p>
+<h2 id="co-zrobic">Co zrobić teraz</h2>
+<ol class="steps">
+<li>Ustal swój status VAT: czynny czy zwolniony.</li>
+<li>Wypełnij <a href="/ksef-od-2027-jdg/">kwestionariusz dla JDG</a>, żeby zobaczyć listę zmian od 1 stycznia 2027 r.</li>
+<li>Zapytaj księgowego o MPP i nietypowe transakcje.</li>
+<li>Przetestuj <a href="/">walidator</a> na kilku numerach.</li>
+</ol>
+<h2 id="lista-pytan">Pytania, które warto sobie zadać</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Pytanie</th><th scope="col">Dlaczego ma znaczenie</th></tr></thead>
+<tbody>
+<tr><td>Czy jestem czynnym podatnikiem VAT?</td><td>komunikat MF wiąże obowiązek z podatnikami czynnymi</td></tr>
+<tr><td>Czy kontrahent jest czynnym podatnikiem?</td><td>od tego zależy, czy art. 108g w ogóle znajdzie zastosowanie do płatności</td></tr>
+<tr><td>Czy płatność idzie w MPP?</td><td>MF wymienia MPP osobno</td></tr>
+<tr><td>Czy faktura jest w KSeF?</td><td>numer KSeF istnieje tylko dla faktur z systemu</td></tr>
+</tbody></table></div>
+<h2 id="co-prosi-kontrahent">Gdy kontrahent prosi o numer</h2>
+<p>Zdarza się, że firma-klient w ramach własnych procedur prosi wszystkich dostawców o numer KSeF w przelewie, także tych zwolnionych z VAT. To jej decyzja organizacyjna, a nie wymóg wobec ciebie. Jeśli chcesz ułatwić współpracę, możesz po prostu podać numer faktury z KSeF w wiadomości lub na fakturze. Wystarczy skopiować go z aplikacji, a poprawność sprawdzić w <a href="/">walidatorze</a>. Taki gest nic nie kosztuje i skraca czas księgowania wpłat.</p>
+<h2 id="ksiegowanie">Księgowanie płatności w JDG</h2>
+<p>Nawet bez obowiązku z art. 108g numer KSeF przydaje się w ewidencji: jednoznacznie wskazuje fakturę, której dotyczy płatność. Jeśli prowadzisz proste zestawienie należności, dodaj do niego kolumnę z numerem KSeF. Pomoże ci to szybciej znaleźć dokument, gdy kontrahent zapyta o płatność lub gdy księgowy poprosi o wyjaśnienie wpłaty z wyciągu.</p>
+<h2 id="rozmowa-z-ksiegowym">Co zanieść do księgowego</h2>
+<p>Przed rozmową przygotuj krótką listę: informację o swoim statusie VAT, rodzaje transakcji (sprzedaż krajowa, zakupy od czynnych podatników, płatności w MPP) oraz przykładowe faktury z numerami KSeF. Zapytaj wprost, czy w twoim przypadku którakolwiek płatność podlega art. 108g, i poproś o odpowiedź na piśmie lub w wiadomości. Taka notatka zostaje w aktach firmy i oszczędza kłopotu, gdy ktoś później zapyta, dlaczego przelewy miały taki, a nie inny tytuł. Wystarczy kilka zdań, a spokój na cały rok jest gwarantowany.</p>
+<p>Warto też zapisać datę rozmowy oraz źródło, na którym oparł się księgowy, np. komunikat MF z 16 listopada 2026 r. albo pytania i odpowiedzi KSeF 2.0.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Według komunikatu MF obowiązek numeru KSeF w przelewie dotyczy czynnych podatników VAT i transakcji w ramach MPP. JDG zwolniona z VAT zwykle nie musi go wpisywać, ale może to zrobić dobrowolnie. Zacznij od <a href="/ksef-od-2027-jdg/">kwestionariusza KSeF dla JDG</a>.</p>
+""",
+    faq=[
+        ("Czy JDG zwolniona z VAT musi wpisać numer KSeF w tytule przelewu?", "Według komunikatu MF obowiązek z art. 108g obejmuje podatników czynnych VAT oraz transakcje w ramach MPP, więc zwolniona JDG zwykle nie musi. Potwierdź to z księgowym."),
+        ("Czy mogę podać numer KSeF dobrowolnie?", "Tak. Ułatwia to odbiorcy dopasowanie wpłaty, ale nie jest to wymóg z art. 108g."),
+        ("Czy zwolnienie z VAT oznacza brak KSeF?", "Nie. Wystawianie faktur i opis płatności to dwie osobne kwestie. Sprawdź swoją sytuację w kwestionariuszu dla JDG."),
+        ("Co jeśli zarejestruję się jako czynny podatnik VAT?", "Jako czynny podatnik możesz podlegać obowiązkowi z art. 108g, więc przygotuj proces kopiowania i sprawdzania numerów."),
+    ],
+    sources=[GOV_OSTATNI, MF_PYT2, MF_TERM, MF_NUM],
+)
+
+C24 = dict(
+    slug="ksef-jdg-od-czego-zaczac",
+    title="KSeF w JDG – od czego zacząć? Lista kroków",
+    desc="KSeF w jednoosobowej firmie: lista kroków przed 1 stycznia 2027 r. – konto w aplikacji, uprawnienia, faktury, płatności z numerem KSeF i kontrola błędów.",
+    h1="KSeF w JDG – od czego zacząć przed 2027 rokiem",
+    intro="Jednoosobowa firma nie potrzebuje wielkiego projektu wdrożeniowego, ale kilka kroków warto wykonać wcześniej. Oto praktyczna lista z odnośnikami do narzędzi.",
+    lead_tool=("/ksef-od-2027-jdg/", "kwestionariusz KSeF dla JDG"),
+    date=("2026-11-21", "21 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Zacznij od sprawdzenia, jakie obowiązki cię dotyczą, w <a href="/ksef-od-2027-jdg/">kwestionariuszu KSeF dla JDG</a>. Potem załóż dostęp do Aplikacji Podatnika KSeF, ustal z księgowym sposób wystawiania faktur i przygotuj opis przelewów. Stan prawny zmienia się, więc ostateczne terminy sprawdzaj na stronie ksef.podatki.gov.pl.</p>
+<h2 id="kroki">Siedem kroków</h2>
+<ol class="steps">
+<li><strong>Ustal status VAT.</strong> Czynny podatnik czy zwolniony – od tego zależy część obowiązków, m.in. dotyczących przelewów.</li>
+<li><strong>Sprawdź terminy.</strong> Według MF zwolnienie dla faktur do 10 000 zł miesięcznie i faktur z kas kończy się 31 grudnia 2026 r. Od 1 stycznia 2027 r. wystawianie faktur dla innych firm odbywa się w KSeF.</li>
+<li><strong>Wejdź do Aplikacji Podatnika KSeF.</strong> Aplikacja jest udostępniana przez MF na ksef.podatki.gov.pl; zapoznaj się z jej podręcznikiem.</li>
+<li><strong>Zapytaj księgowego o uprawnienia.</strong> Ustal, kto wystawia faktury i kto ma dostęp do dokumentów.</li>
+<li><strong>Wybierz sposób wystawiania faktur:</strong> aplikacja MF, program fakturowy lub program księgowy.</li>
+<li><strong>Przygotuj płatności.</strong> Naucz się kopiować numer KSeF i sprawdzać go w <a href="/">walidatorze</a>.</li>
+<li><strong>Zrób próbę.</strong> Wystaw lub pobierz kilka faktur i prześledź cały obieg do przelewu.</li>
+</ol>
+<h2 id="harmonogram">Przykładowy harmonogram</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Kiedy</th><th scope="col">Zadanie</th><th scope="col">Pomoc</th></tr></thead>
+<tbody>
+<tr><td>teraz</td><td>kwestionariusz i rozmowa z księgowym</td><td><a href="/ksef-od-2027-jdg/">kwestionariusz</a></td></tr>
+<tr><td>do połowy grudnia</td><td>dostęp do aplikacji, wybór programu</td><td>ksef.podatki.gov.pl</td></tr>
+<tr><td>do końca grudnia</td><td>próbne faktury, test walidatora</td><td><a href="/">walidator</a></td></tr>
+<tr><td>od 1 stycznia 2027</td><td>wystawianie w KSeF, płatności z numerem</td><td><a href="/przelew-mpp-numer-ksef/">generator MPP</a></td></tr>
+</tbody></table></div>
+<h2 id="przyklad">Przykład: grafik na umowie o dzieło i zlecenia dla firm</h2>
+<p>Anna prowadzi JDG jako grafik i fakturuje kilkunastu klientów miesięcznie, w tym firmy. Dotąd wystawiała faktury w edytorze tekstu. W grudniu wykonuje trzy rzeczy: ustala z księgowym, że faktury będzie wystawiać w programie fakturowym zgodnym z KSeF, wypełnia kwestionariusz i próbuje pobrać z aplikacji MF dwie testowe faktury. Gdy w styczniu dostaje fakturę od dostawcy, kopiuje numer KSeF, wkleja go do walidatora i dopiero wtedy zleca przelew.</p>
+<h2 id="platnosci">Płatności – część, o której łatwo zapomnieć</h2>
+<p>Wiele poradników skupia się na wystawianiu faktur. Tymczasem od 1 stycznia 2027 r. nabywca będący czynnym podatnikiem, płacąc za fakturę z KSeF, ma podać numer KSeF albo identyfikator zbiorczy (art. 108g). Jeśli twoja firma jest zwolniona z VAT, zapoznaj się z tekstem <a href="/blog/czy-jdg-bez-vat-podaje-numer-ksef/">JDG zwolniona z VAT a numer KSeF</a>. Gdy płacisz za wiele faktur, użyj <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarki zbiorczej</a>.</p>
+<h2 id="faktury-kupowane">Faktury od dostawców</h2>
+<p>Faktury kosztowe będziesz odbierać z KSeF. Ustal, kto je pobiera i jak trafiają do księgowości. Z aplikacji możesz je wyszukać i pobrać, a plik XML obejrzysz bez specjalnego programu – opisujemy to w tekście <a href="/blog/jak-otworzyc-plik-xml-ksef/">jak otworzyć plik XML z KSeF</a>. Zadbaj, by numer KSeF każdej faktury kosztowej trafił do ewidencji, bo przyda się przy płatności.</p>
+<h2 id="bledy">Typowe potknięcia na starcie</h2>
+<ul>
+<li>przepisywanie numeru ręcznie zamiast kopiowania,</li>
+<li>brak ustalenia z księgowym, kto odbiera faktury kosztowe,</li>
+<li>założenie, że zwolnienie z VAT zwalnia z KSeF w ogóle,</li>
+<li>pozostawienie testów na ostatni tydzień grudnia,</li>
+<li>zlecenia stałe w banku ze starym opisem.</li>
+</ul>
+<h2 id="czego-nie-wiemy">Czego nie rozstrzygamy</h2>
+<p>Nie podajemy terminów ani wysokości kar. Kwestie te mogą się zmienić, a ich status trzeba sprawdzać w oficjalnych źródłach, takich jak komunikaty gov.pl i ISAP. Ten artykuł jest ogólnym przewodnikiem, a nie doradztwem podatkowym, więc nietypowe przypadki omów z księgowym.</p>
+<h2 id="przyklad-sklep">Przykład: mały sklep internetowy</h2>
+<p>Pan Piotr prowadzi JDG ze sprzedażą hurtową akcesoriów do firm i detaliczną do osób prywatnych. Z komunikatów MF wie, że faktury dla osób fizycznych nieprowadzących działalności są w KSeF dobrowolne, natomiast faktury dla firm trzeba wystawiać w systemie. Dlatego ustala z księgowym, że faktury B2B będą szły przez program fakturowy z integracją z KSeF, a sprzedaż konsumencka zostanie bez zmian. Dodatkowo przygotowuje listę dostawców, od których będzie odbierał faktury, i dopisuje do ewidencji kolumnę z numerem KSeF.</p>
+<h2 id="lista-kontrolna">Lista kontrolna na koniec grudnia</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Pozycja</th><th scope="col">Gotowe, gdy</th></tr></thead>
+<tbody>
+<tr><td>dostęp do aplikacji</td><td>potrafisz wejść i wyszukać fakturę</td></tr>
+<tr><td>sposób wystawiania</td><td>wystawiłeś lub wczytałeś fakturę próbną</td></tr>
+<tr><td>faktury kosztowe</td><td>wiadomo, kto je pobiera i jak trafiają do księgowości</td></tr>
+<tr><td>płatności</td><td>numer przechodzi z aplikacji do banku bez przepisywania</td></tr>
+<tr><td>zlecenia stałe</td><td>opisy sprawdzone i w razie potrzeby poprawione</td></tr>
+</tbody></table></div>
+<h2 id="dalsze-kroki">Co dalej po starcie</h2>
+<p>Po pierwszych tygodniach 2027 r. przejrzyj, co poszło sprawnie, a co trzeba poprawić. Zwróć uwagę na czas, jaki zajmuje kopiowanie numerów, i na ewentualne błędy w przelewach – w razie pomyłki zajrzyj do tekstu <a href="/blog/numer-ksef-blad-w-przelewie/">błędny numer KSeF w przelewie</a>. Śledź też komunikaty MF, bo wyjaśnienia i terminy mogą się zmieniać.</p>
+<h2 id="rozmowa-ksiegowy">Pytania do księgowego</h2>
+<p>Zanim zaczniesz wdrożenie, zapytaj księgowego o cztery rzeczy: kto będzie pobierał faktury kosztowe z KSeF, w jakim programie prowadzona jest ewidencja, czy twoja sprzedaż obejmuje faktury dla firm i dla konsumentów oraz jak wygląda jego procedura dla płatności z numerem KSeF. Odpowiedzi zapisz w jednej notatce. Dzięki niej w styczniu nie będziesz zgadywać, kto za co odpowiada, a ewentualne zmiany w przepisach łatwiej naniesiesz na gotowy plan.</p>
+<p>Jeśli pracujesz sam, rozpisz te role na siebie i ustaw sobie przypomnienie w kalendarzu na pierwszy tydzień stycznia.</p>
+<h2 id="zasoby">Gdzie szukać oficjalnych informacji</h2>
+<p>Najpewniejsze źródła to strona ksef.podatki.gov.pl z pytaniami i odpowiedziami KSeF 2.0, podręcznik użytkownika Aplikacji Podatnika oraz komunikaty na gov.pl. Zaglądaj tam co kilka tygodni, bo MF uzupełnia wyjaśnienia, a przy zmianie terminów lub zakresu obowiązków to właśnie tam pojawia się pierwsza informacja. Fora i grupy w mediach społecznościowych traktuj wyłącznie jako inspirację do pytań.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Dla JDG wdrożenie KSeF to kilka konkretnych kroków: status VAT, dostęp do aplikacji, sposób wystawiania, odbiór faktur kosztowych i przelewy z numerem KSeF. Zacznij od <a href="/ksef-od-2027-jdg/">kwestionariusza KSeF dla JDG</a>, a numery do przelewów sprawdzaj w <a href="/">walidatorze</a>.</p>
+""",
+    faq=[
+        ("Od czego zacząć wdrażanie KSeF w jednoosobowej firmie?", "Od ustalenia statusu VAT i sprawdzenia obowiązków w kwestionariuszu dla JDG, a następnie od rozmowy z księgowym o sposobie wystawiania faktur."),
+        ("Czy JDG musi wystawiać faktury w KSeF od 2027 roku?", "Według MF zwolnienie dla faktur do 10 000 zł miesięcznie kończy się 31 grudnia 2026 r., a od 1 stycznia 2027 r. KSeF obejmuje faktury dla innych firm. Faktury dla osób fizycznych bez działalności są dobrowolne."),
+        ("Gdzie znajdę Aplikację Podatnika KSeF?", "Na stronie ksef.podatki.gov.pl prowadzonej przez Ministerstwo Finansów."),
+        ("Czy trzeba kupić specjalny program?", "Nie ma takiego wymogu w materiałach MF, bo faktury można wystawiać w aplikacji MF. Wybór programu ustal z księgowym."),
+    ],
+    sources=[MF_TERM, MF_AP, GOV_OSTATNI, MF_PYT2],
+)
+
+CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24]
