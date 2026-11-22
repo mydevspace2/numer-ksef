@@ -1931,3 +1931,214 @@ C24 = dict(
 )
 
 CAL_POSTS = [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24]
+
+C25 = dict(
+    slug="ksef-jdg-ryczalt",
+    title="KSeF a JDG na ryczałcie – co się zmienia?",
+    desc="Czy ryczałt zwalnia z KSeF? Wyjaśniamy, że obowiązek dotyczy faktur, a nie formy opodatkowania, i co JDG na ryczałcie powinna przygotować przed 2027 r.",
+    h1="KSeF a JDG na ryczałcie – co się zmienia",
+    intro="Ryczałt upraszcza rozliczenia z podatku dochodowego, ale nie zmienia zasad wystawiania faktur. Sprawdź, co z tego wynika dla twojej firmy.",
+    lead_tool=("/ksef-od-2027-jdg/", "kwestionariusz KSeF dla JDG"),
+    date=("2026-11-22", "22 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Forma opodatkowania dochodu, czyli ryczałt, skala podatkowa lub podatek liniowy, nie decyduje o tym, czy faktura trafia do KSeF. Znaczenie ma to, czy wystawiasz faktury dla innych firm i czy jesteś podatnikiem VAT. Zakres obowiązków zależy od twojej sytuacji, dlatego zacznij od <a href="/ksef-od-2027-jdg/">kwestionariusza KSeF dla JDG</a>, a ostateczne terminy sprawdź na ksef.podatki.gov.pl.</p>
+<h2 id="dwa-podatki">Dwa różne podatki – dwa różne obowiązki</h2>
+<p>Ryczałt od przychodów ewidencjonowanych to forma rozliczania podatku dochodowego. KSeF dotyczy natomiast faktur ustrukturyzowanych, czyli dokumentów sprzedaży. Te dwie sprawy są od siebie niezależne: przedsiębiorca na ryczałcie może być czynnym podatnikiem VAT albo być zwolniony z VAT, a w obu przypadkach może wystawiać faktury dla firm.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Pytanie</th><th scope="col">Od czego zależy odpowiedź</th></tr></thead>
+<tbody>
+<tr><td>Czy muszę wystawiać faktury w KSeF?</td><td>od rodzaju nabywcy i obowiązujących terminów MF</td></tr>
+<tr><td>Czy podaję numer KSeF w przelewie za zakupy?</td><td>od statusu VAT nabywcy, czyli ciebie jako płatnika</td></tr>
+<tr><td>Jak prowadzę ewidencję przychodów?</td><td>od formy opodatkowania, czyli ryczałtu</td></tr>
+</tbody></table></div>
+<h2 id="przyklad">Przykład: konsultantka IT na ryczałcie</h2>
+<p>Marta prowadzi JDG i rozlicza się ryczałtem. Wystawia około dziesięciu faktur miesięcznie dla firm. Z ryczałtu nie wynika dla niej żadne zwolnienie z KSeF. Według komunikatów MF od 1 stycznia 2027 r. faktury dla innych przedsiębiorców wystawia się w systemie, więc Marta ustala z księgowym program fakturowy, a w styczniu sprawdza, czy faktury trafiają do KSeF z numerami.</p>
+<h2 id="platnosci">Płatności za zakupy firmowe</h2>
+<p>Jeśli kupujesz towary lub usługi dla firmy, a twoja firma jest czynnym podatnikiem VAT, przy płatności za fakturę z KSeF podajesz numer KSeF lub identyfikator zbiorczy (art. 108g ustawy o VAT). Jeśli jesteś zwolniony z VAT, przeczytaj tekst <a href="/blog/czy-jdg-bez-vat-podaje-numer-ksef/">JDG zwolniona z VAT a numer KSeF</a>. Numer przed przelewem sprawdzisz w <a href="/">walidatorze numeru KSeF</a>.</p>
+<h2 id="ewidencja">Ewidencja przychodów a numer KSeF</h2>
+<p>Przepisy o ewidencji przychodów dla ryczałtu nie wymagają od ciebie wpisywania numeru KSeF do ewidencji; to, czy księgowy zechce mieć go w kolumnie, jest kwestią organizacji pracy. Praktycznie warto zapisywać numer przy każdej fakturze, bo ułatwia to wyszukiwanie i korektę. Więcej o ewidencji kosztów piszemy w tekście <a href="/blog/numer-ksef-w-kpir/">numer KSeF w KPiR</a>.</p>
+<h2 id="co-zrobic">Co zrobić przed 2027 rokiem</h2>
+<ol class="steps">
+<li>Ustal status VAT swojej firmy.</li>
+<li>Sprawdź obowiązki w kwestionariuszu.</li>
+<li>Wejdź do Aplikacji Podatnika KSeF i zobacz, jak wyglądają faktury.</li>
+<li>Uzgodnij z księgowym, kto pobiera faktury kosztowe.</li>
+<li>Przećwicz kopiowanie numeru do przelewu.</li>
+</ol>
+<p>Pełną listę kroków znajdziesz w artykule <a href="/blog/ksef-jdg-od-czego-zaczac/">KSeF w JDG – od czego zacząć</a>.</p>
+<h2 id="mity">Częste nieporozumienia</h2>
+<ul>
+<li>„Jestem na ryczałcie, więc KSeF mnie nie dotyczy” – forma opodatkowania nie jest kryterium wystawiania faktur w KSeF.</li>
+<li>„Skoro nie jestem w VAT, nie muszę nic robić” – część obowiązków może cię nadal dotyczyć, zwłaszcza przy wystawianiu faktur firmom.</li>
+<li>„Księgowy zrobi wszystko za mnie” – to dobry pomysł, ale płatności i obieg dokumentów nadal są po twojej stronie.</li>
+</ul>
+<h2 id="przyklad-2">Przykład: warsztat z fakturami dla firm i klientów prywatnych</h2>
+<p>Pan Tomasz prowadzi warsztat na ryczałcie. Większość klientów to osoby prywatne, ale kilka firm flotowych dostaje faktury co miesiąc. Według komunikatów MF faktury dla osób fizycznych nieprowadzących działalności są w KSeF dobrowolne, natomiast faktury dla firm trzeba wystawiać w systemie. Dlatego Tomasz wybiera program, który obsługuje oba rodzaje sprzedaży, i prosi księgową o sprawdzenie, jak zapisywać numery KSeF w ewidencji.</p>
+<h2 id="kontrola">Lista kontrolna na grudzień</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Pozycja</th><th scope="col">Gotowe, gdy</th></tr></thead>
+<tbody>
+<tr><td>program do faktur</td><td>wystawiłeś fakturę próbną lub testową</td></tr>
+<tr><td>dostęp do aplikacji MF</td><td>umiesz wyszukać i pobrać fakturę</td></tr>
+<tr><td>przelewy</td><td>numer przechodzi do banku bez przepisywania</td></tr>
+<tr><td>ustalenia z księgowym</td><td>wiadomo, kto odbiera faktury kosztowe</td></tr>
+</tbody></table></div>
+<h2 id="rozmowa">Pytania do księgowego przy ryczałcie</h2>
+<p>Zanim zaczniesz wdrożenie, zapytaj księgowego o pięć spraw: w jakim programie będą wystawiane faktury, kto pobiera faktury kosztowe z KSeF, czy numer KSeF ma trafiać do ewidencji, jak wygląda procedura płatności z numerem oraz kto odpowiada za sprawdzanie komunikatów MF. Odpowiedzi zapisz w jednej notatce. W małej firmie, gdzie wszystko robisz sam, taka notatka pełni rolę instrukcji na styczeń i oszczędza zgadywania, a gdy zmienią się przepisy, łatwo ją zaktualizować.</p>
+<p>Warto też ustawić sobie przypomnienie, by w pierwszym tygodniu stycznia 2027 r. przejrzeć pierwsze faktury z KSeF i sprawdzić, czy numery trafiły do ewidencji oraz czy przelewy mają poprawny opis. Jeśli coś się nie zgadza, lepiej poprawić proces od razu niż po kilku miesiącach, gdy zbierze się wiele dokumentów do korekty.</p>
+<h2 id="zrodla-info">Gdzie sprawdzać zmiany</h2>
+<p>Terminy i zakres obowiązków mogą się zmieniać. Najpewniejsze źródła to ksef.podatki.gov.pl, komunikaty na gov.pl i ISAP. Nie podajemy tu kar ani ich terminów, bo ich status trzeba sprawdzać w obowiązujących przepisach. Tekst ma charakter ogólny i nie zastępuje porady księgowego, więc nietypowe przypadki omów ze specjalistą.</p>
+<h2 id="ryczalt-vs-vat">Ryczałt a zwolnienie z VAT – nie to samo</h2>
+<p>Częsty błąd to utożsamianie ryczałtu ze zwolnieniem z VAT. To dwa osobne ustawienia: jedno dotyczy podatku dochodowego, drugie podatku od towarów i usług. Możesz być ryczałtowcem i czynnym podatnikiem VAT, a także ryczałtowcem zwolnionym z VAT. Dlatego odpowiadając na pytanie o obowiązki w KSeF, zawsze zaczynaj od statusu VAT i rodzaju nabywców, a nie od formy rozliczenia dochodu. Jeśli masz wątpliwości, spisz oba ustawienia na jednej kartce i pokaż ją księgowemu.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Ryczałt nie wyłącza cię z KSeF, bo system dotyczy faktur, a nie formy podatku dochodowego. Sprawdź swoje obowiązki w <a href="/ksef-od-2027-jdg/">kwestionariuszu KSeF dla JDG</a>, a numery do przelewów weryfikuj w <a href="/">walidatorze</a>. Dzięki temu styczeń 2027 r. nie będzie dla ciebie niespodzianką.</p>
+""",
+    faq=[
+        ("Czy ryczałt zwalnia z KSeF?", "Nie wynika to z materiałów MF. KSeF dotyczy faktur, a nie formy opodatkowania dochodu, więc o obowiązkach decydują rodzaj sprzedaży i status VAT."),
+        ("Czy JDG na ryczałcie podaje numer KSeF w przelewie?", "Obowiązek z art. 108g dotyczy płatności za faktury z KSeF dokonywanych przez czynnych podatników VAT. Jeśli nie jesteś czynnym podatnikiem, sprawdź to w komunikatach MF lub u księgowego."),
+        ("Czy numer KSeF trzeba wpisywać do ewidencji ryczałtowca?", "Nie znaleźliśmy takiego wymogu w materiałach MF. Zapisywanie numeru jest jednak praktyczne, więc ustal to z księgowym."),
+        ("Gdzie sprawdzić aktualne terminy KSeF?", "Na stronie ksef.podatki.gov.pl w zakładce o podstawach prawnych i kluczowych terminach."),
+    ],
+    sources=[MF_TERM, MF_AP, GOV_OSTATNI, MF_PYT2],
+)
+
+C26 = dict(
+    slug="uzgadnianie-wyciagu-bankowego-numery-ksef",
+    title="Wyciąg bankowy i numery KSeF – jak uzgadniać?",
+    desc="Jak uzgodnić wyciąg bankowy z fakturami z KSeF: numer KSeF w opisie przelewu ułatwia parowanie płatności. Przykład tabeli i sposób kontroli plików CSV.",
+    h1="Wyciąg bankowy i numery KSeF – jak uzgadniać płatności",
+    intro="Numer KSeF w tytule przelewu może skrócić uzgadnianie wyciągu z fakturami. Pokazujemy, jak to zorganizować i jak sprawdzić większą liczbę numerów naraz.",
+    lead_tool=("/sprawdz-wiele-numerow-ksef/", "sprawdzarkę zbiorczą numerów KSeF"),
+    date=("2026-11-22", "22 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Uzgadnianie polega na zestawieniu wpłat i wypłat z wyciągu z listą faktur. Jeśli w opisie przelewu znajduje się numer KSeF, możesz parować płatność z fakturą po jednym unikalnym kluczu. Przed importem pliku sprawdź numery w <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarce zbiorczej numerów KSeF</a>, żeby wychwycić literówki.</p>
+<h2 id="dlaczego">Dlaczego numer KSeF pomaga</h2>
+<p>Numer faktury nadany przez sprzedawcę może się powtarzać u różnych dostawców. Numer KSeF jest nadawany przez system i ma 35 znaków, więc nadaje się na identyfikator dokumentu. Budowę numeru opisuje dokumentacja MF; jeśli chcesz ją poznać, zajrzyj do tekstu <a href="/blog/z-czego-sklada-sie-numer-ksef/">z czego składa się numer KSeF</a>.</p>
+<h2 id="tabela">Przykładowy arkusz uzgodnień</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Data</th><th scope="col">Kwota</th><th scope="col">Opis na wyciągu</th><th scope="col">Faktura</th><th scope="col">Status</th></tr></thead>
+<tbody>
+<tr><td>02.01.2027</td><td>1 230,00</td><td>numer KSeF w opisie</td><td>FV 15/2026</td><td>uzgodniona</td></tr>
+<tr><td>03.01.2027</td><td>615,00</td><td>numer KSeF w opisie</td><td>FV 8/2027</td><td>uzgodniona</td></tr>
+<tr><td>04.01.2027</td><td>2 000,00</td><td>brak numeru</td><td>do wyjaśnienia</td><td>otwarta</td></tr>
+</tbody></table></div>
+<p>Dane są przykładowe. W praktyce kolumnę z numerem KSeF dodajesz obok numeru faktury.</p>
+<h2 id="kroki">Jak uzgadniać krok po kroku</h2>
+<ol class="steps">
+<li>Pobierz wyciąg z banku w pliku CSV lub w formacie, który obsługuje twój program.</li>
+<li>Wyodrębnij z opisów ciągi długości 35 znaków i sprawdź je w sprawdzarce zbiorczej.</li>
+<li>Połącz numery z listą faktur pobraną z KSeF lub z programu księgowego.</li>
+<li>Oznacz płatności bez numeru jako do wyjaśnienia.</li>
+<li>Porównaj sumy: wpłaty z wyciągu i kwoty faktur.</li>
+</ol>
+<h2 id="przyklad">Przykład: sklep hurtowy z dwudziestoma płatnościami dziennie</h2>
+<p>Hurtownia otrzymuje dziennie około dwudziestu przelewów. Dotąd księgowa szukała faktur po kwocie i nazwie kontrahenta, a przy podobnych kwotach traciła czas. Po wprowadzeniu praktyki, że klienci wpisują numer KSeF w opisie, dopasowanie odbywa się automatycznie, a ręcznie weryfikowane są tylko wpłaty bez numeru. Hurtownia prosi klientów o kopiowanie numeru z faktury, a nie o jego przepisywanie.</p>
+<h2 id="grupowe">Jedna wpłata za wiele faktur</h2>
+<p>Gdy kontrahent płaci za kilka faktur jednym przelewem, w opisie może się pojawić identyfikator zbiorczy. Jak go przygotować, opisujemy w tekście <a href="/blog/jak-wygenerowac-identyfikator-zbiorczy-ksef/">jak wygenerować identyfikator zbiorczy KSeF</a>, a sprawdzisz go w <a href="/identyfikator-zbiorczy-ksef/">sprawdzarce identyfikatora zbiorczego</a>. Przy uzgadnianiu taki przelew rozbijasz na poszczególne faktury według zestawienia, które przygotował płatnik.</p>
+<h2 id="bledy">Najczęstsze problemy</h2>
+<ul>
+<li>numer przepisany z błędem – kontrola sumy CRC w sprawdzarce wychwytuje część pomyłek,</li>
+<li>spacje lub łamanie wiersza w opisie – usuń je przed porównaniem,</li>
+<li>skrócony opis, bo bank ucina część tytułu – sprawdź limit znaków w swoim banku,</li>
+<li>jeden przelew za kilka faktur bez zestawienia,</li>
+<li>faktura korygująca z innym numerem KSeF niż faktura pierwotna.</li>
+</ul>
+<p>Dla korekt przeczytaj <a href="/blog/numer-ksef-faktury-korygujacej/">numer KSeF faktury korygującej</a>.</p>
+<h2 id="csv">Kontrola numerów z pliku CSV</h2>
+<p>Jeśli masz wiele pozycji, wklej numery do <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarki zbiorczej</a>. Narzędzie liczy sumę kontrolną i pokazuje, które numery są poprawne formalnie. Pamiętaj, że poprawna suma nie dowodzi, że faktura istnieje w KSeF. Przetwarzanie odbywa się w twojej przeglądarce, więc dane nie są wysyłane na serwer.</p>
+<h2 id="rytm">Jak często uzgadniać</h2>
+<p>Przy dużej liczbie płatności najwygodniej uzgadniać wyciąg codziennie albo co kilka dni, bo wtedy niewyjaśnione przelewy są świeże i łatwo dopytać kontrahenta. Przy małej firmie wystarczy raz w tygodniu. Niezależnie od rytmu trzymaj stały schemat: pobranie wyciągu, kontrola numerów, zestawienie z fakturami, lista pozycji do wyjaśnienia i krótka notatka, co zrobiono. Takie podejście pozwala szybko znaleźć błąd, gdy suma na koniec miesiąca się nie zgadza.</p>
+<p>Warto też przechowywać kopię arkusza uzgodnień razem z wyciągiem bankowym. Gdy później ktoś zapyta, dlaczego dana płatność została przypisana do danej faktury, odpowiedź będzie od ręki. Pamiętaj, aby numery KSeF zapisywać w osobnej kolumnie, bez spacji i łamania wierszy, bo ułatwia to filtrowanie i porównywanie w arkuszu kalkulacyjnym.</p>
+<h2 id="kontrahenci">Jak prosić kontrahentów o poprawny opis</h2>
+<p>Najprostszy sposób to dodać do stopki maila z fakturą jedno zdanie: „W tytule przelewu prosimy o skopiowanie numeru KSeF z faktury”. Część klientów nadal będzie pisać opis po swojemu, ale większość skorzysta z podpowiedzi. Gdy ktoś płaci bez numeru, nie odrzucaj wpłaty; zestaw ją ręcznie z fakturą po kwocie i nazwie, a następnie uprzejmie przypomnij o numerze przy kolejnej płatności. Dobrze jest też prowadzić listę klientów, którzy często pomijają numer, bo to oni generują najwięcej pracy przy uzgadnianiu.</p>
+<p>W sporach o to, która faktura została opłacona, numer KSeF pomaga jednoznacznie wskazać dokument, bo nie powtarza się u różnych sprzedawców. Dzięki temu rozmowa z kontrahentem jest krótsza, a ewentualne wyjaśnienia nie wymagają przeglądania całej korespondencji ani archiwum faktur z kilku miesięcy.</p>
+<h2 id="limity">Czego narzędzie nie robi</h2>
+<p>Sprawdzarka nie łączy się z bankiem ani z KSeF i nie zaksięguje płatności. Nie podajemy też terminów ani kar, bo ich status trzeba weryfikować w oficjalnych źródłach: ksef.podatki.gov.pl, gov.pl i ISAP. Zasady księgowania omów z księgowym.</p>
+<h2 id="arkusz-wskazowki">Wskazówki do arkusza</h2>
+<p>W arkuszu kalkulacyjnym przydaje się kolumna pomocnicza, która sprawdza długość numeru i usuwa spacje, oraz osobna kolumna ze statusem uzgodnienia. Dzięki filtrowi po statusie szybko zobaczysz, które wpłaty czekają na wyjaśnienie. Na koniec miesiąca porównaj sumę uzgodnionych pozycji z saldem z wyciągu i zapisz różnicę, jeśli występuje. Jasna dokumentacja takich różnic oszczędza czas przy zamknięciu ksiąg i rozmowie z księgowym.</p>
+<h2 id="przyklad-dalej">Przykład: pierwszy tydzień stycznia</h2>
+<p>Biuro rachunkowe obsługujące kilkanaście małych firm w pierwszym tygodniu stycznia 2027 r. prosi każdego klienta o przesłanie wyciągu oraz listy faktur z numerami KSeF. Księgowa zestawia je w jednym arkuszu, oznacza pozycje bez numeru i wysyła klientom krótką listę pytań. Dzięki temu po pierwszym miesiącu wie, którzy klienci kopiują numer poprawnie, a którym trzeba przypomnieć o zasadach opisu płatności.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Numer KSeF w opisie przelewu to wygodny klucz do uzgadniania wyciągu. Zadbaj, by numery były kopiowane, a przed importem sprawdzaj je w <a href="/sprawdz-wiele-numerow-ksef/">sprawdzarce zbiorczej</a>. Pojedynczy numer zweryfikujesz w <a href="/">walidatorze</a>.</p>
+""",
+    faq=[
+        ("Czy numer KSeF ułatwia uzgadnianie wyciągu bankowego?", "Tak, bo to unikalny identyfikator dokumentu, który można zestawić z listą faktur zamiast szukać po kwocie."),
+        ("Jak uzgodnić jeden przelew za wiele faktur?", "Poproś płatnika o zestawienie lub użyj identyfikatora zbiorczego i rozbij wpłatę na faktury według tego zestawienia."),
+        ("Czy poprawna suma CRC oznacza, że faktura istnieje?", "Nie. Suma kontrolna potwierdza tylko formalną poprawność numeru, a istnienie faktury sprawdzasz w KSeF."),
+        ("Czy dane z pliku są wysyłane na serwer?", "Nie, sprawdzarka działa w przeglądarce i nie wysyła wklejonych numerów."),
+    ],
+    sources=[MF_NUM, DOC_NUM, MF_PYT2, GOV_OSTATNI],
+)
+
+C27 = dict(
+    slug="numer-ksef-na-paragonie-z-nip",
+    title="Numer KSeF na paragonie z NIP i fakturze z kasy",
+    desc="Czy paragon z NIP ma numer KSeF? Wyjaśniamy różnicę między paragonem a fakturą ustrukturyzowaną oraz gdzie szukać numeru KSeF przy zakupach firmowych.",
+    h1="Numer KSeF na paragonie z NIP i fakturze z kasy",
+    intro="Paragon z NIP to nie faktura. Numer KSeF otrzymuje dopiero faktura ustrukturyzowana przyjęta przez system. Sprawdź, co z tego wynika przy zakupach firmowych.",
+    lead_tool=("/ksef-od-2027-jdg/", "kwestionariusz KSeF dla JDG"),
+    date=("2026-11-22", "22 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Paragon fiskalny, także z NIP nabywcy, nie jest fakturą ustrukturyzowaną i nie ma numeru KSeF. Numer nadaje system po przyjęciu faktury. Jeśli chcesz mieć numer KSeF przy zakupie firmowym, potrzebna jest faktura wystawiona w KSeF. Ogólne obowiązki sprawdzisz w <a href="/ksef-od-2027-jdg/">kwestionariuszu KSeF dla JDG</a>, a aktualne zasady dla faktur z kas – w komunikatach MF.</p>
+<h2 id="roznica">Paragon, faktura z kasy i faktura w KSeF</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Dokument</th><th scope="col">Numer KSeF</th><th scope="col">Uwagi</th></tr></thead>
+<tbody>
+<tr><td>paragon fiskalny</td><td>nie</td><td>dokument z kasy, nie faktura ustrukturyzowana</td></tr>
+<tr><td>paragon z NIP nabywcy</td><td>nie</td><td>NIP na paragonie nie zastępuje faktury</td></tr>
+<tr><td>faktura wystawiona w KSeF</td><td>tak</td><td>numer nadaje system po przyjęciu faktury</td></tr>
+</tbody></table></div>
+<p>Zasady dotyczące faktur wystawianych z kas rejestrujących oraz okres przejściowy zmieniały się w komunikatach MF, dlatego sprawdź bieżące wyjaśnienia na ksef.podatki.gov.pl, zanim ustalisz procedury w firmie.</p>
+<h2 id="przyklad">Przykład: zakup materiałów biurowych</h2>
+<p>Pani Ewa kupuje w sklepie papier i tonery dla swojej JDG. Przy kasie podaje NIP, a sprzedawca drukuje paragon. Na paragonie nie ma numeru KSeF, więc nie ma czego wpisać w tytule przelewu, bo za zakup zapłaciła od razu kartą. Gdyby sklep wystawił fakturę na jej firmę i przekazał ją przez KSeF, Ewa znalazłaby fakturę z numerem w aplikacji MF i mogłaby go wykorzystać, gdyby płaciła później przelewem.</p>
+<h2 id="platnosc">Kiedy numer KSeF jest potrzebny w płatności</h2>
+<p>Obowiązek podania numeru w przelewie dotyczy płatności za fakturę z KSeF dokonywanej przez czynnego podatnika VAT (art. 108g ustawy o VAT). Jeśli płacisz na miejscu kartą lub gotówką, sprawa wygląda inaczej niż przy przelewie. Szczegóły omawiamy w tekście <a href="/blog/czy-numer-ksef-musi-byc-w-tytule-przelewu/">czy numer KSeF musi być w tytule przelewu</a>. Numer przed zleceniem przelewu możesz sprawdzić w <a href="/">walidatorze numeru KSeF</a>.</p>
+<h2 id="gdzie">Gdzie znaleźć numer KSeF</h2>
+<ul>
+<li>w Aplikacji Podatnika KSeF, w szczegółach pobranej faktury,</li>
+<li>na wizualizacji faktury, gdy zawiera kod QR,</li>
+<li>w programie fakturowym lub księgowym zintegrowanym z KSeF.</li>
+</ul>
+<p>Więcej o lokalizacji numeru piszemy w artykułach <a href="/blog/kod-qr-ksef-co-zawiera/">co zawiera kod QR KSeF</a> oraz <a href="/blog/jak-otworzyc-plik-xml-ksef/">jak otworzyć plik XML z KSeF</a>.</p>
+<h2 id="kroki">Co zrobić, gdy masz tylko paragon</h2>
+<ol class="steps">
+<li>Zapytaj sprzedawcę, czy wystawi fakturę na firmę.</li>
+<li>Sprawdź w komunikatach MF, jak obecnie wygląda dokumentowanie sprzedaży z kasy.</li>
+<li>Zachowaj paragon zgodnie z zaleceniami księgowego.</li>
+<li>Gdy faktura trafi do KSeF, pobierz ją z aplikacji i zapisz numer.</li>
+</ol>
+<h2 id="przyklad-2">Przykład: stacja paliw i firma transportowa</h2>
+<p>Kierowca firmowy tankuje auto i prosi o fakturę na NIP firmy. Stacja może wystawić dokument według zasad obowiązujących w danym okresie. Księgowa po kilku dniach wyszukuje fakturę w KSeF po dacie i sprzedawcy, zapisuje numer w ewidencji i dopiero wtedy zleca ewentualne przelewy. Dzięki temu nie opiera się na samym paragonie, który numeru nie zawiera.</p>
+<h2 id="bledy">Częste pomyłki</h2>
+<ul>
+<li>szukanie numeru KSeF na paragonie,</li>
+<li>założenie, że NIP na paragonie oznacza fakturę,</li>
+<li>wpisywanie w tytule przelewu numeru paragonu zamiast numeru KSeF,</li>
+<li>brak ustalenia, kto w firmie prosi o faktury po zakupach.</li>
+</ul>
+<h2 id="praktyka">Dobre nawyki przy zakupach firmowych</h2>
+<p>Jeśli często kupujesz drobne rzeczy dla firmy, ustal prostą zasadę: przy każdym zakupie, który ma być kosztem, od razu proś o fakturę na firmę, zamiast liczyć na to, że uda się ją uzyskać później. Faktura przekazana przez KSeF trafia do aplikacji, gdzie wyszukasz ją po dacie, NIP sprzedawcy lub kwocie. Dzięki temu masz komplet dokumentów w jednym miejscu, a księgowa nie musi zbierać paragonów w pudełku.</p>
+<p>W firmie z kilkoma pracownikami przygotuj krótką instrukcję: kto prosi o fakturę, komu ją przekazuje i gdzie zapisuje numer KSeF. Taka instrukcja zajmuje pół strony, a znacznie ogranicza liczbę pytań w pierwszych tygodniach stycznia. Pamiętaj, że zasady dla sprzedaży z kas mogą się zmieniać, więc instrukcję trzeba okresowo sprawdzać. Dobrze też ustalić, kto w firmie ma dostęp do aplikacji i kto może pobierać faktury kosztowe, aby dokumenty nie wisiały u jednej osoby.</p>
+<p>Jeśli zakupy robisz głównie online, dopisz w formularzu zamówienia dane firmy i NIP oraz wybierz opcję faktury. Po kilku dniach sprawdź w aplikacji, czy faktura jest dostępna, i zapisz jej numer KSeF. Takie sprawdzenie raz w tygodniu wystarczy, żeby żadna faktura nie umknęła przed końcem miesiąca.</p>
+<h2 id="zrodla-info">Źródła i zastrzeżenia</h2>
+<p>Zasady wystawiania faktur z kas i okresy przejściowe warto weryfikować na ksef.podatki.gov.pl, gov.pl i w ISAP. Nie podajemy tu kar ani ich terminów. Artykuł jest ogólnym omówieniem, nie doradztwem podatkowym.</p>
+<h2 id="uwaga-kasa">Uwaga o dokumentach z kasy</h2>
+<p>Jeśli prowadzisz sprzedaż z kasy i klienci proszą o faktury, śledź komunikaty MF dotyczące faktur wystawianych z kas rejestrujących i terminów przejściowych. Przepisy w tym obszarze były doprecyzowywane, więc dobrze jest raz na kilka tygodni sprawdzić stronę ksef.podatki.gov.pl i zapytać dostawcę kasy lub programu, jak wygląda obsługa faktur w KSeF. Zapisz odpowiedź w firmowej instrukcji, aby cały zespół postępował tak samo.</p>
+<h2 id="faktura-do-paragonu">Przykład: faktura po zakupie online</h2>
+<p>Firma zamawia sprzęt w sklepie internetowym i w formularzu zaznacza zakup na fakturę. Po kilku dniach księgowa wyszukuje fakturę w aplikacji KSeF po dacie i NIP sprzedawcy, zapisuje numer i dopiero wtedy opłaca zamówienie przelewem z tym numerem w opisie. Paragonu w takim przypadku nie ma, więc nie ma też ryzyka pomylenia numeru dokumentu z numerem KSeF.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Numer KSeF ma faktura ustrukturyzowana, a nie paragon. Jeśli kupujesz dla firmy i potrzebujesz numeru, poproś o fakturę, pobierz ją z aplikacji i sprawdź numer w <a href="/">walidatorze</a>. Swoje obowiązki sprawdzisz w <a href="/ksef-od-2027-jdg/">kwestionariuszu dla JDG</a>.</p>
+""",
+    faq=[
+        ("Czy paragon z NIP ma numer KSeF?", "Nie. Numer KSeF nadaje system faktury ustrukturyzowanej, a paragon nie jest taką fakturą."),
+        ("Gdzie znajdę numer KSeF faktury za zakup firmowy?", "W Aplikacji Podatnika KSeF w szczegółach faktury, na wizualizacji z kodem QR lub w programie zintegrowanym z KSeF."),
+        ("Czy przy płatności kartą w sklepie podaję numer KSeF?", "Obowiązek z art. 108g dotyczy płatności za faktury z KSeF, więc zakup z paragonem i płatnością na miejscu to inna sytuacja. Zasady sprawdź w komunikatach MF lub u księgowego."),
+        ("Czy sprzedawca musi wystawić fakturę do paragonu?", "Zasady zależą od przepisów i okresów przejściowych, dlatego sprawdź aktualne wyjaśnienia MF na ksef.podatki.gov.pl."),
+    ],
+    sources=[MF_TERM, MF_PYT2, GOV_OSTATNI, MF_AP],
+)
+
+CAL_POSTS = CAL_POSTS + [C25, C26, C27]

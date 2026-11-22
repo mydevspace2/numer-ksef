@@ -31,9 +31,9 @@ Legenda statusu: „✅ RRRR-MM-DD” przy numerze = opublikowano tego dnia (tre
 | 22 ✅ 2026-11-21 | przelew-faktury-ksef-2026-zaplata-2027 | Faktura z 2026, zapłata w 2027 – jaki tytuł? | numer ksef w przelewie od kiedy | / |
 | 23 ✅ 2026-11-21 | czy-jdg-bez-vat-podaje-numer-ksef | JDG zwolniona z VAT a numer KSeF w przelewie | ksef jdg bez vat | /ksef-od-2027-jdg/ |
 | 24 ✅ 2026-11-21 | ksef-jdg-od-czego-zaczac | KSeF w JDG – od czego zacząć? Lista kroków | ksef jdg od czego zacząć | /ksef-od-2027-jdg/ |
-| 25 | ksef-jdg-ryczalt | KSeF a JDG na ryczałcie – co się zmienia? | ksef a jdg na ryczałcie | /ksef-od-2027-jdg/ |
-| 26 | uzgadnianie-wyciagu-bankowego-numery-ksef | Wyciąg bankowy i numery KSeF – jak uzgadniać? | numer ksef wyciąg bankowy | /sprawdz-wiele-numerow-ksef/ |
-| 27 | numer-ksef-na-paragonie-z-nip | Numer KSeF na paragonie z NIP i fakturze z kasy | gdzie jest numer ksef na paragonie | /ksef-od-2027-jdg/ |
+| 25 ✅ 2026-11-22 | ksef-jdg-ryczalt | KSeF a JDG na ryczałcie – co się zmienia? | ksef a jdg na ryczałcie | /ksef-od-2027-jdg/ |
+| 26 ✅ 2026-11-22 | uzgadnianie-wyciagu-bankowego-numery-ksef | Wyciąg bankowy i numery KSeF – jak uzgadniać? | numer ksef wyciąg bankowy | /sprawdz-wiele-numerow-ksef/ |
+| 27 ✅ 2026-11-22 | numer-ksef-na-paragonie-z-nip | Numer KSeF na paragonie z NIP i fakturze z kasy | gdzie jest numer ksef na paragonie | /ksef-od-2027-jdg/ |
 | 28 | wizualizacja-faktury-ksef-jak-wyglada | Wizualizacja faktury KSeF – jak wygląda PDF? | wizualizacja faktury ksef jak wygląda | /kod-qr-ksef/ |
 | 29 | faktura-ksef-xml-przyklad | Przykładowa faktura XML KSeF FA(3) – omówienie | faktura ksef xml przykład | /przelew-z-faktury-xml-ksef/ |
 | 30 | split-payment-kilka-faktur-ksef | Split payment za kilka faktur KSeF – jak opisać? | split payment numer ksef | /przelew-mpp-numer-ksef/ |
