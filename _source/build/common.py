@@ -235,6 +235,8 @@ def render(page, path):
 <link rel="alternate" hreflang="pl" href="{url}">
 <link rel="alternate" hreflang="x-default" href="{url}">
 <meta name="theme-color" content="#1747c9">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon-96.png" type="image/png" sizes="96x96">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{logo}">
 <link rel="manifest" href="/site.webmanifest">

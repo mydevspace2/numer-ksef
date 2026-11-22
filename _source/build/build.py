@@ -223,4 +223,9 @@ write("/%s.txt" % common.INDEXNOW_KEY, common.INDEXNOW_KEY)
 import og_image
 og_image.og(os.path.join(OUT, "assets", "og-numerksef.png"))
 og_image.logo(os.path.join(OUT, "assets", "logo-512.png"))
+# Favicon PNG/ICO (Google: wielokrotność 48 px) – z logo 512
+import subprocess
+_l = os.path.join(OUT, "assets", "logo-512.png")
+subprocess.run(["convert", _l, "-resize", "96x96", os.path.join(OUT, "assets", "favicon-96.png")], check=True)
+subprocess.run(["convert", _l, "-define", "icon:auto-resize=48,32,16", os.path.join(OUT, "favicon.ico")], check=True)
 print("built", OUT)
