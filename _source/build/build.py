@@ -136,6 +136,15 @@ common.ARTICLE_MAP.update({
 common.ARTICLE_MAP["/ksef-od-2027-jdg/"] = [_K25, _K27, _K24]
 common.ARTICLE_MAP["/sprawdz-wiele-numerow-ksef/"] = [_K26] + [x for x in common.ARTICLE_MAP.get("/sprawdz-wiele-numerow-ksef/", [])][:2]
 
+# 2026-11-23: posty #28-30
+_K28, _K29, _K30 = _B["wizualizacja-faktury-ksef-jak-wyglada"], _B["faktura-ksef-xml-przyklad"], _B["split-payment-kilka-faktur-ksef"]
+common.ARTICLE_MAP.update({
+    _K28: [_K27, _K13, _K16], _K29: [_K28, _K12, _K26], _K30: [_K12, _K10, _K29],
+})
+common.ARTICLE_MAP["/kod-qr-ksef/"] = [_K28] + [x for x in common.ARTICLE_MAP.get("/kod-qr-ksef/", [])][:2]
+common.ARTICLE_MAP["/przelew-z-faktury-xml-ksef/"] = [_K29] + [x for x in common.ARTICLE_MAP.get("/przelew-z-faktury-xml-ksef/", [])][:2]
+common.ARTICLE_MAP["/przelew-mpp-numer-ksef/"] = [_K30] + [x for x in common.ARTICLE_MAP.get("/przelew-mpp-numer-ksef/", [])][:2]
+
 PAGES = [
     ("/", HOME), ("/przelew-mpp-numer-ksef/", MPP), ("/identyfikator-zbiorczy-ksef/", IZ),
     ("/sprawdz-wiele-numerow-ksef/", BULK), ("/przelew-z-faktury-xml-ksef/", XMLP), ("/kod-qr-ksef/", QRP),

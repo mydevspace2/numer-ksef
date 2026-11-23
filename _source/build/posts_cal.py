@@ -2142,3 +2142,220 @@ C27 = dict(
 )
 
 CAL_POSTS = CAL_POSTS + [C25, C26, C27]
+
+C28 = dict(
+    slug="wizualizacja-faktury-ksef-jak-wyglada",
+    title="Wizualizacja faktury KSeF – jak wygląda PDF?",
+    desc="Jak wygląda wizualizacja faktury KSeF, czym różni się od pliku XML i gdzie na niej szukać numeru KSeF oraz kodu QR. Praktyczny przewodnik dla firm.",
+    h1="Wizualizacja faktury KSeF – jak wygląda PDF?",
+    intro="Faktura w KSeF to plik XML, a PDF jest tylko jego czytelnym podglądem. Zobacz, co zawiera wizualizacja i gdzie na niej znaleźć numer KSeF oraz kod QR.",
+    lead_tool=("/kod-qr-ksef/", "sprawdzanie i budowanie kodu QR KSeF"),
+    date=("2026-11-23", "23 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Prawdziwą fakturą w KSeF jest plik XML w strukturze FA(3). Wizualizacja, czyli PDF lub wydruk, to jedynie czytelny podgląd danych z tego pliku. Na wizualizacji powinny być widoczne dane stron, pozycje, kwoty i oznaczenia KSeF, w tym numer KSeF oraz kod QR. Kod QR sprawdzisz w narzędziu <a href="/kod-qr-ksef/">kod QR KSeF – sprawdzanie i budowanie</a>.</p>
+<h2 id="xml-pdf">XML a PDF: co jest fakturą</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Cecha</th><th scope="col">Plik XML</th><th scope="col">Wizualizacja (PDF)</th></tr></thead>
+<tbody>
+<tr><td>rola</td><td>faktura ustrukturyzowana</td><td>czytelny podgląd danych</td></tr>
+<tr><td>numer KSeF</td><td>nadaje system po przyjęciu faktury</td><td>pokazany na wydruku obok kodu QR</td></tr>
+<tr><td>do kogo trafia</td><td>do KSeF, skąd pobiera go nabywca</td><td>można przekazać dodatkowo, np. mailem</td></tr>
+<tr><td>do przelewu</td><td>źródło danych: konto, kwota, termin</td><td>pomocniczo, do odczytu</td></tr>
+</tbody></table></div>
+<h2 id="elementy">Co zwykle widać na wizualizacji</h2>
+<ul>
+<li>dane sprzedawcy i nabywcy oraz ich numery NIP,</li>
+<li>numer faktury nadany przez sprzedawcę (pole P_2) i data wystawienia (P_1),</li>
+<li>tabela pozycji z cenami, stawkami VAT i sumami,</li>
+<li>termin i forma płatności oraz rachunek bankowy, jeśli wystawca je podał,</li>
+<li>numer KSeF i kod QR do weryfikacji faktury.</li>
+</ul>
+<p>Wygląd zależy od programu lub aplikacji, która tworzy wizualizację, bo układ nie jest narzucony jednym wzorem. Dane merytoryczne pochodzą zawsze z XML, więc w razie wątpliwości liczy się plik, a nie PDF. Strukturę pól opisuje <a href="/blog/jak-otworzyc-plik-xml-ksef/">artykuł o otwieraniu pliku XML z KSeF</a>.</p>
+<h2 id="numer">Gdzie na PDF szukać numeru KSeF</h2>
+<p>Numer ma 35 znaków: datę, NIP sprzedawcy, część techniczną i dwie cyfry kontrolne. Zwykle znajdziesz go w pobliżu kodu QR. Jeśli skopiowałeś go z PDF, wklej go do <a href="/">walidatora numeru KSeF</a>, który sprawdzi sumę kontrolną i datę. Budowę numeru wyjaśnia tekst <a href="/blog/jak-wyglada-numer-ksef-przyklad/">jak wygląda numer KSeF – przykład</a>.</p>
+<h2 id="qr">Kod QR na wizualizacji</h2>
+<p>Zgodnie z dokumentacją MF kod QR typu KOD I zawiera adres serwisu weryfikacji, datę wystawienia faktury z pola P_1, NIP sprzedawcy oraz skrót pliku faktury (SHA-256 w formacie Base64URL). Dzięki temu odbiorca może sprawdzić, czy dokument odpowiada fakturze w systemie. Szczegóły omawia artykuł <a href="/blog/kod-qr-ksef-co-zawiera/">co zawiera kod QR KSeF</a>.</p>
+<h2 id="przyklad">Przykład: księgowa sprawdza fakturę od dostawcy</h2>
+<p>Dostawca wysyła mailem PDF. Księgowa otwiera Aplikację Podatnika, wyszukuje fakturę po dacie i NIP sprzedawcy, pobiera XML i porównuje sumę brutto oraz numer rachunku z PDF. Numer KSeF z aplikacji zgadza się z tym na wydruku, więc może zlecić przelew z numerem w tytule. Gdyby kwoty się różniły, wiążący byłby plik w KSeF, a nie załącznik z poczty.</p>
+<h2 id="kroki">Jak sprawdzić, czy PDF jest zgodny z fakturą</h2>
+<ol class="steps">
+<li>Odczytaj numer KSeF z wizualizacji.</li>
+<li>Sprawdź go w <a href="/">walidatorze</a>, by wykluczyć literówkę.</li>
+<li>Znajdź fakturę w Aplikacji Podatnika KSeF po numerze lub dacie.</li>
+<li>Porównaj sprzedawcę, kwotę brutto i rachunek z danymi z XML.</li>
+<li>Dopiero potem zleć przelew z numerem KSeF w tytule.</li>
+</ol>
+<h2 id="platnosc">Wizualizacja a płatność</h2>
+<p>Numer rachunku i kwotę do zapłaty najlepiej brać z XML lub z aplikacji, a nie przepisywać ręcznie z PDF. Jeśli chcesz zobaczyć dane gotowe do przelewu, wklej plik do narzędzia <a href="/przelew-z-faktury-xml-ksef/">przelew z faktury XML</a>. Zasady dotyczące opisu przelewu opisujemy w tekście <a href="/blog/czy-numer-ksef-musi-byc-w-tytule-przelewu/">czy numer KSeF musi być w tytule przelewu</a>.</p>
+<h2 id="bledy">Częste pomyłki</h2>
+<ul>
+<li>traktowanie PDF jako oryginału faktury,</li>
+<li>płacenie na rachunek z samego maila lub PDF bez porównania z XML,</li>
+<li>przepisywanie numeru KSeF z błędami, zwłaszcza w znakach podobnych do siebie,</li>
+<li>zakładanie, że każdy program generuje wizualizację w identycznym układzie.</li>
+</ul>
+<h2 id="praktyka">Dobre nawyki w firmie</h2>
+<p>Ustal, kto w firmie pobiera faktury z KSeF i gdzie zapisuje numer. Wizualizacje przechowuj razem z numerem KSeF, żeby przy rozliczeniu można było łatwo wrócić do faktury w systemie. Dla wielu faktur naraz skorzystaj z <a href="/sprawdz-wiele-numerow-ksef/">sprawdzania wielu numerów KSeF</a>. Pamiętaj, że w razie wątpliwości co do danych wiążący jest plik XML przyjęty przez KSeF.</p>
+<p>Warto też przetestować, jak wizualizacje wyglądają w używanym programie fakturowym: wystaw fakturę testową, sprawdź czy widać na niej numer KSeF, kod QR, rachunek i termin płatności. Jeśli czegoś brakuje, zapytaj dostawcę oprogramowania, jak je włączyć. Dzięki temu klienci i księgowi dostaną komplet danych, a Ty unikniesz zbędnych pytań o to, gdzie znaleźć numer.</p>
+<p>Jeśli odbierasz faktury od wielu dostawców, zwróć uwagę, że ich PDF-y mogą wyglądać zupełnie inaczej. To normalne, ponieważ układ zależy od programu. Zawsze szukaj tych samych elementów: numeru KSeF, NIP sprzedawcy, daty, kwoty brutto i rachunku. Gdy brakuje któregoś z nich, sięgnij do XML w aplikacji MF.</p>
+<h2 id="wydruk">Wydruk, zapis i archiwizacja</h2>
+<p>Wizualizację możesz wydrukować lub zapisać jako PDF, ale pamiętaj, że przechowujesz w ten sposób tylko podgląd. Dobrą praktyką jest archiwizowanie razem z nią pliku XML oraz numeru KSeF. Dzięki temu po latach odtworzysz fakturę bez zgadywania, który dokument był pierwotny. Zapytaj księgowego, w jakiej formie chce otrzymywać dokumenty kosztowe, i ustalcie jeden schemat nazewnictwa plików, na przykład data, sprzedawca i numer KSeF.</p>
+<h2 id="mobilnie">Wizualizacja na telefonie</h2>
+<p>Przy odbiorze faktur na telefonie wygodnie jest zeskanować kod QR z wydruku i porównać dane z tym, co widzisz w aplikacji. Jeśli dokument wygląda podejrzanie lub kod prowadzi na nieznaną stronę, nie płać i skontaktuj się ze sprzedawcą innym kanałem niż wiadomość, w której przyszedł plik.</p>
+<h2 id="zrodla-info">Źródła i zastrzeżenia</h2>
+<p>Opis kodów QR oparto na dokumentacji i stronach MF (ksef.podatki.gov.pl). Nie podajemy kar ani terminów sankcji. Tekst jest ogólnym omówieniem, nie doradztwem podatkowym.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Wizualizacja faktury KSeF to wygodny podgląd, ale źródłem danych jest XML. Znajdź na niej numer KSeF i kod QR, sprawdź je w <a href="/kod-qr-ksef/">narzędziu do kodów QR</a> i <a href="/">walidatorze numeru</a>, a płać na podstawie danych z systemu.</p>
+""",
+    faq=[
+        ("Czy PDF z KSeF jest oryginałem faktury?", "Nie. Fakturą ustrukturyzowaną jest plik XML przyjęty przez KSeF, a PDF to jego wizualizacja."),
+        ("Czy każda wizualizacja wygląda tak samo?", "Nie. Układ zależy od programu lub aplikacji, ale dane pochodzą z tego samego pliku XML."),
+        ("Gdzie na wizualizacji jest numer KSeF?", "Zwykle obok kodu QR. Jeśli go nie widzisz, pobierz fakturę z Aplikacji Podatnika KSeF."),
+        ("Co zrobić, gdy dane w PDF różnią się od XML?", "Wiążący jest plik w KSeF. Skontaktuj się ze sprzedawcą, zanim zlecisz przelew."),
+    ],
+    sources=[MF_QR, QR_DOC, MF_AP, MF_FA3],
+)
+
+C29 = dict(
+    slug="faktura-ksef-xml-przyklad",
+    title="Przykładowa faktura XML KSeF FA(3) – omówienie",
+    desc="Omówienie przykładowej faktury XML KSeF w strukturze FA(3): najważniejsze pola, kwoty, rachunek i termin płatności oraz jak z nich zrobić przelew.",
+    h1="Przykładowa faktura XML KSeF FA(3) – omówienie",
+    intro="Jak czytać fakturę XML w strukturze FA(3)? Omawiamy najważniejsze pola: daty, kwoty, rachunek i termin, czyli dane potrzebne do przelewu.",
+    lead_tool=("/przelew-z-faktury-xml-ksef/", "przelew z faktury XML"),
+    date=("2026-11-23", "23 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Faktura w KSeF to plik XML zgodny ze schematem FA(3). Do przelewu potrzebujesz kilku pól: nazwy i NIP sprzedawcy, kwoty należności, rachunku i terminu płatności. Wklej plik do narzędzia <a href="/przelew-z-faktury-xml-ksef/">przelew z faktury XML</a>, a odczyta je w przeglądarce, bez wysyłania pliku na serwer.</p>
+<h2 id="pola">Najważniejsze pola faktury FA(3)</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Pole</th><th scope="col">Co oznacza</th><th scope="col">Po co do przelewu</th></tr></thead>
+<tbody>
+<tr><td>P_1</td><td>data wystawienia, RRRR-MM-DD</td><td>wyszukiwanie faktury, kod QR</td></tr>
+<tr><td>P_2</td><td>numer faktury nadany przez sprzedawcę</td><td>identyfikacja dokumentu</td></tr>
+<tr><td>P_15</td><td>należność ogółem</td><td>kwota przelewu</td></tr>
+<tr><td>P_18A</td><td>mechanizm podzielonej płatności (1 – tak, 2 – nie)</td><td>wybór przelewu MPP</td></tr>
+<tr><td>NrRB</td><td>rachunek bankowy sprzedawcy</td><td>odbiorca przelewu</td></tr>
+<tr><td>Termin</td><td>termin płatności</td><td>data realizacji</td></tr>
+</tbody></table></div>
+<p>Jeśli w fakturze występuje sekcja rozliczenia z polem DoZaplaty, to ona wskazuje kwotę faktycznie do zapłaty po potrąceniach, więc ma pierwszeństwo przed samą sumą brutto. Pełny wykaz pól znajdziesz w schemacie XSD opublikowanym przez MF.</p>
+<h2 id="przyklad">Przykład: odczyt danych krok po kroku</h2>
+<p>Załóżmy fakturę z datą 2026-12-15 (P_1), numerem sprzedawcy FV/12/2026 (P_2), należnością 1 230,00 zł (P_15), P_18A = 2 i rachunkiem sprzedawcy w polu NrRB. Do przelewu zwykłego wpisujesz kwotę 1 230,00 zł, rachunek z NrRB, a w tytule numer KSeF, który system nadał fakturze. Numer faktury sprzedawcy z P_2 można dopisać w dalszej części opisu, jeśli bank ma na to miejsce. Przy P_18A = 1 użyj <a href="/przelew-mpp-numer-ksef/">kreatora przelewu MPP</a>. Przykład jest ilustracyjny, a nie prawdziwą fakturą.</p>
+<h2 id="uklad">Jak zbudowany jest plik</h2>
+<ul>
+<li>nagłówek z kodem formularza i datą wytworzenia,</li>
+<li>Podmiot1 – sprzedawca, Podmiot2 – nabywca,</li>
+<li>sekcja Fa z datami, kwotami i adnotacjami,</li>
+<li>wiersze faktury (FaWiersz) z nazwą, ilością i cenami,</li>
+<li>płatność z terminem i rachunkiem.</li>
+</ul>
+<p>Plik możesz otworzyć w przeglądarce lub edytorze tekstu, a jak to zrobić, opisujemy w artykule <a href="/blog/jak-otworzyc-plik-xml-ksef/">jak otworzyć plik XML z KSeF</a>.</p>
+<h2 id="numer">Skąd w pliku numer KSeF</h2>
+<p>Numeru KSeF nie ma w treści faktury w chwili jej tworzenia, bo nadaje go system po przyjęciu dokumentu. Odczytasz go w Aplikacji Podatnika lub w danych pobranych z KSeF. Przed użyciem w przelewie sprawdź go w <a href="/">walidatorze numeru KSeF</a>.</p>
+<h2 id="kroki">Jak przygotować przelew z pliku XML</h2>
+<ol class="steps">
+<li>Pobierz plik faktury z KSeF.</li>
+<li>Wklej go do narzędzia lub otwórz w edytorze.</li>
+<li>Odczytaj sprzedawcę, kwotę, rachunek i termin.</li>
+<li>Dodaj numer KSeF do tytułu przelewu.</li>
+<li>Jeśli P_18A = 1, przygotuj przelew w trybie podzielonej płatności.</li>
+</ol>
+<h2 id="bledy">Częste pomyłki</h2>
+<ul>
+<li>użycie numeru faktury sprzedawcy zamiast numeru KSeF w tytule,</li>
+<li>pominięcie sekcji rozliczenia i wpisanie sumy brutto zamiast kwoty do zapłaty,</li>
+<li>pomylenie rachunku z innej faktury lub wiadomości e-mail,</li>
+<li>założenie, że każda faktura ma wszystkie pola opcjonalne.</li>
+</ul>
+<h2 id="praktyka">Dobre nawyki</h2>
+<p>Przy większej liczbie faktur ustal stały sposób pracy: pobierasz pliki, odczytujesz dane, zapisujesz numery KSeF w ewidencji i dopiero potem przygotowujesz przelewy. Przed zleceniem wypłaty sprawdź rachunek na białej liście podatników VAT w sposób wskazany przez MF. Nie podajemy tu terminów ani kwot sankcji.</p>
+<p>Narzędzia w przeglądarce nie wysyłają faktur na serwer, ale pamiętaj o ostrożności z plikami od nieznanych nadawców. Plik XML pobieraj tylko z Aplikacji Podatnika lub z zaufanego programu fakturowego. Jeśli dane wyglądają dziwnie, na przykład kwota znacząco różni się od oczekiwanej, skontaktuj się ze sprzedawcą przed płatnością.</p>
+<p>Warto też zapisać sobie, które pola faktur są dla Twojej firmy najczęściej puste lub nietypowe. Dostawcy usług mają różne zwyczaje: jedni podają rachunek w każdej fakturze, inni tylko raz w umowie. Jeśli rachunku w pliku brak, nie zgaduj go, tylko sprawdź w umowie lub zapytaj sprzedawcę. To prosty nawyk, który chroni przed przelewem na błędne konto.</p>
+<h2 id="przyklad-2">Przykład: faktura z dwiema stawkami VAT</h2>
+<p>Gdy faktura zawiera pozycje z różnymi stawkami, kwoty netto i VAT są sumowane osobno dla każdej stawki w polach z grupy P_13 i P_14, na przykład P_13_1 i P_14_1 dla stawki podstawowej oraz P_13_2 i P_14_2 dla stawki obniżonej. Mimo to kwota do zapłaty jest jedna: wynika z pola P_15 albo z rozliczenia. Załóżmy pozycje 1 000,00 zł netto z VAT 23% oraz 500,00 zł netto z VAT 8%. VAT wynosi 230,00 zł i 40,00 zł, więc suma brutto to 1 770,00 zł (1 500,00 + 270,00). Taką kwotę wpisujesz w przelewie, a nie sumę pojedynczej stawki. Przykład jest wymyślony.</p>
+<h2 id="walidacja">Dlaczego warto znać schemat</h2>
+<p>Schemat FA(3) opublikowany przez MF określa, jakie elementy są wymagane, a jakie opcjonalne, oraz jakie wartości są dozwolone. Dzięki temu dwa różne programy fakturowe tworzą pliki o tej samej strukturze, a narzędzie do odczytu może je obsłużyć bez znajomości konkretnego dostawcy. Jeśli plik nie przechodzi walidacji względem schematu, system go nie przyjmie, więc faktura nie otrzyma numeru KSeF.</p>
+<h2 id="daty">Daty w pliku XML</h2>
+<p>Daty w fakturze zapisuje się w formacie RRRR-MM-DD, na przykład 2026-12-15. Pole P_1 to data wystawienia, a data dostawy lub wykonania usługi może być podana osobno w polu P_6. Termin płatności znajdziesz w sekcji płatności. Przy zlecaniu przelewu liczy się właśnie ten termin, a nie data wystawienia, dlatego zawsze sprawdzaj oba pola i zapisz je w ewidencji płatności firmy.</p>
+<h2 id="dane-nabywcy">Dane nabywcy i sprzedawcy</h2>
+<p>W sekcjach podmiotów znajdziesz NIP, nazwę i adres. Przy płatności ważny jest NIP sprzedawcy, bo w przelewie MPP trafia on do komunikatu, a w kodzie QR jest jednym z elementów. Zawsze porównaj go z danymi umowy lub poprzednich faktur, aby wykluczyć próbę oszustwa na zmianę rachunku.</p>
+<h2 id="zrodla-info">Źródła i zastrzeżenia</h2>
+<p>Opis pól oparto na schemacie FA(3) i stronach MF (ksef.podatki.gov.pl). Przykład liczbowy jest wymyślony dla ilustracji. Tekst nie jest doradztwem podatkowym.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>W fakturze FA(3) szukaj pól P_15, P_18A, NrRB i terminu. Wklej plik do narzędzia <a href="/przelew-z-faktury-xml-ksef/">przelew z faktury XML</a>, dodaj numer KSeF do tytułu i sprawdź go w <a href="/">walidatorze</a>.</p>
+""",
+    faq=[
+        ("Które pole faktury FA(3) zawiera kwotę należności?", "Należność ogółem jest w polu P_15. Jeśli jest sekcja rozliczenia z DoZaplaty, ona wskazuje kwotę do zapłaty."),
+        ("Jak poznać, że faktura jest objęta podzieloną płatnością?", "Wskazuje to pole P_18A w adnotacjach: 1 oznacza mechanizm podzielonej płatności, 2 jego brak."),
+        ("Czy w pliku XML przykładowej faktury widać numer KSeF?", "W chwili wystawienia nie. Numer nadaje system po przyjęciu faktury i widać go w aplikacji lub danych pobranych z KSeF."),
+        ("Czy plik XML wysyłam na serwer narzędzia?", "Nie. Narzędzie odczytuje plik lokalnie w przeglądarce."),
+    ],
+    sources=[XSD, MF_FA3, MF_PODR2, MF_AP],
+)
+
+C30 = dict(
+    slug="split-payment-kilka-faktur-ksef",
+    title="Split payment za kilka faktur KSeF – jak opisać?",
+    desc="Jak opisać przelew split payment za kilka faktur z KSeF: kiedy użyć identyfikatora zbiorczego, jak wpisać numery KSeF i na co uważać w banku.",
+    h1="Split payment za kilka faktur KSeF – jak opisać przelew?",
+    intro="Płacisz jednym przelewem MPP za kilka faktur z KSeF? Sprawdź, jak podać numery KSeF lub identyfikator zbiorczy i co ustalić z bankiem.",
+    lead_tool=("/przelew-mpp-numer-ksef/", "kreator przelewu MPP z numerem KSeF"),
+    date=("2026-11-23", "23 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Przy jednym przelewie za kilka faktur z KSeF w opisie podaje się identyfikator zbiorczy, a nie listę numerów, o ile płacisz za wiele faktur jednego sprzedawcy jedną kwotą. Identyfikator ma budowę zbliżoną do numeru KSeF i jest opisany przez MF. Opis pod bank przygotujesz w <a href="/przelew-mpp-numer-ksef/">kreatorze przelewu MPP</a>, a identyfikator zbiorczy sprawdzisz w <a href="/identyfikator-zbiorczy-ksef/">narzędziu do identyfikatora zbiorczego</a>.</p>
+<h2 id="warianty">Trzy sytuacje przy płatności za wiele faktur</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Sytuacja</th><th scope="col">Co robisz</th><th scope="col">Uwaga</th></tr></thead>
+<tbody>
+<tr><td>jedna faktura</td><td>numer KSeF w tytule</td><td>zwykły przelew MPP lub standardowy</td></tr>
+<tr><td>kilka faktur, osobne przelewy</td><td>każdy przelew z własnym numerem KSeF</td><td>najprostsze, ale więcej pracy</td></tr>
+<tr><td>kilka faktur jednym przelewem</td><td>identyfikator zbiorczy</td><td>sprawdź sposób wpisania w swoim banku</td></tr>
+</tbody></table></div>
+<p>Obowiązek podawania numeru KSeF w przelewie wynika z art. 108g ustawy o VAT i dotyczy płatności za faktury z KSeF dokonywanych przez czynnych podatników VAT. Aktualne zasady sprawdzaj na ksef.podatki.gov.pl.</p>
+<h2 id="mpp">Jak MPP łączy się z numerem KSeF</h2>
+<p>W przelewie podzielonej płatności komunikat zawiera kwotę VAT, kwotę brutto, NIP odbiorcy oraz numer faktury. Banki różnią się sposobem, w jaki przyjmują numer KSeF w polu numeru faktury lub w opisie, a część z nich dopiero dostosowuje formularze. Dlatego zajrzyj do instrukcji swojego banku albo zapytaj doradcę. Sam kreator pomaga złożyć dane w jednym miejscu: <a href="/blog/numer-ksef-w-przelewie-mpp/">artykuł o numerze KSeF w split payment</a> opisuje szczegóły.</p>
+<h2 id="przyklad">Przykład: trzy faktury od jednego dostawcy</h2>
+<p>Firma ma trzy faktury od tego samego dostawcy: 1 230,00 zł, 2 460,00 zł i 615,00 zł brutto, wszystkie z VAT 23%. Sumy: brutto 4 305,00 zł, w tym VAT 805,00 zł (230 + 460 + 115 zł). Dla jednego przelewu zbiorczego kwota brutto to 4 305,00 zł, a kwota VAT 805,00 zł. Zamiast trzech numerów KSeF w opisie podaje się wtedy identyfikator zbiorczy, o ile bank i sytuacja na to pozwalają. Przykład jest liczbowo ilustracyjny, a nie prawdziwą płatnością.</p>
+<h2 id="kroki">Jak przygotować płatność</h2>
+<ol class="steps">
+<li>Zbierz numery KSeF wszystkich faktur i sprawdź je w <a href="/sprawdz-wiele-numerow-ksef/">sprawdzaniu wielu numerów</a>.</li>
+<li>Zsumuj kwoty brutto i VAT, upewniając się, że faktury są od jednego sprzedawcy.</li>
+<li>Ustal, czy masz identyfikator zbiorczy lub czy płacisz osobno.</li>
+<li>Wpisz dane w formularzu MPP w banku.</li>
+<li>Zapisz numer przelewu przy fakturach w ewidencji.</li>
+</ol>
+<h2 id="zbiorczy">Identyfikator zbiorczy</h2>
+<p>Identyfikator zbiorczy służy do wskazania w jednej płatności kilku faktur. Jego strukturę opisuje MF w materiałach o numerze KSeF i identyfikatorze zbiorczym. W <a href="/blog/identyfikator-zbiorczy-ksef-co-to-jest/">artykule o identyfikatorze zbiorczym</a> pokazujemy, jak go rozpoznać. Nie zgaduj jego zasad: korzystaj wyłącznie z opisu publikowanego przez MF.</p>
+<h2 id="bledy">Częste pomyłki</h2>
+<ul>
+<li>wpisanie listy numerów KSeF w polu, które mieści tylko jeden,</li>
+<li>łączenie w jednej płatności faktur od różnych sprzedawców,</li>
+<li>pomylenie kwoty VAT z kwotą brutto w formularzu MPP,</li>
+<li>brak sprawdzenia, jak bank przyjmuje numer KSeF.</li>
+</ul>
+<h2 id="praktyka">Dobre nawyki</h2>
+<p>Jeśli co miesiąc płacisz kilku dostawcom, przygotuj tabelę: sprzedawca, numery KSeF, kwota brutto, kwota VAT, termin. Przed zleceniem przelewu zweryfikuj rachunek sprzedawcy na białej liście. Dla dużych wolumenów zapytaj bank, czy obsługuje import przelewów z numerami KSeF, co oszczędza ręcznego wpisywania. Plik z danymi możesz przygotować w <a href="/sprawdz-wiele-numerow-ksef/">narzędziu do wielu numerów</a>.</p>
+<p>Gdy wątpisz, czy w Twojej sytuacji wolno połączyć faktury, wybierz bezpieczniejszą drogę: osobne przelewy, każdy z własnym numerem KSeF. Jest to wolniejsze, ale nie wymaga interpretowania zasad, których bank mógł jeszcze nie wdrożyć. Później możesz przejść na identyfikator zbiorczy, gdy potwierdzisz sposób jego obsługi z doradcą bankowym lub księgowym.</p>
+<p>Pamiętaj też o terminach płatności. Łączenie faktur w jeden przelew oznacza, że płacisz wszystkie w dniu zbliżającym się do najwcześniejszego terminu, aby żadna nie była przeterminowana. Zapisuj w ewidencji, którą płatnością uregulowano które faktury, bo przy uzgadnianiu wyciągu ułatwi to dopasowanie wpłat.</p>
+<h2 id="przyklad-2">Przykład: kontrola przed wysłaniem przelewu</h2>
+<p>Księgowa przygotowuje płatność za dwie faktury tego samego dostawcy. Najpierw sprawdza oba numery KSeF w walidatorze, potem otwiera fakturę w aplikacji i porównuje rachunek z białą listą. Następnie zestawia kwoty: brutto 2 000,00 zł i 1 000,00 zł, w tym VAT 373,98 zł i 186,99 zł, co daje 3 000,00 zł brutto i 560,97 zł VAT. Dopiero wtedy wpisuje wartości w formularzu MPP. Taka kontrola trwa kilka minut, a chroni przed błędnym przelewem, którego korekta bywa kłopotliwa. Liczby są ilustracyjne.</p>
+<h2 id="rozliczenie">Rozliczenie po płatności</h2>
+<p>Po wysłaniu przelewu zapisz w ewidencji datę, kwotę i numery KSeF opłaconych faktur. Przy uzgadnianiu wyciągu łatwo wtedy znaleźć, którą płatnością zamknięto które dokumenty. Pomaga w tym <a href="/blog/uzgadnianie-wyciagu-bankowego-numery-ksef/">uzgadnianie wyciągu bankowego z numerami KSeF</a>. Jeśli faktur jest wiele, trzymaj prosty arkusz z kolumnami: sprzedawca, numer KSeF, brutto, VAT, termin, data płatności.</p>
+<h2 id="czesc">Płatność częściowa i korekty</h2>
+<p>Gdy płacisz tylko część należności lub faktura została skorygowana, najpierw ustal, jaka kwota jest faktycznie do zapłaty. Przy korektach sprawdź numer KSeF faktury korygującej, który opisujemy w artykule <a href="/blog/numer-ksef-faktury-korygujacej/">numer KSeF faktury korygującej</a>. W razie wątpliwości co do sposobu opisania przelewu zapytaj księgowego lub bank.</p>
+<h2 id="zrodla-info">Źródła i zastrzeżenia</h2>
+<p>Informacje o numerze KSeF i identyfikatorze zbiorczym pochodzą ze stron MF (ksef.podatki.gov.pl). Nie podajemy kar ani terminów sankcji, a sposób obsługi w banku różni się. Tekst nie jest doradztwem podatkowym.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Przy płatności za kilka faktur jedną z dróg jest identyfikator zbiorczy, drugą osobne przelewy. Przygotuj dane w <a href="/przelew-mpp-numer-ksef/">kreatorze MPP</a>, sprawdź numery w <a href="/">walidatorze</a> i potwierdź obsługę w swoim banku.</p>
+""",
+    faq=[
+        ("Czy za kilka faktur z KSeF mogę zapłacić jednym przelewem?", "Tak, w określonych sytuacjach przy użyciu identyfikatora zbiorczego opisanego przez MF. Sprawdź też, jak obsługuje to Twój bank."),
+        ("Czy w przelewie MPP trzeba podać numer KSeF?", "Przy płatności za fakturę z KSeF przez czynnego podatnika VAT numer KSeF ma być podany zgodnie z art. 108g ustawy o VAT. Sposób wpisania zależy od banku."),
+        ("Czy mogę połączyć faktury od różnych sprzedawców?", "Nie, przelew trafia do jednego odbiorcy, więc faktury muszą być od tego samego sprzedawcy."),
+    ],
+    sources=[MF_NUM, MF_TERM, IZ_PDF2, MF_AP],
+)
+
+CAL_POSTS = CAL_POSTS + [C28, C29, C30]

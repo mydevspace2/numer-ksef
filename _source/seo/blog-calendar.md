@@ -34,8 +34,8 @@ Legenda statusu: „✅ RRRR-MM-DD” przy numerze = opublikowano tego dnia (tre
 | 25 ✅ 2026-11-22 | ksef-jdg-ryczalt | KSeF a JDG na ryczałcie – co się zmienia? | ksef a jdg na ryczałcie | /ksef-od-2027-jdg/ |
 | 26 ✅ 2026-11-22 | uzgadnianie-wyciagu-bankowego-numery-ksef | Wyciąg bankowy i numery KSeF – jak uzgadniać? | numer ksef wyciąg bankowy | /sprawdz-wiele-numerow-ksef/ |
 | 27 ✅ 2026-11-22 | numer-ksef-na-paragonie-z-nip | Numer KSeF na paragonie z NIP i fakturze z kasy | gdzie jest numer ksef na paragonie | /ksef-od-2027-jdg/ |
-| 28 | wizualizacja-faktury-ksef-jak-wyglada | Wizualizacja faktury KSeF – jak wygląda PDF? | wizualizacja faktury ksef jak wygląda | /kod-qr-ksef/ |
-| 29 | faktura-ksef-xml-przyklad | Przykładowa faktura XML KSeF FA(3) – omówienie | faktura ksef xml przykład | /przelew-z-faktury-xml-ksef/ |
-| 30 | split-payment-kilka-faktur-ksef | Split payment za kilka faktur KSeF – jak opisać? | split payment numer ksef | /przelew-mpp-numer-ksef/ |
+| 28 ✅ 2026-11-23 | wizualizacja-faktury-ksef-jak-wyglada | Wizualizacja faktury KSeF – jak wygląda PDF? | wizualizacja faktury ksef jak wygląda | /kod-qr-ksef/ |
+| 29 ✅ 2026-11-23 | faktura-ksef-xml-przyklad | Przykładowa faktura XML KSeF FA(3) – omówienie | faktura ksef xml przykład | /przelew-z-faktury-xml-ksef/ |
+| 30 ✅ 2026-11-23 | split-payment-kilka-faktur-ksef | Split payment za kilka faktur KSeF – jak opisać? | split payment numer ksef | /przelew-mpp-numer-ksef/ |
 
 Wspólne zasady treści: źródło MF na końcu, „stan prawny na …”, brak twierdzeń o datach i wysokości kar, link wewnętrzny do 1 narzędzia + 1–2 powiązanych postów. Każdy nowy post dodać do `VP.POSTS` w `build/v3_pages.py` → sitemap i blok „Powiązane artykuły” aktualizują się automatycznie; po publikacji wysłać URL do IndexNow (klucz w repo) i „Poproś o zindeksowanie” w GSC.
