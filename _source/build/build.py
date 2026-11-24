@@ -238,3 +238,8 @@ _l = os.path.join(OUT, "assets", "logo-512.png")
 subprocess.run(["convert", _l, "-resize", "96x96", os.path.join(OUT, "assets", "favicon-96.png")], check=True)
 subprocess.run(["convert", _l, "-define", "icon:auto-resize=48,32,16", os.path.join(OUT, "favicon.ico")], check=True)
 print("built", OUT)
+
+# 2026-11-24: post #31
+_K31 = _B["blad-przepisania-numeru-ksef"]
+common.ARTICLE_MAP[_K31] = [_S, _W, _K12]
+common.ARTICLE_MAP["/sprawdz-wiele-numerow-ksef/"] = [_K31] + [x for x in common.ARTICLE_MAP.get("/sprawdz-wiele-numerow-ksef/", []) if x != _K31][:2]

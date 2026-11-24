@@ -2359,3 +2359,73 @@ C30 = dict(
 )
 
 CAL_POSTS = CAL_POSTS + [C28, C29, C30]
+
+C31 = dict(
+    slug="blad-przepisania-numeru-ksef",
+    title="Błąd przy przepisaniu numeru KSeF – jak go wykryć",
+    desc="Pomyłka w jednym znaku numeru KSeF psuje opis przelewu. Zobacz, jak suma kontrolna CRC-8 wykrywa literówki i jak kopiować numer bezpiecznie.",
+    h1="Błąd przy przepisaniu numeru KSeF – jak go wykryć?",
+    intro="Jedna pomylona litera w numerze KSeF i opis przelewu jest błędny. Sprawdź, jak wykryć literówkę i jak kopiować numer bez pomyłek.",
+    lead_tool=("/", "walidator numeru KSeF"),
+    date=("2026-11-24", "24 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Najpewniej jest kopiować numer KSeF jako tekst z aplikacji lub pliku, a nie przepisywać go ręcznie. Jeśli musisz go wpisać, sprawdź go od razu w <a href="/">walidatorze numeru KSeF</a>. Suma kontrolna CRC-8, opisana przez MF, wychwytuje większość pojedynczych pomyłek, np. literę O zamiast zera.</p>
+<h2 id="budowa">Co sprawdza walidator</h2>
+<p>Numer KSeF ma 35 znaków: NIP sprzedawcy, datę przyjęcia faktury, 12-znakową część techniczną zapisaną szesnastkowo wielkimi literami oraz dwuznakową sumę kontrolną CRC-8. Według dokumentacji CIRFMF suma jest liczona z pierwszych 32 znaków (wielomian 0x07, wartość początkowa 0x00). Więcej o budowie znajdziesz w artykule <a href="/blog/z-czego-sklada-sie-numer-ksef/">z czego składa się numer KSeF</a>.</p>
+<h2 id="przyklad">Przykład: jedna zmieniona litera</h2>
+<p>Do przykładu używamy numeru z dokumentacji MF/CIRFMF: 5265877635-20250826-0100001AF629-AF. Suma kontrolna dla części z danymi wynosi AF, więc numer jest poprawny. Policzyliśmy też sumy dla dwóch typowych pomyłek:</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Wpisany ciąg (część techniczna)</th><th scope="col">Co zmieniono</th><th scope="col">Suma wyliczona</th><th scope="col">Wynik</th></tr></thead>
+<tbody>
+<tr><td>0100001AF629</td><td>nic</td><td>AF</td><td>poprawny</td></tr>
+<tr><td>0100001AF62O</td><td>cyfra 9 zastąpiona literą O</td><td>EA</td><td>błąd sumy</td></tr>
+<tr><td>0100001af629</td><td>małe litery zamiast wielkich</td><td>05</td><td>błąd sumy</td></tr>
+</tbody></table></div>
+<p>Zwróć uwagę, że w drugim wierszu zmiana jednego znaku zmienia wynik sumy z AF na EA. Dlatego rozbieżność od razu widać w narzędziu. Przykład jest obliczony przez nas na podstawie opisu algorytmu MF; sam numer pochodzi z dokumentacji.</p>
+<h2 id="mylone">Znaki, które najczęściej się mylą</h2>
+<ul>
+<li>zero (0) i litera O,</li>
+<li>jedynka (1) i litera I lub l,</li>
+<li>cyfra 8 i litera B,</li>
+<li>małe litery zamiast wielkich w części szesnastkowej,</li>
+<li>spacja doklejona na końcu po skopiowaniu,</li>
+<li>pominięty myślnik lub dodatkowy znak na początku.</li>
+</ul>
+<p>W części technicznej i w sumie kontrolnej mogą występować tylko znaki 0–9 oraz A–F. Litery spoza tego zakresu, np. O czy I, są więc od razu podejrzane.</p>
+<h2 id="kroki">Jak ograniczyć ryzyko pomyłki</h2>
+<ol class="steps">
+<li>Kopiuj numer z Aplikacji Podatnika lub z pliku, zamiast przepisywać go z wydruku.</li>
+<li>Wklej go w <a href="/">walidatorze</a> i sprawdź, czy ma 35 znaków.</li>
+<li>Przy wielu fakturach użyj <a href="/sprawdz-wiele-numerow-ksef/">sprawdzania wielu numerów</a> i wczytaj listę jednym ruchem.</li>
+<li>Do przelewu wklej numer bez dodatkowych spacji.</li>
+<li>Porównaj kwotę, NIP i rachunek z fakturą oraz białą listą.</li>
+</ol>
+<h2 id="kopiowanie">Kopiowanie z PDF i z wydruku</h2>
+<p>Wizualizacja faktury w PDF zawiera numer KSeF jako tekst, ale część czytników przy kopiowaniu dokleja spacje, łamie wiersz lub zamienia myślniki na inne znaki. Po wklejeniu zawsze przejrzyj ciąg. Wydruk albo zdjęcie telefonem są najbardziej narażone na pomyłkę, bo litery i cyfry bywają podobne. Jak znaleźć numer w dokumentach, opisujemy w artykule <a href="/blog/gdzie-znalezc-numer-ksef-faktury/">gdzie znaleźć numer KSeF faktury</a>.</p>
+<h2 id="przyklad2">Przykład: lista z kilku faktur</h2>
+<p>Księgowa kopiuje do arkusza numery z dziesięciu faktur. Po wklejeniu zapisuje je w jednej kolumnie i wczytuje do narzędzia do wielu numerów. Dwa numery zostają oznaczone jako błędne: w jednym brakuje znaku, w drugim na końcu jest spacja. Poprawia je, kopiując numery ponownie z aplikacji, i dopiero wtedy przygotowuje przelewy. Dzięki temu bank nie dostaje błędnych opisów. To przykład ilustracyjny, bez prawdziwych danych.</p>
+<h2 id="co-nie">Czego walidator nie sprawdzi</h2>
+<p>Poprawna suma kontrolna oznacza, że numer ma prawidłową budowę. Nie oznacza jednak, że faktura o takim numerze istnieje w KSeF ani że należy do Twojego kontrahenta. Walidator działa w przeglądarce i nie łączy się z systemem MF, dlatego istnienie faktury potwierdzisz w Aplikacji Podatnika. Podobnie nie sprawdzi on, czy kwota w przelewie odpowiada fakturze.</p>
+<p>Warto więc łączyć dwie kontrole: formalną, czyli walidator, i merytoryczną, czyli porównanie danych z dokumentem. W praktyce zajmuje to chwilę, a ogranicza liczbę przelewów, które trzeba wyjaśniać. Jeśli opis przelewu zawiera błąd, skontaktuj się z bankiem i sprzedawcą; zasady postępowania zależą od banku. Szerzej o tym piszemy w artykule <a href="/blog/numer-ksef-blad-w-przelewie/">numer KSeF – błąd w przelewie</a>.</p>
+<h2 id="firma">Prosta procedura w firmie</h2>
+<p>Jeśli płatności przygotowuje kilka osób, ustalcie jedną zasadę: numer KSeF trafia do przelewu wyłącznie przez kopiowanie i wklejanie, a ręczne wpisywanie jest wyjątkiem. Każdy wyjątek kończy się sprawdzeniem w walidatorze. Przydaje się też prosty arkusz z kolumnami: numer KSeF, wynik sprawdzenia, kwota brutto, kwota VAT, rachunek, data przelewu. Dzięki niemu druga osoba może szybko zweryfikować przygotowaną paczkę przed zatwierdzeniem w banku.</p>
+<p>Przy dużej liczbie faktur dobrze jest zapisywać wynik sprawdzenia razem z numerem. Gdy po tygodniu ktoś zapyta, dlaczego przelew został wstrzymany, wystarczy otworzyć arkusz i zobaczyć, który numer miał błąd. Plik CSV z listą można wczytać do <a href="/sprawdz-wiele-numerow-ksef/">narzędzia do wielu numerów</a> ponownie po poprawkach.</p>
+<h2 id="rozpoznanie">Jak rozpoznać typ błędu po komunikacie</h2>
+<p>Komunikat o złej długości oznacza zwykle, że brakuje znaku albo doklejono spację. Komunikat o niedozwolonych znakach wskazuje na literę spoza zakresu A–F w części szesnastkowej. Komunikat o błędnej sumie kontrolnej mówi, że długość i znaki są w porządku, ale któryś znak został zmieniony. W takim przypadku porównaj numer znak po znaku z oryginałem w aplikacji.</p>
+<p>Pamiętaj, że sprawdzenie formalne to dopiero pierwszy krok. Nawet gdy walidator potwierdza budowę numeru, przed zleceniem przelewu otwórz fakturę w aplikacji i upewnij się, że numer, kwota oraz rachunek sprzedawcy zgadzają się z dokumentem. Dwie krótkie kontrole zajmują mniej czasu niż wyjaśnianie błędnej płatności z bankiem i kontrahentem.</p>
+<h2 id="zrodla-info">Źródła i zastrzeżenia</h2>
+<p>Opis struktury i algorytmu pochodzi z dokumentacji numeru KSeF publikowanej przez MF i CIRFMF. Tekst nie jest doradztwem podatkowym, a o kwestiach spornych decyduje obowiązujące prawo i wyjaśnienia MF.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Kopiuj zamiast przepisywać, a po wklejeniu sprawdź numer w <a href="/">walidatorze numeru KSeF</a>. Przy większej liczbie faktur skorzystaj z <a href="/sprawdz-wiele-numerow-ksef/">sprawdzania wielu numerów</a>. Gotowy opis przelewu złożysz w narzędziu na stronie głównej.</p>
+""",
+    faq=[
+        ("Dlaczego numer KSeF wklejony z PDF jest uznany za błędny?", "Najczęściej czytnik PDF dokleił spację, złamał wiersz albo zmienił myślnik. Usuń dodatkowe znaki i sprawdź numer ponownie."),
+        ("Czy literę O można pomylić z zerem w numerze KSeF?", "Tak, to częsta pomyłka przy przepisywaniu. W części szesnastkowej dozwolone są tylko 0–9 i A–F, więc litera O jest błędem."),
+        ("Czy poprawna suma kontrolna oznacza, że faktura istnieje?", "Nie. Potwierdza tylko budowę numeru. Istnienie faktury sprawdzisz w Aplikacji Podatnika KSeF."),
+        ("Jak sprawdzić kilkadziesiąt numerów KSeF naraz?", "Wklej listę do narzędzia do sprawdzania wielu numerów albo wczytaj plik CSV. Narzędzie oznaczy numery z błędami."),
+    ],
+    sources=[DOC_NUM, MF_NUM, MF_AP],
+)
+
+CAL_POSTS = CAL_POSTS + [C31]
