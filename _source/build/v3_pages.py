@@ -322,7 +322,7 @@ def post_page(p):
            % (lead_url, lead_anchor))
     d_iso, d_pl = p.get("date", ("2026-11-13", "13 listopada 2026"))
     return dict(
-        title=p["title"], desc=p["desc"], app=False, trust=False, article=True, date_iso=d_iso, faq=p.get("faq"),
+        title=p["title"], desc=p["desc"], app=False, trust=False, article=True, date_iso=d_iso, date_pl=(d_iso, d_pl), faq=p.get("faq"),
         h1=p["h1"], intro=p["intro"],
         trail=[("Strona główna", "/"), ("Blog", "/blog/"), (p["h1"].split(" – ")[0], url)],
         content='<p class="updated">Opublikowano: <time datetime="%s">%s r.</time></p>' % (d_iso, d_pl) + cta + p["content"],

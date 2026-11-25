@@ -145,6 +145,14 @@ common.ARTICLE_MAP["/kod-qr-ksef/"] = [_K28] + [x for x in common.ARTICLE_MAP.ge
 common.ARTICLE_MAP["/przelew-z-faktury-xml-ksef/"] = [_K29] + [x for x in common.ARTICLE_MAP.get("/przelew-z-faktury-xml-ksef/", [])][:2]
 common.ARTICLE_MAP["/przelew-mpp-numer-ksef/"] = [_K30] + [x for x in common.ARTICLE_MAP.get("/przelew-mpp-numer-ksef/", [])][:2]
 
+# 2026-11-24: post #31 (przeniesione tutaj 2026-11-25: wcześniej stało po zapisaniu stron i nie działało)
+_K31 = _B["blad-przepisania-numeru-ksef"]
+common.ARTICLE_MAP[_K31] = [_S, _W, _K12]
+common.ARTICLE_MAP["/sprawdz-wiele-numerow-ksef/"] = [_K31] + [x for x in common.ARTICLE_MAP.get("/sprawdz-wiele-numerow-ksef/", []) if x != _K31][:2]
+common.ARTICLE_MAP[_K21] = [_K31] + [x for x in common.ARTICLE_MAP.get(_K21, []) if x != _K31][:2]
+common.ARTICLE_MAP[_S] = [_K31] + [x for x in common.ARTICLE_MAP.get(_S, []) if x != _K31][:2]
+
+# >>> NOWE bloki ARTICLE_MAP dodawaj POWYŻEJ tej linii: poniżej strony są już renderowane i zapisywane. <<<
 PAGES = [
     ("/", HOME), ("/przelew-mpp-numer-ksef/", MPP), ("/identyfikator-zbiorczy-ksef/", IZ),
     ("/sprawdz-wiele-numerow-ksef/", BULK), ("/przelew-z-faktury-xml-ksef/", XMLP), ("/kod-qr-ksef/", QRP),
@@ -203,7 +211,34 @@ for u in urls:
     sm.append("  <url><loc>%s%s</loc><lastmod>%s</lastmod><priority>%s</priority></url>" % (DOMAIN, u, lastmod(u), pr))
 sm.append("</urlset>\n")
 write("/sitemap.xml", "\n".join(sm))
-write("/robots.txt", "User-agent: *\nAllow: /\nDisallow: /_source/\n\nSitemap: %s/sitemap.xml\n" % DOMAIN)
+# Wyszukiwarki i roboty AI wymienione wprost (jedna grupa, te same reguły)
+_BOTS = ["*", "Googlebot", "Bingbot", "GPTBot", "OAI-SearchBot", "ChatGPT-User", "ClaudeBot", "Claude-SearchBot", "PerplexityBot", "Google-Extended", "CCBot"]
+write("/robots.txt", "".join("User-agent: %s\n" % b for b in _BOTS) + "Allow: /\nDisallow: /_source/\n\nSitemap: %s/sitemap.xml\n" % DOMAIN)
+# /llms.txt (format llmstxt.org): czym jest serwis i jego główne strony – dla asystentów AI
+_ll = ["# %s" % common.SITE, "", "> Niezależny serwis z darmowymi narzędziami do numerów KSeF (Krajowy System e-Faktur): walidator numeru KSeF (CRC-8, NIP, data), "
+       "tytuł przelewu i komunikat MPP z numerem KSeF, identyfikator zbiorczy, masowa weryfikacja, przelew z faktury XML FA(3) i kod QR KSeF. "
+       "Wszystko działa w przeglądarce, bez rejestracji. Niezwiązany z Ministerstwem Finansów; treści informacyjne, nie porada podatkowa.", "", "## Narzędzia", ""]
+for _u, _p in PAGES:
+    if _p.get("app", True) and not _p.get("article"):
+        _ll.append("- [%s](%s%s): %s" % (_p["title"], DOMAIN, _u, _p["desc"]))
+_ll += ["", "## Poradniki", ""]
+for _u, _p in PAGES:
+    if _p.get("article"):
+        _ll.append("- [%s](%s%s): %s" % (_p["title"], DOMAIN, _u, _p["desc"]))
+_ll += ["", "## Serwis", ""]
+for _u, _p in PAGES:
+    if not _p.get("article") and not _p.get("app", True):
+        _ll.append("- [%s](%s%s): %s" % (_p["title"], DOMAIN, _u, _p["desc"]))
+write("/llms.txt", "\n".join(_ll) + "\n")
+# Kontrola linkowania: każdy artykuł musi mieć >= 2 linki wewnętrzne z innych stron
+_inb = {u: 0 for u, _ in PAGES}
+for _u, _ in PAGES:
+    _h = open(os.path.join(OUT, _u.lstrip("/"), "index.html"), encoding="utf-8").read()
+    for _t in set(_re.findall(r'href="(/[^"#?]*)"', _h)):
+        if _t in _inb and _t != _u:
+            _inb[_t] += 1
+_weak = [(u, n) for u, n in _inb.items() if n < 2 and u != "/"]
+print("weak inbound (<2):", _weak)
 
 FAV = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#1747c9"/>'
        '<path d="M9 9h3v6.2L17.6 9h3.7l-6 6.6L21.6 23h-3.8l-4.6-5.4-1.2 1.3V23H9z" fill="#fff"/>'
@@ -239,7 +274,3 @@ subprocess.run(["convert", _l, "-resize", "96x96", os.path.join(OUT, "assets", "
 subprocess.run(["convert", _l, "-define", "icon:auto-resize=48,32,16", os.path.join(OUT, "favicon.ico")], check=True)
 print("built", OUT)
 
-# 2026-11-24: post #31
-_K31 = _B["blad-przepisania-numeru-ksef"]
-common.ARTICLE_MAP[_K31] = [_S, _W, _K12]
-common.ARTICLE_MAP["/sprawdz-wiele-numerow-ksef/"] = [_K31] + [x for x in common.ARTICLE_MAP.get("/sprawdz-wiele-numerow-ksef/", []) if x != _K31][:2]

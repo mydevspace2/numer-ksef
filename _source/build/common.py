@@ -155,7 +155,7 @@ def jsonld(page, path):
                       "url": DOMAIN + "/", "inLanguage": "pl-PL", "publisher": {"@id": DOMAIN + "/#organization"}})
     if page.get("article"):
         org = org_ref()
-        graph.append({"@type": "Article", "headline": page["h1"], "description": page["desc"], "url": url,
+        graph.append({"@type": "Article", "headline": page["h1"][:110], "description": page["desc"], "url": url,
                       "mainEntityOfPage": url, "inLanguage": "pl-PL", "datePublished": page.get("date_iso", UPDATED_ISO),
                       "dateModified": page.get("date_iso", UPDATED_ISO), "author": org, "publisher": org,
                       "isAccessibleForFree": True, "image": DOMAIN + OG_IMAGE})
@@ -191,6 +191,19 @@ def sources_html(src):
         for (t, u, n) in src) + "</ul>"
 
 
+def editorial_html(iso, pl):
+    """Ramka „Zespół redakcyjny: jak tworzymy te narzędzia”. Bez wymyślonych osób: autorem jest sam serwis (Organization)."""
+    return ('<aside class="editorial" aria-labelledby="zespol-redakcyjny"><h2 id="zespol-redakcyjny">Zespół redakcyjny: jak tworzymy te narzędzia</h2>'
+            '<p>Serwis prowadzi i aktualizuje zespół redakcyjny %s, wydawca strony. Nie jesteśmy Ministerstwem Finansów ani doradcami podatkowymi, '
+            'dlatego każda reguła musi wynikać z oficjalnego źródła, a nie z opinii.</p><ul>'
+            '<li><strong>Źródła:</strong> dokumentacja Ministerstwa Finansów (ksef.podatki.gov.pl, dokumentacja API KSeF 2.0, schemat FA(3)) '
+            'oraz specyfikacje banków. Każda strona podaje swoje źródła.</li>'
+            '<li><strong>Metoda:</strong> walidatory (format, suma kontrolna CRC-8, NIP, data) przechodzą automatyczne testy przed każdą publikacją. '
+            'Narzędzia sprawdzają poprawność zapisu, a nie to, czy faktura istnieje w KSeF.</li>'
+            '<li><strong>Ostatni przegląd:</strong> <time datetime="%s">%s r.</time> Szczegóły: <a href="/o-serwisie/">O serwisie</a>. '
+            'Zauważyłeś błąd? <a href="/kontakt/">Napisz do nas</a>.</li></ul></aside>') % (e(BRAND), iso, pl)
+
+
 def render(page, path):
     title = page["title"]
     desc = page["desc"]
@@ -217,7 +230,10 @@ def render(page, path):
     if page.get("related", True):
         content += related(path)
         content += related_articles(path)
-    content += '<p class="updated">Ostatnia aktualizacja: <time datetime="%s">%s r.</time> · %s</p>' % (UPDATED_ISO, UPDATED_PL, PRIVACY_NOTE)
+    if page.get("noindex"):
+        content += '<p class="updated">Ostatnia aktualizacja: <time datetime="%s">%s r.</time> · %s</p>' % (UPDATED_ISO, UPDATED_PL, PRIVACY_NOTE)
+    else:
+        content += editorial_html(*(page["date_pl"] if page.get("date_pl") else (UPDATED_ISO, UPDATED_PL)))
     body_parts.append('<article class="content">%s</article>' % content)
     og_title = page.get("og_title", title)
     return """<!doctype html>

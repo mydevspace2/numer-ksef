@@ -35,3 +35,8 @@ Publish 3 new Polish blog posts from `_source/seo/blog-calendar.md` (800–1,200
 - `_source/build/`: site generator (Python). `_source/qa/`: tests.
 - `_source/docs/` (and `_source/seo/`): blog calendar, keywords, research, project notes, SEO knowledge base and playbook.
 - Repo root: the published site (HTML, sitemap.xml, robots.txt).
+
+## Technical SEO rules (audit 2026-11-25)
+- Every indexable page ends with the "Zespół redakcyjny: jak tworzymy te narzędzia" box (`common.editorial_html`); posts show their own date. Author/publisher = the site Organization. Never add an invented person.
+- New `ARTICLE_MAP` blocks go ABOVE the `PAGES = [` line in build/build.py (a post #31 block placed after rendering had no effect until 2026-11-25). The build prints "weak inbound (<2)" pages.
+- robots.txt names Googlebot, Bingbot and AI crawlers; `/llms.txt` is generated. Titles <= 60, descriptions <= 160.
