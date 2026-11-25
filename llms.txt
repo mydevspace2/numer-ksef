@@ -48,6 +48,7 @@
 - [Przykładowa faktura XML KSeF FA(3) – omówienie](https://numerksef.dpdns.org/blog/faktura-ksef-xml-przyklad/): Omówienie przykładowej faktury XML KSeF w strukturze FA(3): najważniejsze pola, kwoty, rachunek i termin płatności oraz jak z nich zrobić przelew.
 - [Split payment za kilka faktur KSeF – jak opisać?](https://numerksef.dpdns.org/blog/split-payment-kilka-faktur-ksef/): Jak opisać przelew split payment za kilka faktur z KSeF: kiedy użyć identyfikatora zbiorczego, jak wpisać numery KSeF i na co uważać w banku.
 - [Błąd przy przepisaniu numeru KSeF – jak go wykryć](https://numerksef.dpdns.org/blog/blad-przepisania-numeru-ksef/): Pomyłka w jednym znaku numeru KSeF psuje opis przelewu. Zobacz, jak suma kontrolna CRC-8 wykrywa literówki i jak kopiować numer bezpiecznie.
+- [Data w numerze KSeF – co oznacza i skąd się bierze](https://numerksef.dpdns.org/blog/data-w-numerze-ksef-co-oznacza/): Drugi człon numeru KSeF to data przyjęcia faktury do dalszego przetwarzania, a nie data wystawienia. Zobacz przykład, tabelę i odpowiedzi na pytania.
 
 ## Serwis
 

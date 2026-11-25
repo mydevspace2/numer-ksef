@@ -2429,3 +2429,75 @@ C31 = dict(
 )
 
 CAL_POSTS = CAL_POSTS + [C31]
+
+C32 = dict(
+    slug="data-w-numerze-ksef-co-oznacza",
+    title="Data w numerze KSeF – co oznacza i skąd się bierze",
+    desc="Drugi człon numeru KSeF to data przyjęcia faktury do dalszego przetwarzania, a nie data wystawienia. Zobacz przykład, tabelę i odpowiedzi na pytania.",
+    h1="Data w numerze KSeF – co oznacza i skąd się bierze?",
+    intro="W środku numeru KSeF stoi ośmiocyfrowa data. Sprawdź, co dokładnie oznacza, czym różni się od daty wystawienia faktury i jak ją odczytać.",
+    lead_tool=("/", "walidator numeru KSeF"),
+    date=("2026-11-25", "25 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Data w numerze KSeF zapisana jako RRRRMMDD to data przyjęcia faktury do dalszego przetwarzania w systemie. Tak opisuje ją dokumentacja MF i CIRFMF. Nie musi być identyczna z datą wystawienia faktury, którą sprzedawca wpisuje w polu P_1. Numer z datą możesz sprawdzić w <a href="/">walidatorze numeru KSeF</a>.</p>
+<h2 id="budowa">Gdzie jest data w numerze</h2>
+<p>Numer KSeF ma 35 znaków i składa się z czterech części oddzielonych myślnikami. Data jest drugą z nich, tuż po NIP-ie sprzedawcy. Poniżej rozbiliśmy przykład z dokumentacji CIRFMF.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Część</th><th scope="col">Przykład</th><th scope="col">Znaczenie</th></tr></thead>
+<tbody>
+<tr><td>NIP sprzedawcy</td><td>5265877635</td><td>10 cyfr</td></tr>
+<tr><td>Data przyjęcia</td><td>20250826</td><td>26 sierpnia 2025 (RRRRMMDD)</td></tr>
+<tr><td>Część techniczna</td><td>0100001AF629</td><td>12 znaków szesnastkowych, wielkie litery</td></tr>
+<tr><td>Suma kontrolna</td><td>AF</td><td>CRC-8 z pierwszych 32 znaków</td></tr>
+</tbody></table></div>
+<p>Całość to 5265877635-20250826-0100001AF629-AF. Ogólną budowę omawiamy w artykule <a href="/blog/z-czego-sklada-sie-numer-ksef/">z czego składa się numer KSeF</a>.</p>
+<h2 id="przyjecie">Data przyjęcia a data wystawienia</h2>
+<p>Data wystawienia faktury to informacja zapisana w pliku XML przez sprzedawcę, w polu P_1. Data w numerze KSeF powstaje dopiero wtedy, gdy system przyjmie fakturę i nada jej numer. Dlatego obie daty mogą się różnić. Poniżej prosty przykład, który wymyśliliśmy wyłącznie dla ilustracji.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Element</th><th scope="col">Przykładowa wartość</th><th scope="col">Skąd pochodzi</th></tr></thead>
+<tbody>
+<tr><td>Data wystawienia (P_1)</td><td>2026-03-10</td><td>plik faktury XML</td></tr>
+<tr><td>Data w numerze KSeF</td><td>20260310 lub późniejsza</td><td>przyjęcie faktury przez system</td></tr>
+</tbody></table></div>
+<p>Jeśli faktura została przyjęta tego samego dnia, obie daty będą takie same. Jeśli system przyjął ją później, w numerze zobaczysz późniejszą datę. Nie traktuj więc daty z numeru jako daty sprzedaży ani terminu płatności.</p>
+<h2 id="odczyt">Jak odczytać datę z numeru krok po kroku</h2>
+<ol class="steps">
+<li>Skopiuj cały numer i sprawdź, czy ma 35 znaków.</li>
+<li>Odetnij pierwsze 11 znaków, czyli NIP i myślnik.</li>
+<li>Weź kolejne osiem cyfr, to jest RRRRMMDD.</li>
+<li>Pierwsze cztery cyfry to rok, następne dwie miesiąc, ostatnie dwie dzień.</li>
+<li>Porównaj wynik z datą przyjęcia widoczną przy fakturze w aplikacji.</li>
+</ol>
+<p>Dla przykładu 20250826 odczytujemy rok 2025, miesiąc 08 i dzień 26. Walidator robi to automatycznie i dodatkowo sprawdza, czy taka data w ogóle istnieje w kalendarzu.</p>
+<h2 id="blad">Typowe błędy w części z datą</h2>
+<ul>
+<li>cyfry zamienione miejscami, np. 20252608 zamiast 20250826,</li>
+<li>data zapisana ze znakami rozdzielającymi, np. 2025-08-26 albo 26-08-2025,</li>
+<li>brakująca cyfra, przez co numer ma 34 znaki,</li>
+<li>miesiąc większy niż 12 albo dzień niemożliwy w danym miesiącu.</li>
+</ul>
+<p>W numerze KSeF data jest zapisana bez znaków rozdzielających. Format z myślnikami dotyczy innego miejsca: w linku z kodu QR data wystawienia jest zapisana jako DD-MM-RRRR. Szczegóły opisaliśmy w artykule <a href="/blog/kod-qr-ksef-co-zawiera/">co zawiera kod QR KSeF</a>.</p>
+<h2 id="po-co">Po co w numerze jest data</h2>
+<p>Numer KSeF ma jednoznacznie identyfikować fakturę. Według dokumentacji składa się z NIP-u sprzedawcy, daty przyjęcia i części technicznej, a całość zamyka suma kontrolna. Dzięki takiej budowie już na pierwszy rzut oka widać, kto wystawił fakturę i kiedy trafiła do systemu. W praktyce pomaga to przy porządkowaniu list numerów, np. gdy sortujesz je w arkuszu, bo ten sam NIP z rosnącą datą ułoży się chronologicznie.</p>
+<p>Pamiętaj jednak, że sama data nie wystarczy do identyfikacji. Unikalność zapewnia dopiero część techniczna, więc w przelewie zawsze podawaj pełny numer, a nie jego fragment. Zasady wpisywania numeru w tytule przelewu znajdziesz w artykule <a href="/blog/jak-wpisac-numer-ksef-w-tytule-przelewu/">jak wpisać numer KSeF w tytule przelewu</a>.</p>
+<h2 id="arkusz">Przykład: porządkowanie listy w arkuszu</h2>
+<p>Księgowa ma w arkuszu 40 numerów KSeF od różnych dostawców. Chce zobaczyć, które faktury zostały przyjęte w danym miesiącu. Dzieli numer na części: znaki od 12. do 19. to data przyjęcia. Następnie filtruje wiersze, w których te osiem cyfr zaczyna się od 202603. Pozostałe numery zostawia na później. Przed przelewami wczytuje całą listę do <a href="/sprawdz-wiele-numerow-ksef/">narzędzia do sprawdzania wielu numerów</a>, aby wychwycić literówki. To tylko przykład organizacji pracy, a nie wymóg prawny.</p>
+<p>Taki podział przydaje się też przy uzgadnianiu płatności z wyciągiem bankowym, bo opis przelewu zawiera pełny numer, a data pozwala szybko znaleźć właściwy miesiąc. Więcej o tym piszemy w artykule o <a href="/blog/uzgadnianie-wyciagu-bankowego-numery-ksef/">uzgadnianiu wyciągu bankowego z numerami KSeF</a>.</p>
+<h2 id="zastrzezenie">Czego nie wynika z daty w numerze</h2>
+<p>Data przyjęcia nie jest ani terminem płatności, ani datą powstania obowiązku podatkowego. Nie rozstrzyga też, w którym okresie rozliczeniowym ujmiesz fakturę. Te kwestie zależą od przepisów i od konkretnej transakcji, więc w razie wątpliwości sprawdź wyjaśnienia na stronach MF albo zapytaj księgowego. Nasz walidator sprawdza wyłącznie budowę numeru, w tym poprawność zapisu daty, i nie łączy się z systemem KSeF.</p>
+<h2 id="zrodla-info">Źródła i stan prawny</h2>
+<p>Opis budowy numeru pochodzi z dokumentacji numeru KSeF publikowanej przez CIRFMF oraz ze stron MF o KSeF. Treść ma charakter informacyjny i nie stanowi doradztwa podatkowego.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Data w numerze KSeF to data przyjęcia faktury do dalszego przetwarzania, zapisana jako RRRRMMDD. Odczytasz ją z drugiej części numeru. Gdy chcesz sprawdzić cały numer, użyj <a href="/">walidatora numeru KSeF</a>, a przy większej liczbie faktur skorzystaj ze <a href="/sprawdz-wiele-numerow-ksef/">sprawdzania wielu numerów</a>.</p>
+""",
+    faq=[
+        ("Czy data w numerze KSeF to data wystawienia faktury?", "Nie. Według dokumentacji to data przyjęcia faktury do dalszego przetwarzania. Data wystawienia jest zapisana w polu P_1 pliku XML."),
+        ("W jakim formacie jest data w numerze KSeF?", "Jako RRRRMMDD, czyli osiem cyfr bez myślników, np. 20250826 oznacza 26 sierpnia 2025."),
+        ("Czy walidator sprawdza, czy data w numerze istnieje?", "Tak, narzędzie sprawdza zapis daty razem z długością, znakami i sumą kontrolną CRC-8."),
+        ("Czy data w numerze KSeF wyznacza termin płatności?", "Nie. Termin płatności wynika z umowy lub faktury, a data z numeru jest tylko elementem identyfikatora."),
+    ],
+    sources=[DOC_NUM, MF_NUM, MF_AP],
+)
+
+CAL_POSTS = CAL_POSTS + [C32]

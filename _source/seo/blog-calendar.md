@@ -40,3 +40,4 @@ Legenda statusu: „✅ RRRR-MM-DD” przy numerze = opublikowano tego dnia (tre
 | 31 ✅ 2026-11-24 | blad-przepisania-numeru-ksef | Błąd przy przepisaniu numeru KSeF – jak go wykryć | numer ksef błąd przepisania | / |
 
 Wspólne zasady treści: źródło MF na końcu, „stan prawny na …”, brak twierdzeń o datach i wysokości kar, link wewnętrzny do 1 narzędzia + 1–2 powiązanych postów. Każdy nowy post dodać do `VP.POSTS` w `build/v3_pages.py` → sitemap i blok „Powiązane artykuły” aktualizują się automatycznie; po publikacji wysłać URL do IndexNow (klucz w repo) i „Poproś o zindeksowanie” w GSC.
+| 32 ✅ 2026-11-25 | data-w-numerze-ksef-co-oznacza | Data w numerze KSeF – co oznacza i skąd się bierze | data w numerze ksef | / |

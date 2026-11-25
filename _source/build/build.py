@@ -152,6 +152,12 @@ common.ARTICLE_MAP["/sprawdz-wiele-numerow-ksef/"] = [_K31] + [x for x in common
 common.ARTICLE_MAP[_K21] = [_K31] + [x for x in common.ARTICLE_MAP.get(_K21, []) if x != _K31][:2]
 common.ARTICLE_MAP[_S] = [_K31] + [x for x in common.ARTICLE_MAP.get(_S, []) if x != _K31][:2]
 
+# 2026-11-25: post #32
+_K32 = _B["data-w-numerze-ksef-co-oznacza"]
+common.ARTICLE_MAP[_K32] = [_S, _W, _K31]
+common.ARTICLE_MAP[_W] = [_K32] + [x for x in common.ARTICLE_MAP.get(_W, []) if x != _K32][:2]
+common.ARTICLE_MAP[_Z] = [_K32] + [x for x in common.ARTICLE_MAP.get(_Z, []) if x != _K32][:2]
+
 # >>> NOWE bloki ARTICLE_MAP dodawaj POWYŻEJ tej linii: poniżej strony są już renderowane i zapisywane. <<<
 PAGES = [
     ("/", HOME), ("/przelew-mpp-numer-ksef/", MPP), ("/identyfikator-zbiorczy-ksef/", IZ),
