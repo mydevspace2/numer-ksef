@@ -158,6 +158,13 @@ common.ARTICLE_MAP[_K32] = [_S, _W, _K31]
 common.ARTICLE_MAP[_W] = [_K32] + [x for x in common.ARTICLE_MAP.get(_W, []) if x != _K32][:2]
 common.ARTICLE_MAP[_Z] = [_K32] + [x for x in common.ARTICLE_MAP.get(_Z, []) if x != _K32][:2]
 
+# 2026-11-26: post #33
+_K33 = _B["suma-kontrolna-crc8-numer-ksef"]
+common.ARTICLE_MAP[_K33] = [_S, _K31, _Z]
+common.ARTICLE_MAP[_S] = [_K33] + [x for x in common.ARTICLE_MAP.get(_S, []) if x != _K33][:2]
+common.ARTICLE_MAP[_K31] = [_K33] + [x for x in common.ARTICLE_MAP.get(_K31, []) if x != _K33][:2]
+common.ARTICLE_MAP["/"] = [_K33] + [x for x in common.ARTICLE_MAP.get("/", []) if x != _K33][:2]
+
 # >>> NOWE bloki ARTICLE_MAP dodawaj POWYŻEJ tej linii: poniżej strony są już renderowane i zapisywane. <<<
 PAGES = [
     ("/", HOME), ("/przelew-mpp-numer-ksef/", MPP), ("/identyfikator-zbiorczy-ksef/", IZ),

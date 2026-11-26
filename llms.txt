@@ -49,6 +49,7 @@
 - [Split payment za kilka faktur KSeF – jak opisać?](https://numerksef.dpdns.org/blog/split-payment-kilka-faktur-ksef/): Jak opisać przelew split payment za kilka faktur z KSeF: kiedy użyć identyfikatora zbiorczego, jak wpisać numery KSeF i na co uważać w banku.
 - [Błąd przy przepisaniu numeru KSeF – jak go wykryć](https://numerksef.dpdns.org/blog/blad-przepisania-numeru-ksef/): Pomyłka w jednym znaku numeru KSeF psuje opis przelewu. Zobacz, jak suma kontrolna CRC-8 wykrywa literówki i jak kopiować numer bezpiecznie.
 - [Data w numerze KSeF – co oznacza i skąd się bierze](https://numerksef.dpdns.org/blog/data-w-numerze-ksef-co-oznacza/): Drugi człon numeru KSeF to data przyjęcia faktury do dalszego przetwarzania, a nie data wystawienia. Zobacz przykład, tabelę i odpowiedzi na pytania.
+- [Suma kontrolna CRC-8 w numerze KSeF – jak działa](https://numerksef.dpdns.org/blog/suma-kontrolna-crc8-numer-ksef/): Ostatnie dwa znaki numeru KSeF to suma kontrolna CRC-8. Zobacz parametry algorytmu, przykład z obliczeniem i to, co wychwytuje literówki w numerze.
 
 ## Serwis
 

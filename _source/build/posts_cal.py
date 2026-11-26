@@ -2501,3 +2501,78 @@ C32 = dict(
 )
 
 CAL_POSTS = CAL_POSTS + [C32]
+
+C33 = dict(
+    slug="suma-kontrolna-crc8-numer-ksef",
+    title="Suma kontrolna CRC-8 w numerze KSeF – jak działa",
+    desc="Ostatnie dwa znaki numeru KSeF to suma kontrolna CRC-8. Zobacz parametry algorytmu, przykład z obliczeniem i to, co wychwytuje literówki w numerze.",
+    h1="Suma kontrolna CRC-8 w numerze KSeF – jak działa?",
+    intro="Dwa ostatnie znaki numeru KSeF to suma kontrolna. Sprawdź, jak się ją liczy, co wykrywa i czego nie potwierdza.",
+    lead_tool=("/", "walidator numeru KSeF"),
+    date=("2026-11-26", "26 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Suma kontrolna to dwa ostatnie znaki numeru KSeF, zapisane szesnastkowo wielkimi literami. Według dokumentacji CIRFMF liczy się ją algorytmem CRC-8 z pierwszych 32 znaków numeru, z wielomianem 0x07 i wartością początkową 0x00. Gotowy numer sprawdzisz w <a href="/">walidatorze numeru KSeF</a>.</p>
+<h2 id="parametry">Parametry algorytmu</h2>
+<p>Dokumentacja opisuje walidację w czterech krokach: sprawdzenie długości 35 znaków, rozdzielenie części danych (32 znaki) od sumy (2 znaki), obliczenie CRC-8 z części danych i porównanie wyniku z wartością w numerze.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Parametr</th><th scope="col">Wartość</th></tr></thead>
+<tbody>
+<tr><td>Algorytm</td><td>CRC-8</td></tr>
+<tr><td>Wielomian</td><td>0x07</td></tr>
+<tr><td>Wartość początkowa</td><td>0x00</td></tr>
+<tr><td>Dane wejściowe</td><td>pierwsze 32 znaki numeru, razem z myślnikami</td></tr>
+<tr><td>Wynik</td><td>2 znaki szesnastkowe, wielkie litery</td></tr>
+</tbody></table></div>
+<p>Przykładowo, jeśli obliczona suma wynosi 0x46, do numeru trafia ciąg 46. Całą budowę numeru opisujemy w artykule <a href="/blog/z-czego-sklada-sie-numer-ksef/">z czego składa się numer KSeF</a>.</p>
+<h2 id="przyklad">Przykład z dokumentacji</h2>
+<p>Weźmy numer 5265877635-20250826-0100001AF629-AF. Pierwsze 32 znaki to 5265877635-20250826-0100001AF629, a więc NIP, data i część techniczna wraz z dwoma myślnikami. CRC-8 z tego ciągu daje wartość AF, czyli dokładnie to, co stoi na końcu numeru. Numer przechodzi więc kontrolę sumy.</p>
+<p>Zmieńmy teraz jeden znak i policzmy sumę ponownie. Wyniki obliczyliśmy tym samym algorytmem.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Zmiana w numerze</th><th scope="col">Obliczona suma</th><th scope="col">Suma w numerze</th><th scope="col">Wynik</th></tr></thead>
+<tbody>
+<tr><td>bez zmian</td><td>AF</td><td>AF</td><td>zgodna</td></tr>
+<tr><td>ostatni znak części technicznej 9 zamiast 8</td><td>A8</td><td>AF</td><td>niezgodna</td></tr>
+<tr><td>część techniczna kończy się na 2A zamiast 29</td><td>C0</td><td>AF</td><td>niezgodna</td></tr>
+<tr><td>data 20250286 zamiast 20250826</td><td>65</td><td>AF</td><td>niezgodna</td></tr>
+</tbody></table></div>
+<p>Pierwszy wiersz tej tabeli to pierwotny numer, a w pozostałych zmieniono po jednym znaku (w drugim wierszu zmiana jest tylko w sumie). Każda taka literówka daje inną sumę, więc walidator ją zgłosi. Przy zamianie cyfr w dacie widać, że sama poprawność kalendarzowa nie wystarcza, bo suma też się nie zgadza.</p>
+<h2 id="co-wykrywa">Co suma kontrolna wykrywa</h2>
+<ul>
+<li>przepisanie jednego znaku w części, z której liczona jest suma,</li>
+<li>zamianę sąsiednich cyfr, np. w dacie,</li>
+<li>pominięcie albo dodanie znaku, które i tak zmienia długość numeru,</li>
+<li>pomyłkę w samej sumie, na przykład AE zamiast AF.</li>
+</ul>
+<p>Dwa znaki szesnastkowe dają 256 możliwych wartości, więc zdarzy się, że inny ciąg danych ma tę samą sumę. Dlatego suma jest zabezpieczeniem przed przypadkowymi błędami, a nie gwarancją. Praktyczne wskazówki znajdziesz w artykule o <a href="/blog/blad-przepisania-numeru-ksef/">błędzie przy przepisaniu numeru KSeF</a>.</p>
+<h2 id="czego-nie">Czego suma nie potwierdza</h2>
+<p>Poprawna suma mówi tylko tyle, że numer jest wewnętrznie spójny. Nie oznacza, że faktura istnieje w systemie, że należy do wskazanego sprzedawcy ani że została opłacona. Nasze narzędzie działa lokalnie w przeglądarce i nie łączy się z KSeF. Istnienie faktury sprawdzisz w Aplikacji Podatnika albo w swoim systemie księgowym.</p>
+<h2 id="krok">Jak sprawdzić sumę krok po kroku</h2>
+<ol class="steps">
+<li>Skopiuj numer z faktury lub z aplikacji, zamiast przepisywać go ręcznie.</li>
+<li>Wklej go w <a href="/">walidatorze numeru KSeF</a>.</li>
+<li>Sprawdź komunikat o długości, znakach, dacie i sumie CRC-8.</li>
+<li>Przy niezgodności porównaj numer znak po znaku z oryginałem, zwracając uwagę na 0 i O oraz 8 i B.</li>
+<li>Dopiero poprawny numer wpisz w tytule przelewu.</li>
+</ol>
+<h2 id="lista">Przykład: lista numerów przed przelewami</h2>
+<p>Dział finansów ma przygotować 25 przelewów, a numery KSeF dostał w arkuszu. Zamiast sprawdzać je pojedynczo, wczytuje całą listę do <a href="/sprawdz-wiele-numerow-ksef/">narzędzia do sprawdzania wielu numerów</a>. Wiersze z niezgodną sumą wracają do poprawy, a reszta idzie do banku. To tylko przykład organizacji pracy, nie wymóg prawny. Zasady wpisywania numeru w przelewie opisaliśmy w artykule <a href="/blog/jak-wpisac-numer-ksef-w-tytule-przelewu/">jak wpisać numer KSeF w tytule przelewu</a>.</p>
+<h2 id="hex">Dlaczego suma jest zapisana szesnastkowo</h2>
+<p>CRC-8 daje wynik od 0 do 255. W zapisie szesnastkowym mieści się on zawsze w dwóch znakach, od 00 do FF, dlatego numer ma stałą długość 35 znaków. Dokumentacja podaje, że wolno używać tylko cyfr 0–9 i liter A–F, a litery muszą być wielkie. Jeśli więc w sumie zobaczysz literę G, małą literę albo znak spoza tego zestawu, numer jest błędny jeszcze przed obliczeniem CRC.</p>
+<p>W praktyce błędy zdarzają się najczęściej przy ręcznym przepisywaniu: litera O zamiast zera, litera B zamiast ósemki albo pominięty znak w części technicznej. Walidator zgłasza je osobnymi komunikatami, a ostatnim krokiem jest właśnie porównanie sumy. Jeśli kopiujesz numer z aplikacji, ryzyko takiej pomyłki jest dużo mniejsze, o czym piszemy w artykule o <a href="/blog/gdzie-znalezc-numer-ksef-faktury/">tym, gdzie znaleźć numer KSeF faktury</a>.</p>
+<h2 id="zrodla-info">Źródła i stan prawny</h2>
+<p>Parametry algorytmu i opis walidacji pochodzą z dokumentacji CIRFMF dla KSeF 2.0 oraz ze stron MF o numerze KSeF. Treść ma charakter informacyjny i nie stanowi doradztwa podatkowego.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Suma kontrolna to CRC-8 z pierwszych 32 znaków numeru, zapisane jako dwa znaki szesnastkowe. Wychwytuje literówki, ale nie potwierdza istnienia faktury. Wklej numer w <a href="/">walidatorze numeru KSeF</a>, a przy dłuższej liście użyj <a href="/sprawdz-wiele-numerow-ksef/">sprawdzania wielu numerów</a>.</p>
+""",
+    faq=[
+        ("Jak obliczyć sumę kontrolną numeru KSeF?", "Liczy się CRC-8 (wielomian 0x07, wartość początkowa 0x00) z pierwszych 32 znaków numeru i zapisuje wynik jako dwa znaki szesnastkowe."),
+        ("Z jakich znaków liczona jest suma CRC-8?", "Z pierwszych 32 znaków numeru, czyli NIP-u, daty i części technicznej razem z dwoma myślnikami. Ostatnie dwa znaki to sama suma."),
+        ("Czy mogę sam wyliczyć numer KSeF, znając sumę?", "Nie. Numer nadaje system, a suma kontrolna tylko sprawdza spójność zapisu."),
+        ("Czy poprawna suma CRC-8 gwarantuje, że numer jest prawdziwy?", "Nie. Potwierdza tylko spójność zapisu, a przy 256 możliwych wartościach sumy inny ciąg znaków może mieć taką samą wartość."),
+        ("Czy małe litery w sumie kontrolnej są poprawne?", "Według dokumentacji suma zapisywana jest wielkimi literami szesnastkowymi, czyli 0–9 i A–F."),
+    ],
+    sources=[DOC_NUM, MF_NUM, MF_AP],
+)
+
+CAL_POSTS = CAL_POSTS + [C33]
