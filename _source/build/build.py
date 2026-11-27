@@ -165,6 +165,14 @@ common.ARTICLE_MAP[_S] = [_K33] + [x for x in common.ARTICLE_MAP.get(_S, []) if 
 common.ARTICLE_MAP[_K31] = [_K33] + [x for x in common.ARTICLE_MAP.get(_K31, []) if x != _K33][:2]
 common.ARTICLE_MAP["/"] = [_K33] + [x for x in common.ARTICLE_MAP.get("/", []) if x != _K33][:2]
 
+# 2026-11-27: post #34
+_K34 = _B["nip-w-numerze-ksef-jak-sprawdzic"]
+_NIP = _B["czy-numer-ksef-to-nip"]
+common.ARTICLE_MAP[_K34] = [_NIP, _K33, _K31]
+common.ARTICLE_MAP[_NIP] = [_K34] + [x for x in common.ARTICLE_MAP.get(_NIP, []) if x != _K34][:2]
+common.ARTICLE_MAP[_K33] = [_K34] + [x for x in common.ARTICLE_MAP.get(_K33, []) if x != _K34][:2]
+common.ARTICLE_MAP["/"] = [_K34] + [x for x in common.ARTICLE_MAP.get("/", []) if x != _K34][:2]
+
 # >>> NOWE bloki ARTICLE_MAP dodawaj POWYŻEJ tej linii: poniżej strony są już renderowane i zapisywane. <<<
 PAGES = [
     ("/", HOME), ("/przelew-mpp-numer-ksef/", MPP), ("/identyfikator-zbiorczy-ksef/", IZ),

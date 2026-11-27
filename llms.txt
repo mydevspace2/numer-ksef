@@ -50,6 +50,7 @@
 - [Błąd przy przepisaniu numeru KSeF – jak go wykryć](https://numerksef.dpdns.org/blog/blad-przepisania-numeru-ksef/): Pomyłka w jednym znaku numeru KSeF psuje opis przelewu. Zobacz, jak suma kontrolna CRC-8 wykrywa literówki i jak kopiować numer bezpiecznie.
 - [Data w numerze KSeF – co oznacza i skąd się bierze](https://numerksef.dpdns.org/blog/data-w-numerze-ksef-co-oznacza/): Drugi człon numeru KSeF to data przyjęcia faktury do dalszego przetwarzania, a nie data wystawienia. Zobacz przykład, tabelę i odpowiedzi na pytania.
 - [Suma kontrolna CRC-8 w numerze KSeF – jak działa](https://numerksef.dpdns.org/blog/suma-kontrolna-crc8-numer-ksef/): Ostatnie dwa znaki numeru KSeF to suma kontrolna CRC-8. Zobacz parametry algorytmu, przykład z obliczeniem i to, co wychwytuje literówki w numerze.
+- [NIP w numerze KSeF – jak sprawdzić jego poprawność](https://numerksef.dpdns.org/blog/nip-w-numerze-ksef-jak-sprawdzic/): Pierwsze 10 cyfr numeru KSeF to NIP sprzedawcy. Zobacz, jak sprawdzić jego cyfrę kontrolną wagami 6-5-7-2-3-4-5-6-7, na przykładach z obliczeniem.
 
 ## Serwis
 

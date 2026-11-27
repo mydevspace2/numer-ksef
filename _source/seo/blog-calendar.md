@@ -42,3 +42,4 @@ Legenda statusu: „✅ RRRR-MM-DD” przy numerze = opublikowano tego dnia (tre
 Wspólne zasady treści: źródło MF na końcu, „stan prawny na …”, brak twierdzeń o datach i wysokości kar, link wewnętrzny do 1 narzędzia + 1–2 powiązanych postów. Każdy nowy post dodać do `VP.POSTS` w `build/v3_pages.py` → sitemap i blok „Powiązane artykuły” aktualizują się automatycznie; po publikacji wysłać URL do IndexNow (klucz w repo) i „Poproś o zindeksowanie” w GSC.
 | 32 ✅ 2026-11-25 | data-w-numerze-ksef-co-oznacza | Data w numerze KSeF – co oznacza i skąd się bierze | data w numerze ksef | / |
 | 33 ✅ 2026-11-26 | suma-kontrolna-crc8-numer-ksef | Suma kontrolna CRC-8 w numerze KSeF – jak działa | suma kontrolna numer ksef | / |
+| 34 ✅ 2026-11-27 | nip-w-numerze-ksef-jak-sprawdzic | NIP w numerze KSeF – jak sprawdzić jego poprawność | nip w numerze ksef | / |

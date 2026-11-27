@@ -2576,3 +2576,79 @@ C33 = dict(
 )
 
 CAL_POSTS = CAL_POSTS + [C33]
+
+C34 = dict(
+    slug="nip-w-numerze-ksef-jak-sprawdzic",
+    title="NIP w numerze KSeF – jak sprawdzić jego poprawność",
+    desc="Pierwsze 10 cyfr numeru KSeF to NIP sprzedawcy. Zobacz, jak sprawdzić jego cyfrę kontrolną wagami 6-5-7-2-3-4-5-6-7, na przykładach z obliczeniem.",
+    h1="NIP w numerze KSeF – jak sprawdzić jego poprawność?",
+    intro="Numer KSeF zaczyna się od 10 cyfr NIP sprzedawcy. Sprawdź, jak policzyć jego cyfrę kontrolną i co z tego wynika.",
+    lead_tool=("/", "walidator numeru KSeF"),
+    date=("2026-11-27", "27 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Pierwsze 10 znaków numeru KSeF to NIP sprzedawcy. Jego ostatnia cyfra jest cyfrą kontrolną: mnoży się pierwszych dziewięć cyfr przez wagi 6, 5, 7, 2, 3, 4, 5, 6, 7, sumuje wyniki i dzieli sumę przez 11. Reszta musi być równa dziesiątej cyfrze. Wszystko sprawdzisz automatycznie w <a href="/">walidatorze numeru KSeF</a>.</p>
+<h2 id="gdzie">Gdzie w numerze jest NIP</h2>
+<p>Według dokumentacji CIRFMF numer KSeF ma 35 znaków: NIP (10 cyfr), data (8 cyfr), część techniczna (12 znaków) i suma kontrolna (2 znaki), rozdzielone myślnikami. W numerze 5265877635-20250826-0100001AF629-AF NIP to 5265877635. Szerzej o budowie piszemy w artykule <a href="/blog/czy-numer-ksef-to-nip/">czy numer KSeF to NIP</a>.</p>
+<h2 id="algorytm">Algorytm cyfry kontrolnej NIP</h2>
+<ol class="steps">
+<li>Weź pierwszych dziewięć cyfr NIP.</li>
+<li>Pomnóż je kolejno przez wagi 6, 5, 7, 2, 3, 4, 5, 6, 7.</li>
+<li>Zsumuj iloczyny.</li>
+<li>Oblicz resztę z dzielenia sumy przez 11.</li>
+<li>Reszta musi być równa dziesiątej cyfrze. Reszta 10 oznacza, że taki NIP jest niepoprawny.</li>
+</ol>
+<h2 id="przyklad">Przykład krok po kroku</h2>
+<p>Weźmy NIP 5265877635 z przykładu w dokumentacji.</p>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Cyfra</th><th scope="col">5</th><th scope="col">2</th><th scope="col">6</th><th scope="col">5</th><th scope="col">8</th><th scope="col">7</th><th scope="col">7</th><th scope="col">6</th><th scope="col">3</th></tr></thead>
+<tbody>
+<tr><td>Waga</td><td>6</td><td>5</td><td>7</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
+<tr><td>Iloczyn</td><td>30</td><td>10</td><td>42</td><td>10</td><td>24</td><td>28</td><td>35</td><td>36</td><td>21</td></tr>
+</tbody></table></div>
+<p>Suma iloczynów wynosi 236. Po podzieleniu przez 11 (21 razy 11 to 231) zostaje reszta 5, a dziesiąta cyfra NIP to właśnie 5. NIP przechodzi kontrolę.</p>
+<h2 id="bledy">Co wykryje kontrola – cztery przypadki</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">NIP</th><th scope="col">Suma</th><th scope="col">Reszta</th><th scope="col">Ostatnia cyfra</th><th scope="col">Wynik</th></tr></thead>
+<tbody>
+<tr><td>5265877635</td><td>236</td><td>5</td><td>5</td><td>poprawny</td></tr>
+<tr><td>5265877636</td><td>236</td><td>5</td><td>6</td><td>błędna cyfra kontrolna</td></tr>
+<tr><td>5265877365</td><td>239</td><td>8</td><td>5</td><td>zamienione cyfry</td></tr>
+<tr><td>5265877535</td><td>230</td><td>10</td><td>5</td><td>reszta 10, NIP niepoprawny</td></tr>
+</tbody></table></div>
+<p>Drugi wiersz pokazuje zmianę ostatniej cyfry, trzeci zamianę dwóch cyfr w środku, a czwarty zmianę jednej cyfry tak, że reszta wynosi 10. Wszystkie obliczenia wykonaliśmy tym samym algorytmem. Drugi przykład poprawnego NIP: 1234563218 (suma 118, reszta 8, ostatnia cyfra 8).</p>
+<h2 id="czego-nie">Czego kontrola NIP nie potwierdza</h2>
+<p>Poprawna cyfra kontrolna oznacza tylko, że NIP ma prawidłowy zapis. Nie wynika z niej, że firma istnieje, jest czynnym podatnikiem VAT ani że to ona wystawiła fakturę. Takie rzeczy sprawdza się w oficjalnych rejestrach, a nie w naszym narzędziu, które działa lokalnie w przeglądarce. Podobnie poprawny NIP w numerze KSeF nie dowodzi, że faktura jest w systemie.</p>
+<h2 id="kolejnosc">W jakiej kolejności walidator sprawdza numer</h2>
+<p>Najpierw długość i dozwolone znaki, potem NIP, data i na końcu suma CRC-8 z całych 32 znaków. Jeśli NIP jest błędny, a suma CRC-8 zgodna, numer mógł powstać z poprawnych danych, których NIP przepisano inaczej niż na fakturze. Zawsze porównaj go wtedy z oryginałem. O samej sumie CRC-8 piszemy w artykule <a href="/blog/suma-kontrolna-crc8-numer-ksef/">suma kontrolna CRC-8 w numerze KSeF</a>.</p>
+<h2 id="lista">Przykład: kontrola listy sprzedawców</h2>
+<p>Księgowa dostaje arkusz z 40 numerami KSeF od dostawców. Wczytuje go do <a href="/sprawdz-wiele-numerow-ksef/">narzędzia do sprawdzania wielu numerów</a>, które zaznacza wiersze z błędnym NIP lub sumą. Do poprawy wracają tylko te pozycje, a reszta trafia do przelewów. To przykład organizacji pracy, nie wymóg prawny.</p>
+<h2 id="wskazowki">Praktyczne wskazówki</h2>
+<ul>
+<li>Kopiuj numer z aplikacji lub PDF zamiast przepisywać go ręcznie.</li>
+<li>Usuń dodatkowe spacje, które dokleja czytnik PDF.</li>
+<li>Przy błędzie NIP porównaj go z NIP-em na fakturze i w umowie.</li>
+<li>Pamiętaj, że w schemacie FA(3) pole numeru KSeF może mieć inny prefiks, o czym ostrzega walidator.</li>
+</ul>
+<p>Jeśli numer ma błąd, sprawdź nasz poradnik o <a href="/blog/blad-przepisania-numeru-ksef/">błędzie przy przepisaniu numeru KSeF</a>.</p>
+<h2 id="typowe">Typowe pomyłki przy przepisywaniu NIP</h2>
+<p>Najczęściej myli się kolejność dwóch sąsiednich cyfr, pomija jedną cyfrę albo wpisuje NIP z myślnikami, choć w numerze KSeF występuje on w jednym ciągu 10 cyfr. Kontrola wag wychwytuje większość takich błędów, bo każda pozycja ma inną wagę, więc zamiana dwóch różnych cyfr zwykle zmienia sumę. Nie wychwyci jej, gdy zmiana daje tę samą resztę z dzielenia przez 11, dlatego warto zawsze porównać numer z oryginałem.</p>
+<p>Warto też pamiętać, że NIP sprzedawcy znajdziesz na fakturze w danych sprzedawcy. Jeśli różni się od pierwszych 10 cyfr numeru KSeF, sprawdź, czy skopiowałeś numer właściwej faktury. W razie wątpliwości zapytaj sprzedawcę albo sprawdź fakturę w Aplikacji Podatnika KSeF. Po zmianach w tytule przelewu zajrzyj do artykułu <a href="/blog/jak-wpisac-numer-ksef-w-tytule-przelewu/">jak wpisać numer KSeF w tytule przelewu</a>.</p>
+<h2 id="po-co">Po co sprawdzać NIP, skoro jest suma CRC-8</h2>
+<p>Obie kontrole działają niezależnie. Suma CRC-8 obejmuje cały początek numeru, więc wychwytuje pomyłkę w dowolnym z 32 znaków, ale nie mówi, w którym miejscu błąd leży. Osobna kontrola NIP od razu wskazuje, że problem dotyczy identyfikatora sprzedawcy, a nie daty ani części technicznej. Dzięki temu łatwiej znaleźć przyczynę i poprawić tylko tę część, którą trzeba.</p>
+<p>Gdy walidator pokazuje błąd tylko w NIP, a pozostałe kontrole przechodzą, sprawdź, czy numer nie pochodzi od innego podmiotu niż zakładałeś. Taką sytuację omawiamy też w artykule <a href="/blog/jak-sprawdzic-czy-numer-ksef-jest-poprawny/">jak sprawdzić, czy numer KSeF jest poprawny</a>.</p>
+<h2 id="zrodla-info">Źródła i stan prawny</h2>
+<p>Budowa numeru pochodzi z dokumentacji CIRFMF dla KSeF 2.0 i stron MF. Wzór wag NIP jest powszechnie stosowanym algorytmem walidacji numeru; treść ma charakter informacyjny i nie stanowi doradztwa podatkowego.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>NIP w numerze KSeF sprawdzisz wagami 6-5-7-2-3-4-5-6-7 i dzieleniem przez 11. Wynik potwierdza tylko poprawność zapisu. Wklej numer w <a href="/">walidatorze numeru KSeF</a>, a większą listę w <a href="/sprawdz-wiele-numerow-ksef/">sprawdzaniu wielu numerów</a>.</p>
+""",
+    faq=[
+        ("Jak obliczyć cyfrę kontrolną NIP z numeru KSeF?", "Pomnóż pierwszych dziewięć cyfr przez wagi 6-5-7-2-3-4-5-6-7, zsumuj i weź resztę z dzielenia przez 11. Musi równać się dziesiątej cyfrze."),
+        ("Co oznacza reszta 10 przy sprawdzaniu NIP?", "Taki NIP jest niepoprawny, bo cyfra kontrolna nie może mieć wartości 10."),
+        ("Czy poprawny NIP w numerze KSeF oznacza, że sprzedawca jest czynnym podatnikiem VAT?", "Nie. Cyfra kontrolna sprawdza tylko zapis, a status podatnika weryfikuje się w oficjalnych rejestrach."),
+        ("Co zrobić, gdy NIP w numerze KSeF jest błędny?", "Porównaj numer z oryginałem na fakturze lub w aplikacji i skopiuj go ponownie zamiast przepisywać."),
+    ],
+    sources=[DOC_NUM, MF_NUM, MF_AP],
+)
+
+CAL_POSTS = CAL_POSTS + [C34]
