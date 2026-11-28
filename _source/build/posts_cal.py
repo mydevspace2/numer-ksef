@@ -2652,3 +2652,77 @@ C34 = dict(
 )
 
 CAL_POSTS = CAL_POSTS + [C34]
+
+C35 = dict(
+    slug="kto-nadaje-numer-ksef",
+    title="Kto nadaje numer KSeF i kiedy powstaje",
+    desc="Numer KSeF nadaje system, nie sprzedawca ani program księgowy. Sprawdź, co jest w numerze, skąd kupujący go bierze i dlaczego data to data przyjęcia faktury.",
+    h1="Kto nadaje numer KSeF i kiedy powstaje?",
+    intro="Numer KSeF nie jest wpisywany przez wystawcę faktury. Sprawdź, kto go nadaje, co zawiera i skąd go wziąć do przelewu.",
+    lead_tool=("/", "walidator numeru KSeF"),
+    date=("2026-11-28", "28 listopada 2026"),
+    content="""
+<h2 id="odpowiedz">Krótka odpowiedź</h2>
+<p>Zgodnie z dokumentacją MF numer KSeF to unikalny identyfikator faktury nadawany przez system. Nie wymyśla go sprzedawca, program do fakturowania ani księgowa. Ma zawsze 35 znaków i jednoznacznie wskazuje fakturę w KSeF. Gotowy numer sprawdzisz w <a href="/">walidatorze numeru KSeF</a>.</p>
+<h2 id="co-zawiera">Co zawiera numer nadany przez system</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Część</th><th scope="col">Długość</th><th scope="col">Co oznacza</th><th scope="col">Przykład</th></tr></thead>
+<tbody>
+<tr><td>NIP</td><td>10 cyfr</td><td>NIP sprzedawcy</td><td>5265877635</td></tr>
+<tr><td>Data</td><td>8 cyfr</td><td>data przyjęcia faktury do dalszego przetwarzania</td><td>20250826</td></tr>
+<tr><td>Część techniczna</td><td>12 znaków</td><td>zapis szesnastkowy, wielkie litery</td><td>0100001AF629</td></tr>
+<tr><td>Suma kontrolna</td><td>2 znaki</td><td>CRC-8, zapis szesnastkowy</td><td>AF</td></tr>
+</tbody></table></div>
+<p>Części są rozdzielone myślnikami: 5265877635-20250826-0100001AF629-AF. Razem to 10 + 8 + 12 + 2 = 32 znaki danych oraz 3 myślniki, czyli 35 znaków. Budowę opisujemy też w artykule <a href="/blog/z-czego-sklada-sie-numer-ksef/">z czego składa się numer KSeF</a>.</p>
+<h2 id="kiedy">Kiedy numer powstaje</h2>
+<p>Data w numerze to data przyjęcia faktury do dalszego przetwarzania. Wynika z tego, że numer jest znany dopiero wtedy, gdy KSeF przyjął fakturę. Plik XML przygotowany w programie, a jeszcze niewysłany, takiego numeru nie ma. Dlatego w samym pliku faktury nie znajdziesz pola z numerem nadanym przez system, o czym piszemy w artykule <a href="/blog/dlaczego-numeru-ksef-nie-ma-w-xml/">dlaczego numeru KSeF nie ma w XML</a>.</p>
+<h2 id="przyklad">Przykład: od wystawienia do przelewu</h2>
+<ol class="steps">
+<li>Sprzedawca z NIP 5265877635 przesyła fakturę do KSeF.</li>
+<li>System przyjmuje fakturę i nadaje jej numer, w którym jest data przyjęcia, np. 20250826.</li>
+<li>Kupujący znajduje fakturę w swoim programie lub Aplikacji Podatnika KSeF i odczytuje numer.</li>
+<li>Numer trafia do tytułu przelewu, gdy wymaga tego przepis lub bank.</li>
+<li>Księgowa sprawdza go w <a href="/">walidatorze</a> i dopisuje do rejestru.</li>
+</ol>
+<h2 id="skad">Skąd kupujący bierze numer</h2>
+<p>Kupujący nie musi liczyć nic samodzielnie. Numer pokazuje program księgowy zintegrowany z KSeF albo Aplikacja Podatnika, a często także wizualizacja faktury. Szczegóły pokazujemy w poradniku <a href="/blog/gdzie-znalezc-numer-ksef-faktury/">gdzie znaleźć numer KSeF faktury</a>. Gdy numer trzeba wpisać w przelewie, pomoże <a href="/">generator tytułu przelewu</a>.</p>
+<h2 id="kto-nie">Kto numeru nie nadaje</h2>
+<div class="table-wrap"><table>
+<thead><tr><th scope="col">Podmiot</th><th scope="col">Czy nadaje numer KSeF</th><th scope="col">Co robi</th></tr></thead>
+<tbody>
+<tr><td>System KSeF</td><td>tak</td><td>nadaje numer po przyjęciu faktury</td></tr>
+<tr><td>Sprzedawca</td><td>nie</td><td>wystawia i wysyła fakturę</td></tr>
+<tr><td>Program księgowy</td><td>nie</td><td>pobiera numer z systemu i go pokazuje</td></tr>
+<tr><td>Bank</td><td>nie</td><td>przyjmuje przelew z numerem w tytule</td></tr>
+<tr><td>Nasze narzędzia</td><td>nie</td><td>tylko sprawdzają zapis numeru lokalnie w przeglądarce</td></tr>
+</tbody></table></div>
+<p>Nasz walidator nie łączy się z KSeF i nie potwierdza, że faktura istnieje. Sprawdza długość, NIP, datę i sumę CRC-8 z numeru, który wkleisz.</p>
+<h2 id="unikalnosc">Unikalność numeru</h2>
+<p>Dokumentacja podkreśla, że numer jest globalnie unikalny. Dwie faktury nie dostaną tego samego numeru, więc w przelewie i w księgach numer jednoznacznie wskazuje dokument. Nie myl go z numerem faktury nadanym przez sprzedawcę, który widnieje w polu P_2 i który sprzedawca wybiera sam. Różnice opisujemy w artykule <a href="/blog/czy-numer-ksef-to-numer-faktury/">czy numer KSeF to numer faktury</a>.</p>
+<h2 id="bledy">Najczęstsze nieporozumienia</h2>
+<ul>
+<li>Numer KSeF nie jest numerem NIP, choć zaczyna się od NIP sprzedawcy.</li>
+<li>Nie da się go odgadnąć ani wygenerować przed przyjęciem faktury, bo zawiera datę przyjęcia i część techniczną.</li>
+<li>Data w numerze to data przyjęcia, a nie data wystawienia ani sprzedaży.</li>
+<li>Wersja robocza faktury w programie nie ma jeszcze numeru KSeF.</li>
+</ul>
+<h2 id="weryfikacja">Jak sprawdzić, że numer jest poprawnie zapisany</h2>
+<p>Wklej numer do <a href="/">walidatora numeru KSeF</a>. Narzędzie sprawdzi, czy ma 35 znaków, czy NIP ma prawidłową cyfrę kontrolną, czy data jest możliwa i czy suma CRC-8 zgadza się z pierwszymi 32 znakami. Przy większej liście użyj <a href="/sprawdz-wiele-numerow-ksef/">sprawdzania wielu numerów</a>. Jeśli wynik jest błędny, najczęściej przyczyną jest literówka przy przepisywaniu, więc skopiuj numer ponownie z aplikacji. Pomoże też artykuł <a href="/blog/blad-przepisania-numeru-ksef/">błąd przy przepisaniu numeru KSeF</a>.</p>
+<h2 id="ksiegowosc">Co to znaczy dla księgowości</h2>
+<p>Skoro numer nadaje system, biuro rachunkowe nie może go przygotować z wyprzedzeniem ani wpisać do dokumentu przed wysyłką. Numer pojawia się w danych pobranych z KSeF, więc w rejestrach, w uzgadnianiu płatności i w przelewach należy go przenosić z systemu, a nie odtwarzać z pamięci. Takie podejście ogranicza ryzyko pomyłek i oszczędza czas przy rozliczeniach na koniec miesiąca. Pozwala to uniknąć sytuacji, w której w tytule przelewu znajduje się numer wyglądający poprawnie, lecz odnoszący się do innej faktury.</p>
+<p>W praktyce dobrze jest zapisać numer w kolumnie arkusza obok numeru faktury sprzedawcy i NIP-u kontrahenta. Przy kilkudziesięciu pozycjach wystarczy jeden przebieg przez <a href="/sprawdz-wiele-numerow-ksef/">narzędzie do sprawdzania wielu numerów</a>, aby wyłapać literówki, zanim trafią do banku. To podpowiedź organizacyjna, a nie wymóg przepisów. Sposób powiązania płatności z fakturami opisujemy w artykule <a href="/blog/uzgadnianie-wyciagu-bankowego-numery-ksef/">uzgadnianie wyciągu bankowego z numerami KSeF</a>.</p>
+<h2 id="zrodla-info">Źródła i stan prawny</h2>
+<p>Opis struktury pochodzi z dokumentacji CIRFMF dla KSeF 2.0 oraz ze strony MF o numerze KSeF i zbiorczym identyfikatorze. Treść ma charakter informacyjny i nie stanowi doradztwa podatkowego. Sprawdź aktualne wymagania w oficjalnych źródłach.</p>
+<h2 id="podsumowanie">Podsumowanie</h2>
+<p>Numer KSeF nadaje system po przyjęciu faktury, a jego datą jest data przyjęcia. Kupujący odczytuje go w programie lub w aplikacji, a poprawność zapisu sprawdzi w <a href="/">walidatorze numeru KSeF</a>. Do tytułu przelewu przyda się <a href="/">generator tytułu</a>, a do większych list <a href="/sprawdz-wiele-numerow-ksef/">sprawdzanie wielu numerów</a>.</p>
+""",
+    faq=[
+        ("Kto nadaje numer KSeF faktury?", "Nadaje go system KSeF po przyjęciu faktury. Nie robi tego sprzedawca ani program księgowy."),
+        ("Czy mogę znać numer KSeF przed wysłaniem faktury?", "Nie. Numer zawiera datę przyjęcia faktury i część techniczną, więc powstaje dopiero po przyjęciu faktury przez system."),
+        ("Czy dwie faktury mogą mieć ten sam numer KSeF?", "Nie. Według dokumentacji numer jest globalnie unikalny i jednoznacznie identyfikuje fakturę."),
+        ("Czy data zapisana w numerze nadanym przez KSeF jest datą sprzedaży?", "Nie. To data przyjęcia faktury do dalszego przetwarzania, a nie data wystawienia ani sprzedaży."),
+    ],
+    sources=[DOC_NUM, MF_NUM, MF_AP],
+)
+
+CAL_POSTS = CAL_POSTS + [C35]

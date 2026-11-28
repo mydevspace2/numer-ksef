@@ -43,3 +43,4 @@ Wspólne zasady treści: źródło MF na końcu, „stan prawny na …”, brak 
 | 32 ✅ 2026-11-25 | data-w-numerze-ksef-co-oznacza | Data w numerze KSeF – co oznacza i skąd się bierze | data w numerze ksef | / |
 | 33 ✅ 2026-11-26 | suma-kontrolna-crc8-numer-ksef | Suma kontrolna CRC-8 w numerze KSeF – jak działa | suma kontrolna numer ksef | / |
 | 34 ✅ 2026-11-27 | nip-w-numerze-ksef-jak-sprawdzic | NIP w numerze KSeF – jak sprawdzić jego poprawność | nip w numerze ksef | / |
+| 35 ✅ 2026-11-28 | kto-nadaje-numer-ksef | Kto nadaje numer KSeF i kiedy powstaje | numer ksef kto nadaje | / |
